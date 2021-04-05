@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:deluge_client/api_manager.dart';
 import 'package:deluge_client/controlpanel.dart';
+import 'package:dropdownfield/dropdownfield.dart';
 import "package:flutter/material.dart";
 import 'package:http/http.dart' as http;
 
@@ -45,6 +46,11 @@ class view extends StatefulWidget {
 }
 
 class _viewState extends State<view> {
+  bool all_torrent = true;
+  bool noncompleted = false;
+  bool completed_torrent = false;
+  bool torren_seeding = false;
+  bool paused_torrent = false;
   double speed = 0.0;
   Future<ThinClient> torrent;
   List<Cookie> cookie = null;
@@ -147,7 +153,168 @@ class _viewState extends State<view> {
     */
   }
 
-  //---
+  @override
+  void dispose() {
+    super.dispose();
+  }
+
+  //--------------show dialog
+
+  Future<void> filtermenu(BuildContext context) async {
+    return await showDialog(
+        context: context,
+        builder: (context) {
+          return StatefulBuilder(builder: (context, setState) {
+            return AlertDialog(
+                backgroundColor: Colors.transparent,
+                title: Text("Filter the list of torrents",
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 25.0,
+                        fontWeight: FontWeight.bold)),
+                content: Container(
+                    color: Colors.transparent,
+                    height: 280.0,
+                    width: 50.0,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Container(
+                                width: 200.0,
+                                child: RaisedButton(
+                                  onPressed: () {
+                                    setState(() {
+                                      all_torrent = true;
+                                      noncompleted = false;
+                                      completed_torrent = false;
+                                      torren_seeding = false;
+                                      paused_torrent = false;
+
+                                      this.mounted;
+                                    });
+                                    torrent_list();
+                                    Navigator.of(context).pop();
+                                  },
+                                  color: all_torrent
+                                      ? Color.fromRGBO(66, 85, 112, 1)
+                                      : Colors.white,
+                                  child: Text("All",
+                                      style: TextStyle(
+                                          color: all_torrent
+                                              ? Colors.white
+                                              : Colors.black)),
+                                )),
+                            Container(
+                                width: 200.0,
+                                child: RaisedButton(
+                                  onPressed: () {
+                                    setState(() {
+                                      all_torrent = false;
+                                      noncompleted = false;
+                                      completed_torrent = true;
+                                      torren_seeding = false;
+                                      paused_torrent = false;
+                                      this.mounted;
+                                    });
+                                     torrent_list();
+                                    Navigator.of(context).pop();
+                                  },
+                                  color: completed_torrent
+                                      ? Color.fromRGBO(66, 85, 112, 1)
+                                      : Colors.white,
+                                  child: Text("Completed",
+                                      style: TextStyle(
+                                          color: completed_torrent
+                                              ? Colors.white
+                                              : Colors.black)),
+                                )),
+                            Container(
+                                width: 200.0,
+                                child: RaisedButton(
+                                  onPressed: () {
+                                    setState(() {
+                                      all_torrent = false;
+                                      noncompleted = true;
+                                      completed_torrent = false;
+                                      torren_seeding = false;
+                                      paused_torrent = false;
+                                      this.mounted;
+                                    });
+                                     torrent_list();
+                                    Navigator.of(context).pop();
+                                  },
+                                  color: noncompleted
+                                      ? Color.fromRGBO(66, 85, 112, 1)
+                                      : Colors.white,
+                                  child: Text("Non-Completed",
+                                      style: TextStyle(
+                                          color: noncompleted
+                                              ? Colors.white
+                                              : Colors.black)),
+                                )),
+                            Container(
+                              width: 200.0,
+                              child: RaisedButton(
+                                onPressed: () {
+                                  setState(() {
+                                    all_torrent = false;
+                                    noncompleted = false;
+                                    completed_torrent = false;
+                                    torren_seeding = false;
+                                    paused_torrent = true;
+                                    this.mounted;
+                                  });
+                                   torrent_list();
+                                    Navigator.of(context).pop();
+                                },
+                                color: paused_torrent
+                                    ? Color.fromRGBO(66, 85, 112, 1)
+                                    : Colors.white,
+                                child: Text("Paused",
+                                    style: TextStyle(
+                                        color: paused_torrent
+                                            ? Colors.white
+                                            : Colors.black)),
+                              ),
+                            ),
+                            Container(
+                              width: 200.0,
+                              child: RaisedButton(
+                                onPressed: () {
+                                  setState(() {
+                                    all_torrent = false;
+                                    noncompleted = false;
+                                    completed_torrent = false;
+                                    torren_seeding = true;
+                                    paused_torrent = false;
+                                    this.mounted;
+                                  });
+                                   torrent_list();
+                                    Navigator.of(context).pop();
+                                },
+                                color: torren_seeding
+                                    ? Color.fromRGBO(66, 85, 112, 1)
+                                    : Colors.white,
+                                child: Text("Seeding",
+                                    style: TextStyle(
+                                        color: torren_seeding
+                                            ? Colors.white
+                                            : Colors.black)),
+                              ),
+                            ),
+                          ],
+                        )
+                      ],
+                    )));
+
+            //----
+          }); //statefulbuilder
+        }); //show dialog
+    //----
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -190,62 +357,88 @@ class _viewState extends State<view> {
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.start,
                               children: [
-                                IconButton(
-                                    icon: Icon(Icons.add_to_queue),
-                                    color: Colors.white,
-                                    tooltip: "Add new",
-                                    iconSize: 30.0,
-                                    onPressed: () {
-                                      print("ok");
-                                    }),
-                                IconButton(
-                                    icon: Icon(Icons.delete_forever_sharp),
-                                    tooltip: "Delete",
-                                    color: Colors.white,
-                                    iconSize: 30.0,
-                                    onPressed: () {
-                                      print("ok");
-                                    }),
-                                IconButton(
-                                    icon: Icon(Icons.pause_outlined),
-                                    tooltip: "pause all",
-                                    color: Colors.white,
-                                    iconSize: 30.0,
-                                    onPressed: () {
-                                      print("ok");
-                                    }),
-                                IconButton(
-                                    tooltip: "start all",
-                                    icon: Icon(Icons.play_arrow_rounded),
-                                    color: Colors.white,
-                                    iconSize: 30.0,
-                                    onPressed: () {
-                                      print("ok");
-                                    }),
-                                IconButton(
-                                    icon: Icon(Icons.settings),
-                                    tooltip: "Setting",
-                                    color: Colors.white,
-                                    iconSize: 30.0,
-                                    onPressed: () {
-                                      print("ok");
-                                    }),
+                                Flexible(
+                                    fit: FlexFit.tight,
+                                    child: IconButton(
+                                        icon: Icon(Icons.add_to_queue),
+                                        color: Colors.white,
+                                        tooltip: "Add new",
+                                        iconSize: 30.0,
+                                        onPressed: () {
+                                          print("ok");
+                                        })),
+                                Flexible(
+                                    fit: FlexFit.tight,
+                                    child: IconButton(
+                                        icon: Icon(Icons.delete_forever_sharp),
+                                        tooltip: "Delete",
+                                        color: Colors.white,
+                                        iconSize: 30.0,
+                                        onPressed: () {
+                                          print("ok");
+                                        })),
+                                Flexible(
+                                    fit: FlexFit.tight,
+                                    child: IconButton(
+                                        icon: Icon(Icons.pause_outlined),
+                                        tooltip: "pause all",
+                                        color: Colors.white,
+                                        iconSize: 30.0,
+                                        onPressed: () {
+                                          print("ok");
+                                        })),
+                                Flexible(
+                                    fit: FlexFit.tight,
+                                    child: IconButton(
+                                        tooltip: "start all",
+                                        icon: Icon(Icons.play_arrow_rounded),
+                                        color: Colors.white,
+                                        iconSize: 30.0,
+                                        onPressed: () {
+                                          print("ok");
+                                        })),
+                                Flexible(
+                                    fit: FlexFit.tight,
+                                    child: IconButton(
+                                        tooltip: "Filter",
+                                        icon: Icon(Icons.sort),
+                                        color: Colors.white,
+                                        iconSize: 30.0,
+                                        onPressed: () async {
+                                          // print("ok");
+                                          await filtermenu(context);
+                                        })),
+                                Flexible(
+                                    fit: FlexFit.tight,
+                                    child: IconButton(
+                                        icon: Icon(Icons.settings),
+                                        tooltip: "Setting",
+                                        color: Colors.white,
+                                        iconSize: 30.0,
+                                        onPressed: () {
+                                          print("ok");
+                                        })),
                                 //----------------speed meter
-                                IconButton(
-                                    icon: Icon(Icons.speed_sharp),
-                                    tooltip: "Speed checker",
-                                    color: Colors.white,
-                                    iconSize: 30.0,
-                                    onPressed: () {
-                                      print("ok");
-                                    }),
-                                Text(
-                                  "$speed MB/S",
-                                  style: TextStyle(
-                                      fontSize: 18.0,
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.bold,
-                                      fontStyle: FontStyle.italic),
+                                Flexible(
+                                    fit: FlexFit.tight,
+                                    child: IconButton(
+                                        icon: Icon(Icons.speed_sharp),
+                                        tooltip: "Speed checker",
+                                        color: Colors.white,
+                                        iconSize: 30.0,
+                                        onPressed: () {
+                                          print("ok");
+                                        })),
+                                Flexible(
+                                  fit: FlexFit.tight,
+                                  child: Text(
+                                    "$speed MB/S",
+                                    style: TextStyle(
+                                        fontSize: 13.0,
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.bold,
+                                        fontStyle: FontStyle.italic),
+                                  ),
                                 )
                               ],
                             )),
@@ -282,96 +475,125 @@ class _viewState extends State<view> {
                           Result inside_res = res_torrent[key];
                           bool paused = inside_res.paused;
                           bool completed = inside_res.isFinished;
+                          bool seeding = inside_res.isSeed;
+                          bool query;
+                          if (completed_torrent) {
+                            query = completed;
+                          } else if (all_torrent) {
+                            query = (!completed || completed);
+                          } else if (noncompleted) {
+                            query = !completed;
+                          } else if (torren_seeding) {
+                            query = seeding;
+                          } else if (paused_torrent) {
+                            query = paused;
+                          }
+
                           // we will be returning row and col
-                          return Column(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              Container(
-                                child: Row(
+
+                          return (query)
+                              ? Column(
                                   mainAxisAlignment: MainAxisAlignment.start,
                                   children: [
-                                    Text(
-                                      inside_res.name,
-                                      style: TextStyle(
-                                          color: Colors.black,
-                                          fontSize: 15.0,
-                                          fontWeight: FontWeight.bold),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              //2nd row
-                              Container(
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      "Total Size: " +
-                                          (inside_res.totalSize ~/ 1000000)
-                                              .toString() +
-                                          " MB",
-                                      style: TextStyle(
-                                        color: Colors.black,
-                                        fontSize: 15.0,
+                                    Container(
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            inside_res.name,
+                                            style: TextStyle(
+                                                color: Colors.black,
+                                                fontSize: 15.0,
+                                                fontWeight: FontWeight.bold),
+                                          ),
+                                        ],
                                       ),
                                     ),
-                                    Flexible(
-                                      fit: FlexFit.tight,
-                                      child: !completed
-                                          ? paused
-                                              ? Icon(Icons.pause)
-                                              : Icon(
-                                                  Icons.account_tree_outlined)
-                                          : Icon(Icons.download_done_outlined),
-                                    ),
+                                    //2nd row
                                     Container(
-                                      padding: EdgeInsets.only(left: 15.0),
                                       child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.start,
                                         children: [
-                                          Icon(Icons.arrow_downward_sharp),
                                           Text(
-                                            inside_res.maxDownloadSpeed
-                                                .toString(),
+                                            "Total Size: " +
+                                                (inside_res.totalSize ~/
+                                                        1000000)
+                                                    .toString() +
+                                                " MB",
                                             style: TextStyle(
                                               color: Colors.black,
                                               fontSize: 15.0,
                                             ),
                                           ),
-                                          Icon(Icons.arrow_upward),
-                                          Text(
-                                              inside_res.maxUploadSpeed
-                                                  .toString(),
-                                              style: TextStyle(
-                                                color: Colors.black,
-                                                fontSize: 15.0,
-                                              )),
+                                          Flexible(
+                                            fit: FlexFit.tight,
+                                            child: !completed
+                                                ? paused
+                                                    ? Icon(Icons.pause)
+                                                    : Icon(Icons
+                                                        .account_tree_outlined)
+                                                : Icon(Icons
+                                                    .download_done_outlined),
+                                          ),
+                                          Flexible(
+                                              fit: FlexFit.tight,
+                                              child: seeding
+                                                  ? Text("seeding")
+                                                  : Text("")),
+                                          Container(
+                                            padding:
+                                                EdgeInsets.only(left: 15.0),
+                                            child: Row(
+                                              children: [
+                                                Icon(
+                                                    Icons.arrow_downward_sharp),
+                                                Text(
+                                                  inside_res.maxDownloadSpeed
+                                                      .toString(),
+                                                  style: TextStyle(
+                                                    color: Colors.black,
+                                                    fontSize: 15.0,
+                                                  ),
+                                                ),
+                                                Icon(Icons.arrow_upward),
+                                                Text(
+                                                    inside_res.maxUploadSpeed
+                                                        .toString(),
+                                                    style: TextStyle(
+                                                      color: Colors.black,
+                                                      fontSize: 15.0,
+                                                    )),
+                                              ],
+                                            ),
+                                          )
                                         ],
                                       ),
+                                    ),
+                                    //----------
+                                    //download info
+                                    Container(
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.start,
+                                        children: [
+                                          download_progress(
+                                            torrent_id: key,
+                                            cookie: cookie,
+                                            tor_name: inside_res.name,
+                                          )
+                                        ],
+                                      ),
+                                    ),
+                                    Divider(
+                                      color: Color.fromRGBO(66, 85, 112, 1),
+                                      height: 10.0,
+                                      thickness: 5.0,
                                     )
                                   ],
-                                ),
-                              ),
-                              //----------
-                              //download info
-                              Container(
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  children: [
-                                    download_progress(
-                                      torrent_id: key,
-                                      cookie: cookie,
-                                      tor_name: inside_res.name,
-                                    )
-                                  ],
-                                ),
-                              ),
-                              Divider(
-                                color: Color.fromRGBO(66, 85, 112, 1),
-                                height: 10.0,
-                                thickness: 5.0,
-                              )
-                            ],
-                          );
+                                )
+                              : Container();
                         }));
                 //p---
               }
