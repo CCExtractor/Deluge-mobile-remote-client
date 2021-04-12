@@ -1,6 +1,3 @@
-// To parse this JSON data, do
-//
-//     final thinClient = thinClientFromJson(jsonString);
 
 import 'dart:convert';
 
