@@ -23,15 +23,21 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  http: ^0.12.1
-  dio:
-  requests: ^3.3.0
-  percent_indicator: ^3.0.1
 
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
+  http: ^0.12.1
+  percent_indicator: ^3.0.1
+  flutter_document_picker: ^4.0.1
+  qr_code_scanner: ^0.4.0
+  modal_bottom_sheet:
+  sqflite:
+  shared_preferences: ^2.0.5
+  fluttertoast:
+
+ 
 
 dev_dependencies:
   flutter_test:
@@ -49,8 +55,13 @@ flutter:
   uses-material-design: true
 
   # To add assets to your application, add an assets section, like this:
-  # assets:
-  #   - images/a_dot_burr.jpeg
+  assets:
+    - assets/logo.png
+    - assets/loader.gif
+    - assets/no_data.png
+    - assets/animation.gif
+
+
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
@@ -64,6 +75,12 @@ flutter:
   # "family" key with the font family name, and a "fonts" key with a
   # list giving the asset and other descriptors for the font. For
   # example:
+  fonts:
+    - family: SFUIDisplay
+      fonts:
+        - asset: assets/fonts/SFUIDisplay/sf-ui-display-heavy.otf
+        - asset: assets/fonts/SFUIDisplay/sf-ui-display-light.otf
+        - asset: assets/fonts/SFUIDisplay/sf-ui-display-medium.otf
   # fonts:
   #   - family: Schyler
   #     fonts:
