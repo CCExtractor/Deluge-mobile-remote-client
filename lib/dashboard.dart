@@ -1,23 +1,30 @@
+import 'dart:collection';
 import 'dart:convert';
 import 'package:deluge_client/api/apis.dart';
 import 'package:deluge_client/components/all_acc.dart';
 import 'package:deluge_client/components/all_acc.dart';
+import 'package:deluge_client/components/bottom_sheet/choose_account.dart';
+import 'package:deluge_client/components/bottom_sheet/sorter.dart';
 import 'package:deluge_client/components/download_upload_pane.dart';
 import 'package:deluge_client/components/no_data.dart';
 import 'package:deluge_client/components/progress_bar.dart';
+import 'package:deluge_client/components/tile.dart';
 import 'package:deluge_client/database/dbmanager.dart';
 import 'package:deluge_client/multi_dash.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:http/http.dart' as http;
 import 'package:deluge_client/components/bottom_sheet/add_torrent.dart';
 import 'package:flutter/material.dart';
 import 'package:deluge_client/control_center/theme.dart';
 import 'package:deluge_client/components/sidebar.dart';
 import 'dart:io';
+import 'package:deluge_client/string/controller.dart';
 
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:deluge_client/state_ware_house/state_ware_house.dart';
+import 'package:deluge_client/string/sorter.dart';
 
 class MyApp extends StatefulWidget {
   @override
@@ -41,7 +48,6 @@ class view extends StatefulWidget {
 }
 
 class _viewState extends State<view> {
-  final myController = TextEditingController();
   Future<Map<String, dynamic>> torrent;
   List<Cookie> cookie = null;
   //----
@@ -544,6 +550,14 @@ class _viewState extends State<view> {
     }
   }
 
+  Map<String, dynamic> sort(Map<String, dynamic> map) {
+    if (sort_helper.non_reverse_order) {
+      return map;
+    } else {
+      return sort_helper.sort(map);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -593,6 +607,11 @@ class _viewState extends State<view> {
                 children: [
                   Expanded(
                       child: TextField(
+                    onChanged: (val) {
+                      setState(() {
+                        controller.search_field_controller.text;
+                      });
+                    },
                     decoration: new InputDecoration(
                       border: new OutlineInputBorder(
                         borderRadius: const BorderRadius.all(
@@ -605,7 +624,7 @@ class _viewState extends State<view> {
                       prefixIcon: Icon(Icons.search),
                       fillColor: Colors.white70,
                     ),
-                    controller: myController,
+                    controller: controller.search_field_controller,
                   )),
                   Padding(
                       padding: EdgeInsets.only(left: 10.0),
@@ -622,8 +641,29 @@ class _viewState extends State<view> {
                               borderRadius: new BorderRadius.circular(10.0),
                               color: theme.base_color),
                         ),
-                        onTap: () {
-                          print("ok");
+                        onTap: () async {
+                          // sort(await torrent);
+                          showCupertinoModalBottomSheet(
+                              expand: false,
+                              context: context,
+                              backgroundColor: Colors.transparent,
+                              builder: (context) => sorter(
+                                    rebuilt_list: () {
+                                      if (!all_account_selected) {
+                                        non_delayed_torrent_fetch(
+                                            selx_acc.deluge_url,
+                                            selx_acc.deluge_pwrd,
+                                            cookie,
+                                            selx_acc.has_deluge_pwrd,
+                                            selx_acc.is_reverse_proxied,
+                                            selx_acc.username,
+                                            selx_acc.password,
+                                            selx_acc.via_qr);
+                                      } else {
+                                        multidash.currentState.config();
+                                      }
+                                    },
+                                  ));
                         },
                       )),
                 ],
@@ -662,7 +702,10 @@ class _viewState extends State<view> {
                                       itemBuilder: (context, index) {
                                         Map<String, dynamic> res_torrent =
                                             new Map();
-                                        res_torrent = snapshot.data['result'];
+
+                                        res_torrent =
+                                            sort(snapshot.data['result']);
+
                                         // it is the key that is basically idententity of list
                                         String key =
                                             res_torrent.keys.elementAt(index);
@@ -697,31 +740,106 @@ class _viewState extends State<view> {
                                         // we will be returning row and col
 
                                         return (query)
-                                            ? InkWell(
-                                                onTap: () {
-                                                  if (long_press_activity &&
-                                                      selected_torrents
-                                                          .isNotEmpty) {
-                                                    if (!selected_torrents
-                                                        .contains(key)) {
-                                                      if (this.mounted) {
-                                                        setState(() {
-                                                          insert_selected_torrent(
-                                                              key);
-                                                        });
-                                                      }
-                                                    } else {
-                                                      if (this.mounted) {
-                                                        setState(() {
-                                                          pop_out_on_click(key);
-                                                        });
-                                                      }
-                                                    } //else brace
+                                            ? inside_res['name']
+                                                    .toString()
+                                                    .toLowerCase()
+                                                    .contains(controller
+                                                        .search_field_controller
+                                                        .text
+                                                        .toLowerCase())
+                                                ? InkWell(
+                                                    onTap: () {
+                                                      if (long_press_activity &&
+                                                          selected_torrents
+                                                              .isNotEmpty) {
+                                                        if (!selected_torrents
+                                                            .contains(key)) {
+                                                          if (this.mounted) {
+                                                            setState(() {
+                                                              insert_selected_torrent(
+                                                                  key);
+                                                            });
+                                                          }
+                                                        } else {
+                                                          if (this.mounted) {
+                                                            setState(() {
+                                                              pop_out_on_click(
+                                                                  key);
+                                                            });
+                                                          }
+                                                        } //else brace
 
-                                                    if (select_all_activity_trigger) {
-                                                      setState(() {
-                                                        select_all_activity_trigger =
-                                                            false;
+                                                        if (select_all_activity_trigger) {
+                                                          setState(() {
+                                                            select_all_activity_trigger =
+                                                                false;
+                                                            non_delayed_torrent_fetch(
+                                                                selx_acc
+                                                                    .deluge_url,
+                                                                selx_acc
+                                                                    .deluge_pwrd,
+                                                                cookie,
+                                                                selx_acc
+                                                                    .has_deluge_pwrd,
+                                                                selx_acc
+                                                                    .is_reverse_proxied,
+                                                                selx_acc
+                                                                    .username,
+                                                                selx_acc
+                                                                    .password,
+                                                                selx_acc
+                                                                    .via_qr);
+                                                            pop_out_on_click(
+                                                                key);
+                                                          });
+                                                        }
+                                                      }
+                                                      //--------implement the ontap
+                                                      //------------for text editor
+                                                      FocusScopeNode
+                                                          currentFocus =
+                                                          FocusScope.of(
+                                                              context);
+
+                                                      if (!currentFocus
+                                                          .hasPrimaryFocus) {
+                                                        currentFocus.unfocus();
+                                                      }
+                                                      //------------------------>
+                                                    },
+                                                    onLongPress: () {
+                                                      if (this.mounted) {
+                                                        setState(() {
+                                                          long_press_activity =
+                                                              true;
+                                                        });
+                                                      }
+                                                      if (!selected_torrents
+                                                          .contains(key)) {
+                                                        if (this.mounted) {
+                                                          setState(() {
+                                                            insert_selected_torrent(
+                                                                key);
+                                                          });
+                                                        }
+                                                      }
+                                                    },
+                                                    child:
+                                                        //-----------
+
+                                                        //---------------
+                                                        tile(
+                                                      paused: paused,
+                                                      completed: completed,
+                                                      cookie: cookie,
+                                                      for_multi: false,
+                                                      hash: key,
+                                                      inside_res: inside_res,
+                                                      selected_torrents:
+                                                          selected_torrents,
+                                                      seeding: seeding,
+                                                      selx_acc: selx_acc,
+                                                      non_delayed_fetch: () {
                                                         non_delayed_torrent_fetch(
                                                             selx_acc.deluge_url,
                                                             selx_acc
@@ -734,184 +852,10 @@ class _viewState extends State<view> {
                                                             selx_acc.username,
                                                             selx_acc.password,
                                                             selx_acc.via_qr);
-                                                        pop_out_on_click(key);
-                                                      });
-                                                    }
-                                                  }
-                                                  //--------implement the ontap
-                                                },
-                                                onLongPress: () {
-                                                  if (this.mounted) {
-                                                    setState(() {
-                                                      long_press_activity =
-                                                          true;
-                                                    });
-                                                  }
-                                                  if (!selected_torrents
-                                                      .contains(key)) {
-                                                    if (this.mounted) {
-                                                      setState(() {
-                                                        insert_selected_torrent(
-                                                            key);
-                                                      });
-                                                    }
-                                                  }
-                                                },
-                                                child: Container(
-                                                    color: selected_torrents
-                                                            .contains(key)
-                                                        ? Colors.blueGrey
-                                                        : Colors.transparent,
-                                                    child: Column(
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment
-                                                              .start,
-                                                      children: [
-                                                        Container(
-                                                          child: Row(
-                                                            mainAxisAlignment:
-                                                                MainAxisAlignment
-                                                                    .start,
-                                                            children: [
-                                                              Text(
-                                                                inside_res[
-                                                                    'name'],
-                                                                style: TextStyle(
-                                                                    color: Colors
-                                                                        .black,
-                                                                    fontSize:
-                                                                        15.0,
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .w300,
-                                                                    fontFamily:
-                                                                        theme
-                                                                            .font_family),
-                                                              ),
-                                                            ],
-                                                          ),
-                                                        ),
-                                                        //2nd row
-                                                        Container(
-                                                          child: Row(
-                                                            mainAxisAlignment:
-                                                                MainAxisAlignment
-                                                                    .start,
-                                                            children: [
-                                                              Text(
-                                                                "Total Size: " +
-                                                                    (inside_res['total_size'] ~/
-                                                                            1000000)
-                                                                        .toString() +
-                                                                    " MB",
-                                                                style: TextStyle(
-                                                                    color: Colors
-                                                                        .black,
-                                                                    fontSize: theme
-                                                                        .minimal_font_size,
-                                                                    fontFamily:
-                                                                        theme
-                                                                            .font_family),
-                                                              ),
-                                                              Flexible(
-                                                                fit: FlexFit
-                                                                    .tight,
-                                                                child: !completed
-                                                                    ? paused
-                                                                        ? Icon(Icons.pause)
-                                                                        : Icon(Icons.account_tree_outlined)
-                                                                    : Icon(Icons.download_done_outlined),
-                                                              ),
-                                                              Flexible(
-                                                                  fit: FlexFit
-                                                                      .tight,
-                                                                  child: !paused
-                                                                      ? seeding
-                                                                          ? Text(
-                                                                              "seeding")
-                                                                          : Text(
-                                                                              "")
-                                                                      : Text(
-                                                                          "")),
-                                                              Container(
-                                                                padding: EdgeInsets
-                                                                    .only(
-                                                                        left:
-                                                                            15.0),
-                                                                child:
-                                                                    network_speed(
-                                                                  torrent_id:
-                                                                      key,
-                                                                  cookie:
-                                                                      cookie,
-                                                                  tor_name:
-                                                                      inside_res[
-                                                                          'name'],
-                                                                  url: selx_acc
-                                                                      .deluge_url,
-                                                                  is_reverse_proxied:
-                                                                      selx_acc
-                                                                          .is_reverse_proxied,
-                                                                  seed_username:
-                                                                      selx_acc
-                                                                          .username,
-                                                                  seed_pass:
-                                                                      selx_acc
-                                                                          .password,
-                                                                  qr_auth:
-                                                                      selx_acc
-                                                                          .via_qr,
-                                                                  paused:
-                                                                      paused,
-                                                                ),
-                                                              )
-                                                            ],
-                                                          ),
-                                                        ),
-                                                        //----------
-                                                        //download info
-                                                        Container(
-                                                          child: Row(
-                                                            mainAxisAlignment:
-                                                                MainAxisAlignment
-                                                                    .start,
-                                                            children: [
-                                                              download_progress(
-                                                                torrent_id: key,
-                                                                initial_progress:
-                                                                    inside_res[
-                                                                        'progress'],
-                                                                cookie: cookie,
-                                                                tor_name:
-                                                                    inside_res[
-                                                                        'name'],
-                                                                url: selx_acc
-                                                                    .deluge_url,
-                                                                is_reverse_proxied:
-                                                                    selx_acc
-                                                                        .is_reverse_proxied,
-                                                                seed_username:
-                                                                    selx_acc
-                                                                        .username,
-                                                                seed_pass:
-                                                                    selx_acc
-                                                                        .password,
-                                                                qr_auth:
-                                                                    selx_acc
-                                                                        .via_qr,
-                                                                paused: paused,
-                                                              )
-                                                            ],
-                                                          ),
-                                                        ),
-                                                        Divider(
-                                                          color:
-                                                              theme.base_color,
-                                                          height: 10.0,
-                                                          thickness: 5.0,
-                                                        )
-                                                      ],
-                                                    )))
+                                                      },
+                                                    ),
+                                                  )
+                                                : new Container()
                                             : new Container();
                                       })
                                   : no_data()));
@@ -938,27 +882,44 @@ class _viewState extends State<view> {
         child: Icon(Icons.add),
         backgroundColor: theme.base_color,
         onPressed: () {
-          showCupertinoModalBottomSheet(
-              expand: false,
-              context: context,
-              backgroundColor: Colors.transparent,
-              builder: (context) => add_new(
-                    cookie: cookie,
-                    url: selx_acc.deluge_url,
-                    is_reverse_proxied: selx_acc.is_reverse_proxied,
-                    seed_username: selx_acc.username,
-                    seed_pass: selx_acc.password,
-                    qr_auth: selx_acc.via_qr,
-                    refresh: () => non_delayed_torrent_fetch(
-                        selx_acc.deluge_url,
-                        selx_acc.deluge_pwrd,
-                        cookie,
-                        selx_acc.has_deluge_pwrd,
-                        selx_acc.is_reverse_proxied,
-                        selx_acc.username,
-                        selx_acc.password,
-                        selx_acc.via_qr),
-                  ));
+          if (!all_account_selected) {
+            //-----------------------------------
+            showCupertinoModalBottomSheet(
+                expand: false,
+                context: context,
+                backgroundColor: Colors.transparent,
+                builder: (context) => add_new(
+                      cookie: cookie,
+                      url: selx_acc.deluge_url,
+                      is_reverse_proxied: selx_acc.is_reverse_proxied,
+                      seed_username: selx_acc.username,
+                      seed_pass: selx_acc.password,
+                      qr_auth: selx_acc.via_qr,
+                      refresh: () => non_delayed_torrent_fetch(
+                          selx_acc.deluge_url,
+                          selx_acc.deluge_pwrd,
+                          cookie,
+                          selx_acc.has_deluge_pwrd,
+                          selx_acc.is_reverse_proxied,
+                          selx_acc.username,
+                          selx_acc.password,
+                          selx_acc.via_qr),
+                    ));
+          } else {
+            showCupertinoModalBottomSheet(
+                expand: false,
+                context: context,
+                backgroundColor: Colors.transparent,
+                builder: (context) => multi_account_menu(
+                      cookie_all_account:
+                          multidash.currentState.cookie_all_account,
+                      refresh: () {
+                        multidash.currentState.config();
+                      },
+                    ));
+          }
+
+          //----------------------------------
         },
       ),
       //---
@@ -1024,7 +985,7 @@ class _viewState extends State<view> {
                                       // it will work when any torrent is selected
 
                                       select_all_activity_trigger = true;
-                                      
+
                                       rebuild_list();
                                     } else if (select_all_activity_trigger) {
                                       if (this.mounted) {

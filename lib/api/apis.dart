@@ -1,6 +1,8 @@
 import 'dart:convert';
 import 'dart:io';
 
+
+
 class apis {
   static int network_request = 0;
   static Future<List<Cookie>> authentication_to_deluge(
@@ -94,6 +96,8 @@ class apis {
       final responseBody = await response.transform(utf8.decoder).join();
 
       Map<String, dynamic> client_output = json.decode(responseBody);
+     
+      
 
       return client_output;
     } catch (e) {
@@ -298,101 +302,10 @@ class apis {
   }
   //---------------------------------
 
-  static Future<Map<String, dynamic>> download_upload_pane(
-      List<Cookie> cookie,
-      String url,
-      String is_reverse_proxied,
-      String seed_username,
-      String seed_pass,
-      String qr_auth) async {
-    try {
-      Map<String, dynamic> requestPayload = {
-        "method": "core.get_torrents_status",
-        "params": [[], []],
-        "id": network_request++
-      };
-      final httpclient = new HttpClient();
-
-      final request = await httpclient.postUrl(Uri.parse(
-          is_reverse_proxied == 'true' ? "$url/deluge/json" : "$url/json"));
-      request.headers.contentType = new ContentType("application", "json");
-      request.headers.add("Cookie", cookie);
-      if (seed_username.length > 0 && seed_pass.length > 0) {
-        String auth =
-            'Basic ' + base64Encode(utf8.encode("$seed_username:$seed_pass"));
-        request.headers.add('authorization', auth);
-      }
-
-      if (qr_auth.length > 0) {
-        request.headers.add('X-QR-AUTH', qr_auth);
-      }
-
-      request.add(
-        utf8.encode(
-          jsonEncode(requestPayload),
-        ),
-      );
-
-      final response = await request.close();
-      // print(response.cookies);
-      cookie = response.cookies;
-      final responseBody = await response.transform(utf8.decoder).join();
-      Map<String, dynamic> api_output = json.decode(responseBody);
-      return api_output;
-    } catch (e) {
-      print(e);
-    }
-  }
+ 
 
   //--------------------------------
-  static Future<Map<String, dynamic>> progress_bar(
-      List param,
-      List<Cookie> cookie,
-      String url,
-      String is_reverse_proxied,
-      String seed_username,
-      String seed_pass,
-      String qr_auth) async {
-    Map<String, dynamic> requestPayload = {
-      "id": network_request++,
-      "method": "web.get_torrent_files",
-      "params": param
-    };
-
-    final httpclient = new HttpClient();
-    try {
-      final request = await httpclient.postUrl(Uri.parse(
-          is_reverse_proxied == 'true' ? "$url/deluge/json" : "$url/json"));
-      request.headers.contentType = new ContentType("application", "json");
-      request.headers.add("Cookie", cookie);
-      if (seed_username.length > 0 && seed_pass.length > 0) {
-        String auth =
-            'Basic ' + base64Encode(utf8.encode('$seed_username:$seed_pass'));
-        request.headers.add('authorization', auth);
-      }
-      if (qr_auth.length > 0) {
-        request.headers.add('X-QR-AUTH', qr_auth);
-      }
-
-      request.add(
-        utf8.encode(
-          jsonEncode(requestPayload),
-        ),
-      );
-
-      final response = await request.close();
-
-      cookie = response.cookies;
-      final responseBody = await response.transform(utf8.decoder).join();
-      Map<String, dynamic> api_output = json.decode(responseBody);
-     // print(api_output);
-
-      return api_output;
-    } catch (e) {
-      print(e);
-    }
-  }
-
+ 
   //------------------------------------------------------------------------
   static void add_torrent_file(
       String base64,

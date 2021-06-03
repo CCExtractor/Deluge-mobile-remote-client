@@ -16,6 +16,7 @@ class network_speed extends StatefulWidget {
   final String seed_pass;
   final String qr_auth;
   final bool paused;
+  final bool completed;
   const network_speed(
       {Key key,
       @required this.torrent_id,
@@ -26,7 +27,8 @@ class network_speed extends StatefulWidget {
       this.seed_pass,
       this.seed_username,
       this.qr_auth,
-      this.paused})
+      this.paused,
+      this.completed})
       : super(key: key);
 
   @override
@@ -39,7 +41,8 @@ class network_speed extends StatefulWidget {
       seed_username: seed_username,
       seed_pass: seed_pass,
       qr_auth: qr_auth,
-      paused: paused);
+      paused: paused,
+      completed: completed);
 }
 
 class _network_speedState extends State<network_speed> {
@@ -52,6 +55,7 @@ class _network_speedState extends State<network_speed> {
   final String seed_pass;
   final String qr_auth;
   final bool paused;
+  bool completed;
   _network_speedState(
       {this.tor_id,
       this.cookie,
@@ -61,21 +65,27 @@ class _network_speedState extends State<network_speed> {
       this.seed_username,
       this.seed_pass,
       this.qr_auth,
-      this.paused});
+      this.paused,
+      this.completed});
   int download_speed_in_byte = 0;
   int upload_speed_in_byte = 0;
   double download_speed_in_kb = 0.0;
   double upload_speed_in_kb = 0.0;
   Future<void> fetch_speed() async {
     try {
-      Map<String, dynamic> api_output = await apis.download_upload_pane(
+      Map<String, dynamic> api_output = await apis.get_torrent_list(
           cookie, url, is_reverse_proxied, seed_username, seed_pass, qr_auth);
       if (api_output != null) {
         Map<String, dynamic> result = api_output['result'];
         Map<String, dynamic> properties = result[tor_id];
+        if (this.mounted) {
+          setState(() {
+            completed = properties["is_finished"];
+          });
+        }
 
         download_speed_in_byte = properties['download_payload_rate'].toInt();
-     
+
         upload_speed_in_byte = properties['upload_payload_rate'].toInt();
         if (this.mounted) {
           setState(() {
@@ -97,8 +107,11 @@ class _network_speedState extends State<network_speed> {
     setState(() {
       paused;
     });
-    if (!paused) {
+    if (!paused || !completed) {
       Timer.periodic(Duration(seconds: 2), (timer) {
+        if (completed) {
+          timer.cancel();
+        }
         if (this.mounted) {
           setState(() {
             fetch_speed();

@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:ffi';
 import 'dart:io';
 import 'package:deluge_client/control_center/theme.dart';
 import "package:flutter/material.dart";
@@ -19,6 +20,8 @@ class download_progress extends StatefulWidget {
   final String seed_pass;
   final String qr_auth;
   final bool paused;
+  final bool completed;
+  final Function(bool) update_completion_state;
   const download_progress(
       {Key key,
       @required this.torrent_id,
@@ -30,7 +33,9 @@ class download_progress extends StatefulWidget {
       this.seed_pass,
       this.qr_auth,
       this.paused,
-      this.initial_progress})
+      this.initial_progress,
+      @required this.update_completion_state,
+      this.completed})
       : super(key: key);
 
   @override
@@ -44,7 +49,9 @@ class download_progress extends StatefulWidget {
       seed_pass: seed_pass,
       qr_auth: qr_auth,
       paused: paused,
-      initial_progress: initial_progress);
+      initial_progress: initial_progress,
+      update_completion_state: update_completion_state,
+      completed: completed);
 }
 
 class _download_progressState extends State<download_progress> {
@@ -52,7 +59,9 @@ class _download_progressState extends State<download_progress> {
   String tor_name;
   List<Cookie> cookie;
   final double initial_progress;
+  final Function(bool) update_completion_state;
   //--
+  bool completed;
 
   final String url;
   final String is_reverse_proxied;
@@ -70,36 +79,31 @@ class _download_progressState extends State<download_progress> {
       this.seed_pass,
       this.qr_auth,
       this.paused,
-      this.initial_progress});
+      this.initial_progress,
+      this.update_completion_state,
+      this.completed});
   double progress_percent = 0;
   //-----------------
   void get_status() async {
     try {
-      var param = new List();
-      param.add(tor_id);
-
-      Map<String, dynamic> api_output = await apis.progress_bar(param, cookie,
-          url, is_reverse_proxied, seed_username, seed_pass, qr_auth);
-
+      Map<String, dynamic> api_output = await apis.get_torrent_list(
+          cookie, url, is_reverse_proxied, seed_username, seed_pass, qr_auth);
       Map<String, dynamic> result = await api_output['result'];
+      if (result != null) {
+        Map<String, dynamic> content = await result[tor_id];
+        double middletemp = content['progress'];
 
-      Map<String, dynamic> content = await result['contents'];
-      Map<String, dynamic> torrent_info = await content[tor_name];
+        double temp = (middletemp / 100.0);
+        print(temp);
 
-      if (torrent_info != null) {
-        String middletemp = torrent_info['progress'].toString().length >= 4
-            ? torrent_info['progress'].toString().substring(0, 4)
-            : torrent_info['progress'].toString().substring(0, 3);
-        
-    
-        double temp = double.parse(middletemp);
-        
         if (this.mounted) {
           setState(() {
             progress_percent = temp;
-            
+            completed = content['is_finished'];
           });
         }
+
+        update_completion_state(completed);
       }
     } catch (e) {
       print(e);
@@ -114,8 +118,12 @@ class _download_progressState extends State<download_progress> {
       paused;
     });
     handle_first_progress();
-    if (!paused) {
+    if (!paused || !completed) {
       Timer.periodic(Duration(seconds: 2), (timer) {
+        if (completed) {
+          timer.cancel();
+        }
+        
         if (this.mounted) {
           setState(() {
             get_status();
@@ -144,7 +152,7 @@ class _download_progressState extends State<download_progress> {
         child: Container(
       padding: EdgeInsets.all(15.0),
       child: new LinearPercentIndicator(
-        width: MediaQuery.of(context).size.width - 50,
+        width: MediaQuery.of(context).size.width - 120.0,
         animation: false,
         lineHeight: 15.0,
         animationDuration: 2000,

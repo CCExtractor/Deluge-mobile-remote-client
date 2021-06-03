@@ -1,12 +1,16 @@
 import 'package:deluge_client/components/download_upload_pane.dart';
 import 'package:deluge_client/components/no_data.dart';
 import 'package:deluge_client/components/progress_bar.dart';
+import 'package:deluge_client/components/tile.dart';
 import 'package:deluge_client/database/dbmanager.dart';
 import 'package:flutter/material.dart';
 import 'package:deluge_client/components/all_acc.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:deluge_client/control_center/theme.dart';
 import 'package:deluge_client/api/apis.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:deluge_client/string/controller.dart';
+import 'package:deluge_client/string/sorter.dart';
 
 class multi_account extends StatefulWidget {
   final Function(List<multtorrent>) manage_multi;
@@ -42,7 +46,6 @@ class multi_accountState extends State<multi_account> {
             all_account_core.config_torrent_list(cookie_all_account);
       });
     });
-  
   }
 
   bool long_press_activity = false;
@@ -338,32 +341,13 @@ class multi_accountState extends State<multi_account> {
     }
   }
 
-  void rebuild_list() {
-    Future<Map<multtorrent, dynamic>> temp = torrents_all_account;
-    if (this.mounted) {
-      setState(() {
-        torrents_all_account = temp;
-      });
+  Map<String, dynamic> sort(Map<String, dynamic> map) {
+    if (sort_helper.non_reverse_order) {
      
-    }
-     
-   
-  }
-
-  void select_all() {
-    if (selected_torrents.isNotEmpty && !select_all_activity_trigger) {
-      // it will work when any torrent is selected
-
-      select_all_activity_trigger = true;
-      rebuild_list();
-     
-    } else if (select_all_activity_trigger) {
-      if (this.mounted) {
-        setState(() {
-          selected_torrents.clear();
-          select_all_activity_trigger = false;
-        });
-      }
+      return map;
+    } else {
+      
+      return sort_helper.sort(map);
     }
   }
 
@@ -397,7 +381,7 @@ class multi_accountState extends State<multi_account> {
                             String hash = key.hash;
                             //inside the result array
                             Map<String, dynamic> inside_res =
-                                snapshot.data[key];
+                                sort(snapshot.data[key]);
 
                             bool paused = inside_res['paused'];
 
@@ -425,166 +409,89 @@ class multi_accountState extends State<multi_account> {
                             // we will be returning row and col
 
                             return query
-                                ? InkWell(
-                                    onTap: () {
-                                      if (long_press_activity &&
-                                          selected_torrents.isNotEmpty) {
-                                        if (!selected_torrents.contains(key)) {
-                                          if (this.mounted) {
-                                            setState(() {
-                                              insert_selected_torrent(key);
-                                            });
-                                          }
-                                        } else {
-                                          if (this.mounted) {
-                                            setState(() {
-                                              pop_out_on_click(key);
-                                            });
-                                          }
-                                        } //else brace
+                                ? inside_res['name']
+                                        .toString()
+                                        .toLowerCase()
+                                        .contains(controller
+                                            .search_field_controller.text
+                                            .toLowerCase())
+                                    ? InkWell(
+                                        onTap: () {
+                                          if (long_press_activity &&
+                                              selected_torrents.isNotEmpty) {
+                                            if (!selected_torrents
+                                                .contains(key)) {
+                                              if (this.mounted) {
+                                                setState(() {
+                                                  insert_selected_torrent(key);
+                                                });
+                                              }
+                                            } else {
+                                              if (this.mounted) {
+                                                setState(() {
+                                                  pop_out_on_click(key);
+                                                });
+                                              }
+                                            } //else brace
 
-                                        if (select_all_activity_trigger) {
-                                          setState(() {
-                                            select_all_activity_trigger = false;
+                                            if (select_all_activity_trigger) {
+                                              setState(() {
+                                                select_all_activity_trigger =
+                                                    false;
+                                                config();
+                                                pop_out_on_click(key);
+                                              });
+                                            }
+                                          }
+                                          //--------implement the ontap
+                                          //------------for text editor
+                                          FocusScopeNode currentFocus =
+                                              FocusScope.of(context);
+
+                                          if (!currentFocus.hasPrimaryFocus) {
+                                            currentFocus.unfocus();
+                                          }
+                                          //------------------------>
+                                        },
+                                        onLongPress: () {
+                                          if (this.mounted) {
+                                            setState(() {
+                                              long_press_activity = true;
+                                            });
+                                          }
+                                          if (!selected_torrents
+                                              .contains(key)) {
+                                            if (this.mounted) {
+                                              setState(() {
+                                                insert_selected_torrent(key);
+                                              });
+                                            }
+                                          }
+                                        },
+                                        child:
+                                            //---------------
+                                            tile(
+                                          paused: paused,
+                                          completed: completed,
+                                          cookie: cookie_all_account[
+                                              buc.deluge_url],
+                                          for_multi: true,
+                                          hash: key.hash,
+                                          inside_res: inside_res,
+                                          multi_selected_torrent:
+                                              selected_torrents,
+                                          seeding: seeding,
+                                          selx_acc: buc,
+                                          hash_m: key,
+                                          non_delayed_fetch: () {
                                             config();
-                                            pop_out_on_click(key);
-                                          });
-                                        }
-                                      }
-                                      //--------implement the ontap
-                                    },
-                                    onLongPress: () {
-                                      if (this.mounted) {
-                                        setState(() {
-                                          long_press_activity = true;
-                                        });
-                                      }
-                                      if (!selected_torrents.contains(key)) {
-                                        if (this.mounted) {
-                                          setState(() {
-                                            insert_selected_torrent(key);
-                                          });
-                                        }
-                                      }
-                                    },
-                                    child: Container(
-                                        color: selected_torrents.contains(key)
-                                            ? Colors.blueGrey
-                                            : Colors.transparent,
-                                        child: Column(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.start,
-                                          children: [
-                                            Container(
-                                              child: Row(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.start,
-                                                children: [
-                                                  Text(
-                                                    inside_res['name'],
-                                                    style: TextStyle(
-                                                        color: Colors.black,
-                                                        fontSize: 15.0,
-                                                        fontWeight:
-                                                            FontWeight.w300,
-                                                        fontFamily:
-                                                            theme.font_family),
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                            //2nd row
-                                            Container(
-                                              child: Row(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.start,
-                                                children: [
-                                                  Text(
-                                                    "Total Size: " +
-                                                        (inside_res['total_size'] ~/
-                                                                1000000)
-                                                            .toString() +
-                                                        " MB",
-                                                    style: TextStyle(
-                                                        color: Colors.black,
-                                                        fontSize: theme
-                                                            .minimal_font_size,
-                                                        fontFamily:
-                                                            theme.font_family),
-                                                  ),
-                                                  Flexible(
-                                                    fit: FlexFit.tight,
-                                                    child: !completed
-                                                        ? paused
-                                                            ? Icon(Icons.pause)
-                                                            : Icon(Icons
-                                                                .account_tree_outlined)
-                                                        : Icon(Icons
-                                                            .download_done_outlined),
-                                                  ),
-                                                  Flexible(
-                                                      fit: FlexFit.tight,
-                                                      child: !paused
-                                                          ? seeding
-                                                              ? Text("seeding")
-                                                              : Text("")
-                                                          : Text("")),
-                                                  Container(
-                                                    padding: EdgeInsets.only(
-                                                        left: 15.0),
-                                                    child: network_speed(
-                                                      torrent_id: hash,
-                                                      cookie:
-                                                          cookie_all_account[
-                                                              buc.deluge_url],
-                                                      tor_name:
-                                                          inside_res['name'],
-                                                      url: buc.deluge_url,
-                                                      is_reverse_proxied: buc
-                                                          .is_reverse_proxied,
-                                                      seed_username:
-                                                          buc.username,
-                                                      seed_pass: buc.password,
-                                                      qr_auth: buc.via_qr,
-                                                      paused: paused,
-                                                    ),
-                                                  )
-                                                ],
-                                              ),
-                                            ),
-                                            //----------
-                                            //download info
-                                            Container(
-                                              child: Row(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.start,
-                                                children: [
-                                                  download_progress(
-                                                    torrent_id: hash,
-                                                    cookie: cookie_all_account[
-                                                        buc.deluge_url],
-                                                    tor_name:
-                                                        inside_res['name'],
-                                                    url: buc.deluge_url,
-                                                    is_reverse_proxied:
-                                                        buc.is_reverse_proxied,
-                                                    seed_username: buc.username,
-                                                    seed_pass: buc.password,
-                                                    qr_auth: buc.via_qr,
-                                                    paused: paused,
-                                                    initial_progress:
-                                                        inside_res['progress'],
-                                                  )
-                                                ],
-                                              ),
-                                            ),
-                                            Divider(
-                                              color: theme.base_color,
-                                              height: 10.0,
-                                              thickness: 5.0,
-                                            )
-                                          ],
-                                        )))
+                                          },
+                                        ),
+                                      )
+                                    : Container(
+                                        height: 0.0,
+                                        width: 0.0,
+                                      )
                                 : Container(
                                     height: 0.0,
                                     width: 0.0,

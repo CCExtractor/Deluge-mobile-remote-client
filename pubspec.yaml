@@ -36,6 +36,10 @@ dependencies:
   sqflite:
   shared_preferences: ^2.0.5
   fluttertoast:
+  expandable:
+  flutter_slidable:
+  intl:
+ 
 
  
 
