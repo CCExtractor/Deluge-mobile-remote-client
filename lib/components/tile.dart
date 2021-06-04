@@ -18,7 +18,7 @@ class tile extends StatefulWidget {
   final List<multtorrent> multi_selected_torrent;
   final String hash;
   final Map<String, dynamic> inside_res;
-  final bool paused;
+  bool paused;
   final bool seeding;
   final Bucket selx_acc;
   final List<Cookie> cookie;
@@ -60,7 +60,7 @@ class _tileState extends State<tile> {
   final List<String> selected_torrents;
   final List<multtorrent> multi_selected_torrent;
   final String hash;
-  final bool paused;
+  bool paused;
   final bool seeding;
   final bool for_multi;
   final Bucket selx_acc;
@@ -84,7 +84,8 @@ class _tileState extends State<tile> {
       this.completed,
       this.non_delayed_fetch});
   //-------------------------------------------------delete and pause operations for solo
-  void pause() {
+
+  void pause() async {
     apis.pause_activity(
         hash,
         cookie,
@@ -93,7 +94,25 @@ class _tileState extends State<tile> {
         selx_acc.username,
         selx_acc.password,
         selx_acc.via_qr);
-    non_delayed_fetch();
+    Future.delayed(Duration(seconds: 1), () async {
+      Map<String, dynamic> mid_fetch = await apis.get_torrent_list(
+          cookie,
+          selx_acc.deluge_url,
+          selx_acc.is_reverse_proxied,
+          selx_acc.username,
+          selx_acc.password,
+          selx_acc.via_qr);
+
+      Map<String, dynamic> result = mid_fetch['result'];
+
+      
+      if (this.mounted) {
+        setState(() {
+           paused = result[hash]['paused'];
+        });
+       
+      }
+    });
   }
 
   void resume() {
@@ -105,7 +124,26 @@ class _tileState extends State<tile> {
         selx_acc.username,
         selx_acc.password,
         selx_acc.via_qr);
-    non_delayed_fetch();
+        Future.delayed(Duration(seconds: 1), () async {
+      Map<String, dynamic> mid_fetch = await apis.get_torrent_list(
+          cookie,
+          selx_acc.deluge_url,
+          selx_acc.is_reverse_proxied,
+          selx_acc.username,
+          selx_acc.password,
+          selx_acc.via_qr);
+
+      Map<String, dynamic> result = mid_fetch['result'];
+
+      
+      if (this.mounted) {
+        setState(() {
+           paused = result[hash]['paused'];
+        });
+       
+      }
+    });
+    
   }
 
   //--------------------------
@@ -371,13 +409,11 @@ class _tileState extends State<tile> {
                       ),
                       RawMaterialButton(
                         onPressed: () {
-                          
-                            if (paused) {
-                              resume();
-                            } else {
-                              pause();
-                            }
-                          
+                          if (paused) {
+                            resume();
+                          } else {
+                            pause();
+                          }
                         },
                         elevation: 2.0,
                         fillColor: theme.base_color,

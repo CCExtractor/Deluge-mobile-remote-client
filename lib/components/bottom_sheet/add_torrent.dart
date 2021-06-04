@@ -120,8 +120,9 @@ class _add_newState extends State<add_new> {
                     leading:
                         Icon(Icons.folder_rounded, color: theme.base_color),
                     onTap: () {
+                       Navigator.of(context).pop();
                       add_new_torrent_file();
-                      Navigator.of(context).pop();
+                     
                     },
                   ),
                   ListTile(

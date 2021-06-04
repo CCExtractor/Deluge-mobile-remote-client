@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
 import 'package:deluge_client/control_center/theme.dart';
 import 'package:deluge_client/api/apis.dart';
+import 'package:deluge_client/string/magnet_detect.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class magnet_qr_reader extends StatefulWidget {
   final VoidCallback refresh;
@@ -34,8 +36,7 @@ class magnet_qr_reader extends StatefulWidget {
       is_reverse_proxied: is_reverse_proxied,
       seed_username: seed_username,
       seed_pass: seed_pass,
-      qr_auth: qr_auth
-      );
+      qr_auth: qr_auth);
 }
 
 class _magnet_qr_readerState extends State<magnet_qr_reader> {
@@ -55,8 +56,7 @@ class _magnet_qr_readerState extends State<magnet_qr_reader> {
       this.seed_username,
       this.seed_pass,
       this.url,
-      this.qr_auth
-      });
+      this.qr_auth});
   Barcode result;
   QRViewController controller;
   final GlobalKey qrKey = GlobalKey(debugLabel: 'QR');
@@ -77,15 +77,33 @@ class _magnet_qr_readerState extends State<magnet_qr_reader> {
     super.dispose();
   }
 
+  void toastMessage(String message) {
+    Fluttertoast.showToast(
+      msg: message,
+      toastLength: Toast.LENGTH_SHORT,
+      gravity: ToastGravity.BOTTOM,
+      fontSize: 16.0,
+      backgroundColor: Colors.black,
+    );
+  }
+
   void add_torrent_by_magnet_uri(String link) async {
-    apis.add_magnet(
-        link, cookie, url, is_reverse_proxied, seed_username, seed_pass,qr_auth);
+    if (magnet_detect.parse(link)) {
+      apis.add_magnet(link, cookie, url, is_reverse_proxied, seed_username,
+          seed_pass, qr_auth);
 
-    // after adding file then it should refresh it self;
+      // after adding file then it should refresh it self;
+         Navigator.of(context).pop();// bottom sheet should get closed
 
-    Future.delayed(Duration(seconds: 1), () {
-      refresh();
-    });
+    
+      Future.delayed(Duration(seconds: 1), () {
+        refresh();
+      });
+      
+
+    } else {
+      toastMessage("Magnet Q.R is invalid");
+    }
   }
 
   @override

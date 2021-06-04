@@ -8,6 +8,12 @@ class sort_helper {
     
     return Map.fromEntries(map.entries.toList().reversed);
   }
+   static Map<multtorrent, dynamic> sort_for_multi(Map<multtorrent, dynamic>map)  {
+    
+    return Map.fromEntries(map.entries.toList().reversed);
+  }
+
+  
 
 
 

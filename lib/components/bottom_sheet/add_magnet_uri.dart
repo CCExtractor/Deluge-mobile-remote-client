@@ -6,6 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:deluge_client/control_center/theme.dart';
 import 'package:deluge_client/api/apis.dart';
+import 'package:deluge_client/string/magnet_detect.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class add_magnet extends StatefulWidget {
   final List<Cookie> cookie;
@@ -34,9 +36,7 @@ class add_magnet extends StatefulWidget {
       is_reverse_proxied: is_reverse_proxied,
       seed_username: seed_username,
       seed_pass: seed_pass,
-      qr_auth: qr_auth
-      
-      );
+      qr_auth: qr_auth);
 }
 
 class _add_magnetState extends State<add_magnet> {
@@ -56,8 +56,7 @@ class _add_magnetState extends State<add_magnet> {
       this.is_reverse_proxied,
       this.seed_username,
       this.seed_pass,
-      this.qr_auth
-      });
+      this.qr_auth});
   var myController = TextEditingController();
   String input = "";
   Future<void> fetch_clipboard() async {
@@ -70,14 +69,30 @@ class _add_magnetState extends State<add_magnet> {
     }
   }
 
-  void add_torrent_by_magnet_uri(String link) async {
-    apis.add_magnet(
-        link, cookie, url, is_reverse_proxied, seed_username, seed_pass,qr_auth);
+  void toastMessage(String message) {
+    Fluttertoast.showToast(
+      msg: message,
+      toastLength: Toast.LENGTH_SHORT,
+      gravity: ToastGravity.BOTTOM,
+      fontSize: 16.0,
+      backgroundColor: Colors.black,
+    );
+  }
 
-    // after adding file then it should refresh it self;
-    Future.delayed(Duration(seconds: 1), () {
-      refresh();
-    });
+  void add_torrent_by_magnet_uri(String link) async {
+    if (magnet_detect.parse(link)) {
+      apis.add_magnet(link, cookie, url, is_reverse_proxied, seed_username,
+          seed_pass, qr_auth);
+
+      // after adding file then it should refresh it self;
+       Navigator.of(context).pop();//bottom sheet should get closed
+      Future.delayed(Duration(seconds: 1), () {
+        refresh();
+      });
+     
+    } else {
+      toastMessage("Please enter correct link");
+    }
   }
 
   @override

@@ -1,9 +1,9 @@
 import 'dart:io';
 
-import 'package:deluge_client/auth.dart';
+import 'package:deluge_client/screens/auth.dart';
 import 'package:deluge_client/database/dbmanager.dart';
-import 'package:deluge_client/dashboard.dart';
-import 'package:deluge_client/splash.dart';
+import 'package:deluge_client/screens/dashboard.dart';
+import 'package:deluge_client/screens/splash.dart';
 import 'package:flutter/material.dart';
 import 'package:deluge_client/control_center/theme.dart';
 import 'package:flutter/services.dart';

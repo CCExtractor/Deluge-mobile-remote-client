@@ -1,4 +1,4 @@
-import 'package:deluge_client/auth.dart';
+import 'package:deluge_client/screens/auth.dart';
 import 'package:deluge_client/components/accounts.dart';
 import 'package:deluge_client/components/storage_indicator.dart';
 import 'package:flutter/material.dart';

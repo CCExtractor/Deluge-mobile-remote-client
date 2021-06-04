@@ -1,6 +1,4 @@
 import 'dart:async';
-import 'dart:convert';
-import 'dart:ffi';
 import 'dart:io';
 import 'package:deluge_client/control_center/theme.dart';
 import "package:flutter/material.dart";
