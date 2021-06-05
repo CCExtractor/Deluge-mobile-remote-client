@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:deluge_client/screens/auth.dart';
 import 'package:deluge_client/components/accounts.dart';
 import 'package:deluge_client/components/storage_indicator.dart';
@@ -20,6 +22,7 @@ class sidebar extends StatefulWidget {
   final bool completed_torrent;
   final bool torren_seeding;
   final bool paused_torrent;
+  final List<Cookie> cookie;
 
   sidebar(
       {Key key,
@@ -33,7 +36,8 @@ class sidebar extends StatefulWidget {
       @required this.completed_torrent,
       @required this.paused_torrent,
       @required this.torren_seeding,
-      @required this.dashboard_state})
+      @required this.dashboard_state,
+      @required this.cookie})
       : super(key: key);
   @override
   sidebarState createState() => sidebarState(
@@ -47,7 +51,9 @@ class sidebar extends StatefulWidget {
       non_comp_selected: noncompleted,
       paused_selected: paused_torrent,
       seeding_selected: torren_seeding,
-      dashboard_state: dashboard_state);
+      dashboard_state: dashboard_state,
+      cookie: cookie
+      );
 }
 
 class sidebarState extends State<sidebar> {
@@ -57,6 +63,7 @@ class sidebarState extends State<sidebar> {
   final VoidCallback filter_torrent_paused;
   final VoidCallback filter_torrent_seeding;
   final VoidCallback dashboard_state;
+  final List<Cookie> cookie;
 
   bool all_selected;
   bool completed_selected;
@@ -75,7 +82,9 @@ class sidebarState extends State<sidebar> {
       this.non_comp_selected,
       this.paused_selected,
       this.seeding_selected,
-      this.dashboard_state});
+      this.dashboard_state,
+      this.cookie
+      });
 
   @override
   void initState() {
@@ -94,7 +103,7 @@ class sidebarState extends State<sidebar> {
 
   int selected_account = 0;
   void fetch_selectx_account() async {
-    int mid=await states.state_selected_account();
+    int mid = await states.state_selected_account();
     if (this.mounted) {
       setState(() {
         selected_account = mid;
@@ -133,16 +142,23 @@ class sidebarState extends State<sidebar> {
                   ],
                 ))),
         //-----------
-
-        ExpansionTile(
-          initiallyExpanded: true,
-          title: Text("Available Storage", style: theme.sidebar_tile_style),
-          leading: Icon(
-            Icons.storage_rounded,
-            color: theme.base_color,
-          ),
-          children: [storage_indicator()],
-        ),
+        selected_account > 0
+            ? ExpansionTile(
+                initiallyExpanded: true,
+                title:
+                    Text("Available Storage", style: theme.sidebar_tile_style),
+                leading: Icon(
+                  Icons.storage_rounded,
+                  color: theme.base_color,
+                ),
+                children: [storage_indicator(
+                  cookie: cookie,
+                )],
+              )
+            : new Container(
+                height: 0.0,
+                width: 0.0,
+              ),
 
         ExpansionTile(
           childrenPadding: EdgeInsets.all(0),

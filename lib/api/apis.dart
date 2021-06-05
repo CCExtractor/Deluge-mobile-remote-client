@@ -1,8 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
 
-
-
 class apis {
   static int network_request = 0;
   static Future<List<Cookie>> authentication_to_deluge(
@@ -96,8 +94,6 @@ class apis {
       final responseBody = await response.transform(utf8.decoder).join();
 
       Map<String, dynamic> client_output = json.decode(responseBody);
-     
-      
 
       return client_output;
     } catch (e) {
@@ -302,10 +298,8 @@ class apis {
   }
   //---------------------------------
 
- 
-
   //--------------------------------
- 
+
   //------------------------------------------------------------------------
   static void add_torrent_file(
       String base64,
@@ -393,6 +387,97 @@ class apis {
 
       // cookie = response.cookies;
       final responseBody = await response.transform(utf8.decoder).join();
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  //-----------------------------------------
+  static Future<Map<String, dynamic>> fetch_config(
+      List<Cookie> cookie,
+      String url,
+      String is_reverse_proxied,
+      String seed_username,
+      String seed_pass,
+      String qr_auth) async {
+    Map<String, dynamic> requestPayload = {
+      "method": "core.get_config",
+      "params": [],
+      "id": network_request++
+    };
+
+    final httpclient = new HttpClient();
+    try {
+      final request = await httpclient.postUrl(Uri.parse(
+          is_reverse_proxied == 'true' ? "$url/deluge/json" : "$url/json"));
+      request.headers.contentType = new ContentType("application", "json");
+      request.headers.add("Cookie", cookie);
+      if (seed_username.length > 0 && seed_pass.length > 0) {
+        String auth =
+            'Basic ' + base64Encode(utf8.encode('$seed_username:$seed_pass'));
+        request.headers.add('authorization', auth);
+      }
+      if (qr_auth.length > 0) {
+        request.headers.add('X-QR-AUTH', qr_auth);
+      }
+
+      request.add(
+        utf8.encode(
+          jsonEncode(requestPayload),
+        ),
+      );
+
+      final response = await request.close();
+
+      // cookie = response.cookies;
+      final responseBody = await response.transform(utf8.decoder).join();
+      Map<String, dynamic> res = json.decode(responseBody);
+      return res;
+    } catch (e) {
+      print(e);
+    }
+  }
+   static Future<int> fetch_free_space(
+      List<Cookie> cookie,
+      String download_path,
+      String url,
+      String is_reverse_proxied,
+      String seed_username,
+      String seed_pass,
+      String qr_auth) async {
+    Map<String, dynamic> requestPayload = {
+     "method": "core.get_free_space",
+        "params": [download_path],
+        "id": network_request++
+    };
+
+    final httpclient = new HttpClient();
+    try {
+      final request = await httpclient.postUrl(Uri.parse(
+          is_reverse_proxied == 'true' ? "$url/deluge/json" : "$url/json"));
+      request.headers.contentType = new ContentType("application", "json");
+      request.headers.add("Cookie", cookie);
+      if (seed_username.length > 0 && seed_pass.length > 0) {
+        String auth =
+            'Basic ' + base64Encode(utf8.encode('$seed_username:$seed_pass'));
+        request.headers.add('authorization', auth);
+      }
+      if (qr_auth.length > 0) {
+        request.headers.add('X-QR-AUTH', qr_auth);
+      }
+
+      request.add(
+        utf8.encode(
+          jsonEncode(requestPayload),
+        ),
+      );
+
+      final response = await request.close();
+
+      // cookie = response.cookies;
+      final responseBody = await response.transform(utf8.decoder).join();
+      Map<String, dynamic> res = json.decode(responseBody);
+      return res['result'];
     } catch (e) {
       print(e);
     }

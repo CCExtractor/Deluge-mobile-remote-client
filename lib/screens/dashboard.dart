@@ -599,6 +599,7 @@ class _viewState extends State<view> {
         noncompleted: noncompleted,
         paused_torrent: paused_torrent,
         torren_seeding: torren_seeding,
+        cookie:cookie,
       ),
       body: Column(
         children: [
