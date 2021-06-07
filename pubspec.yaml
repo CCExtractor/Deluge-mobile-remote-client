@@ -39,6 +39,7 @@ dependencies:
   expandable:
   flutter_slidable:
   intl:
+  filesize: ^2.0.1
  
 
  

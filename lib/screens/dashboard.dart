@@ -554,7 +554,6 @@ class _viewState extends State<view> {
     if (sort_helper.non_reverse_order) {
       return map;
     } else {
-      
       return sort_helper.sort(map);
     }
   }
@@ -569,6 +568,7 @@ class _viewState extends State<view> {
           IconButton(
             icon: Icon(Icons.brightness_5),
             onPressed: () {
+              apis.update_config_settings(cookie,selx_acc.deluge_url,selx_acc.is_reverse_proxied,selx_acc.username,selx_acc.password,selx_acc.via_qr);
               print("ok");
             },
           ),
@@ -599,7 +599,8 @@ class _viewState extends State<view> {
         noncompleted: noncompleted,
         paused_torrent: paused_torrent,
         torren_seeding: torren_seeding,
-        cookie:cookie,
+        cookie: cookie,
+        selected_account: selx_acc,
       ),
       body: Column(
         children: [
@@ -913,11 +914,14 @@ class _viewState extends State<view> {
                 context: context,
                 backgroundColor: Colors.transparent,
                 builder: (context) => multi_account_menu(
+                     
                       cookie_all_account:
                           multidash.currentState.cookie_all_account,
                       refresh: () {
                         multidash.currentState.config();
                       },
+                      widget_id: 1,
+
                     ));
           }
 

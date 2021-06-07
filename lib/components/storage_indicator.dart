@@ -64,9 +64,11 @@ class _storage_indicatorState extends State<storage_indicator> {
           selx_acc.username,
           selx_acc.password,
           selx_acc.via_qr);
-      setState(() {
-        space = filesize(free_space).toString();
-      });
+      if (this.mounted) {
+        setState(() {
+          space = filesize(free_space).toString();
+        });
+      }
     });
   }
 
@@ -84,17 +86,19 @@ class _storage_indicatorState extends State<storage_indicator> {
         Flexible(
             fit: FlexFit.tight,
             child: Container(
-               
                 child: ListTile(
-                  dense: true,
-                  visualDensity: VisualDensity(horizontal: 0, vertical: -4),
-                  title: Text(path,style: theme.sidebar_expansion_children_tile,),
-                  subtitle: Text(space +" "+ "Available ",
-                  style: theme.sidebar_tile_style,
-                  ),
-                  leading: Icon(Icons.sd_storage_sharp),
-
-                )))
+              dense: true,
+              visualDensity: VisualDensity(horizontal: 0, vertical: -4),
+              title: Text(
+                path,
+                style: theme.sidebar_expansion_children_tile,
+              ),
+              subtitle: Text(
+                space + " " + "Available ",
+                style: theme.sidebar_tile_style,
+              ),
+              leading: Icon(Icons.sd_storage_sharp),
+            )))
       ],
     );
   }

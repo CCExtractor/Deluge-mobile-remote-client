@@ -1,14 +1,19 @@
 import 'dart:io';
 
+import 'package:deluge_client/components/bottom_sheet/choose_account.dart';
+import 'package:deluge_client/database/dbmanager.dart';
 import 'package:deluge_client/screens/auth.dart';
 import 'package:deluge_client/components/accounts.dart';
 import 'package:deluge_client/components/storage_indicator.dart';
+import 'package:deluge_client/settings/deluge/deluge_setting.dart';
 import 'package:flutter/material.dart';
 import 'package:deluge_client/control_center/theme.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:deluge_client/components/accounts.dart';
 import 'package:deluge_client/state_ware_house/state_ware_house.dart';
+import 'package:deluge_client/components/all_acc.dart';
 
 class sidebar extends StatefulWidget {
   final VoidCallback filter_torrent_all;
@@ -23,36 +28,39 @@ class sidebar extends StatefulWidget {
   final bool torren_seeding;
   final bool paused_torrent;
   final List<Cookie> cookie;
+  final Bucket selected_account;
 
-  sidebar(
-      {Key key,
-      @required this.filter_torrent_all,
-      @required this.filter_torrent_completed,
-      @required this.filter_torrent_noncompleted,
-      @required this.filter_torrent_paused,
-      @required this.filter_torrent_seeding,
-      @required this.all_torrent,
-      @required this.noncompleted,
-      @required this.completed_torrent,
-      @required this.paused_torrent,
-      @required this.torren_seeding,
-      @required this.dashboard_state,
-      @required this.cookie})
-      : super(key: key);
+  sidebar({
+    Key key,
+    @required this.filter_torrent_all,
+    @required this.filter_torrent_completed,
+    @required this.filter_torrent_noncompleted,
+    @required this.filter_torrent_paused,
+    @required this.filter_torrent_seeding,
+    @required this.all_torrent,
+    @required this.noncompleted,
+    @required this.completed_torrent,
+    @required this.paused_torrent,
+    @required this.torren_seeding,
+    @required this.dashboard_state,
+    @required this.selected_account,
+    @required this.cookie,
+  }) : super(key: key);
   @override
   sidebarState createState() => sidebarState(
-      filter_torrent_all: filter_torrent_all,
-      filter_torrent_completed: filter_torrent_completed,
-      filter_torrent_noncompleted: filter_torrent_noncompleted,
-      filter_torrent_paused: filter_torrent_paused,
-      filter_torrent_seeding: filter_torrent_seeding,
-      all_selected: all_torrent,
-      completed_selected: completed_torrent,
-      non_comp_selected: noncompleted,
-      paused_selected: paused_torrent,
-      seeding_selected: torren_seeding,
-      dashboard_state: dashboard_state,
-      cookie: cookie
+        filter_torrent_all: filter_torrent_all,
+        filter_torrent_completed: filter_torrent_completed,
+        filter_torrent_noncompleted: filter_torrent_noncompleted,
+        filter_torrent_paused: filter_torrent_paused,
+        filter_torrent_seeding: filter_torrent_seeding,
+        all_selected: all_torrent,
+        completed_selected: completed_torrent,
+        non_comp_selected: noncompleted,
+        paused_selected: paused_torrent,
+        seeding_selected: torren_seeding,
+        dashboard_state: dashboard_state,
+        cookie: cookie,
+        selecx: selected_account,
       );
 }
 
@@ -64,27 +72,30 @@ class sidebarState extends State<sidebar> {
   final VoidCallback filter_torrent_seeding;
   final VoidCallback dashboard_state;
   final List<Cookie> cookie;
+  final Bucket selecx;
 
   bool all_selected;
   bool completed_selected;
   bool non_comp_selected;
   bool paused_selected;
   bool seeding_selected;
-  sidebarState(
-      {Key key,
-      this.filter_torrent_all,
-      this.filter_torrent_completed,
-      this.filter_torrent_noncompleted,
-      this.filter_torrent_paused,
-      this.filter_torrent_seeding,
-      this.all_selected,
-      this.completed_selected,
-      this.non_comp_selected,
-      this.paused_selected,
-      this.seeding_selected,
-      this.dashboard_state,
-      this.cookie
-      });
+
+  sidebarState({
+    Key key,
+    this.filter_torrent_all,
+    this.filter_torrent_completed,
+    this.filter_torrent_noncompleted,
+    this.filter_torrent_paused,
+    this.filter_torrent_seeding,
+    this.all_selected,
+    this.completed_selected,
+    this.non_comp_selected,
+    this.paused_selected,
+    this.seeding_selected,
+    this.dashboard_state,
+    this.cookie,
+    this.selecx,
+  });
 
   @override
   void initState() {
@@ -151,9 +162,11 @@ class sidebarState extends State<sidebar> {
                   Icons.storage_rounded,
                   color: theme.base_color,
                 ),
-                children: [storage_indicator(
-                  cookie: cookie,
-                )],
+                children: [
+                  storage_indicator(
+                    cookie: cookie,
+                  )
+                ],
               )
             : new Container(
                 height: 0.0,
@@ -195,6 +208,7 @@ class sidebarState extends State<sidebar> {
                 selected_account = -1;
               });
             }
+            Navigator.of(context).pop(); // closing side bar
 
             update_account_selection(-1);
             dashboard_state();
@@ -397,6 +411,28 @@ class sidebarState extends State<sidebar> {
                 "Deluge settings",
                 style: theme.sidebar_expansion_children_tile,
               ),
+              onTap: () {
+                if (selected_account > 0) {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => deluge_settings(
+                                cookie: cookie,
+                                selected_account: selecx,
+                              )));
+                } else {
+                  Navigator.of(context).pop();//close sidebar
+                  showCupertinoModalBottomSheet(
+                      expand: false,
+                      context: context,
+                      backgroundColor: Colors.transparent,
+                      builder: (context) => multi_account_menu(
+                            cookie_all_account:
+                                all_account_core.all_account_cookie,
+                            widget_id: -1,
+                          ));
+                }
+              },
             ),
           ],
         ),

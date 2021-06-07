@@ -2,26 +2,32 @@ import 'dart:io';
 
 import 'package:deluge_client/components/bottom_sheet/add_torrent.dart';
 import 'package:deluge_client/database/dbmanager.dart';
+import 'package:deluge_client/settings/deluge/deluge_setting.dart';
 import 'package:flutter/material.dart';
 import 'package:deluge_client/control_center/theme.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
 class multi_account_menu extends StatefulWidget {
+  final int widget_id;
   final Map<String, dynamic> cookie_all_account;
   final VoidCallback refresh;
-  multi_account_menu({Key key, this.cookie_all_account,this.refresh}) : super(key: key);
+  multi_account_menu(
+      {Key key, this.cookie_all_account, this.refresh, this.widget_id})
+      : super(key: key);
   @override
-  _multi_account_menuState createState() =>
-      _multi_account_menuState(cookie_all_account: cookie_all_account,
-      refresh: refresh
-      );
+  _multi_account_menuState createState() => _multi_account_menuState(
+      cookie_all_account: cookie_all_account,
+      refresh: refresh,
+      widget_id: widget_id);
 }
 
 class _multi_account_menuState extends State<multi_account_menu> {
+  final int widget_id;
   final Map<String, dynamic> cookie_all_account;
   final VoidCallback refresh;
 
-  _multi_account_menuState({this.cookie_all_account,this.refresh});
+  _multi_account_menuState(
+      {this.cookie_all_account, this.refresh, this.widget_id});
   final DbbucketManager dbmanager = new DbbucketManager();
   void switch_to_next(
       List<Cookie> cookie,
@@ -98,16 +104,34 @@ class _multi_account_menuState extends State<multi_account_menu> {
                                               fontSize: theme.minimal_font_size,
                                             )),
                                         onTap: () {
-                                          if (cookie_all_account != null) {
-                                            switch_to_next(
-                                                cookie_all_account[
-                                                    accounts[index].deluge_url],
-                                                accounts[index].deluge_url,
-                                                accounts[index]
-                                                    .is_reverse_proxied,
-                                                accounts[index].username,
-                                                accounts[index].password,
-                                                accounts[index].via_qr);
+                                          if (widget_id == 1) {
+                                            if (cookie_all_account != null) {
+                                              switch_to_next(
+                                                  cookie_all_account[
+                                                      accounts[index]
+                                                          .deluge_url],
+                                                  accounts[index].deluge_url,
+                                                  accounts[index]
+                                                      .is_reverse_proxied,
+                                                  accounts[index].username,
+                                                  accounts[index].password,
+                                                  accounts[index].via_qr);
+                                            }
+                                          } else if (widget_id == -1) {
+                                            Navigator.of(context).pop();//closing the bottom sheet
+                                            Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        deluge_settings(
+                                                            cookie:
+                                                                cookie_all_account[
+                                                                    accounts[
+                                                                            index]
+                                                                        .deluge_url],
+                                                            selected_account:
+                                                                accounts[
+                                                                    index])));
                                           }
                                         },
                                       );

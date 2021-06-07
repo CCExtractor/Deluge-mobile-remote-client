@@ -23,6 +23,6 @@ class theme {
       fontSize: 20.0, fontFamily: theme.font_family, color: Colors.white);
   static TextStyle warning_style = TextStyle(
       fontFamily: theme.font_family, fontSize: 15.0, color: Colors.white);
-      static TextStyle warning_style2 = TextStyle(
+  static TextStyle warning_style2 = TextStyle(
       fontFamily: theme.font_family, fontSize: 15.0, color: Colors.black);
 }

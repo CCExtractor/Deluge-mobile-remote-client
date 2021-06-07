@@ -84,6 +84,7 @@ class accountsState extends State<accounts> {
                           }
                           update_account_selection();
                           dashboard_state();
+                          Navigator.of(context).pop();//closing side bar
                         },
                       );
                     });

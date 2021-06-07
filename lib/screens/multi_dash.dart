@@ -36,7 +36,7 @@ class multi_accountState extends State<multi_account> {
     super.initState();
   }
 
-  Map<String, dynamic> cookie_all_account;
+  Map<String, dynamic> cookie_all_account=Map<String,dynamic>();
   Future<Map<multtorrent, dynamic>> torrents_all_account;
   void config() async {
     cookie_all_account = await all_account_core.config_cache();
