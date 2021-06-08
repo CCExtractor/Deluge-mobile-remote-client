@@ -14,6 +14,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:deluge_client/components/accounts.dart';
 import 'package:deluge_client/state_ware_house/state_ware_house.dart';
 import 'package:deluge_client/components/all_acc.dart';
+import 'package:deluge_client/notification/notification_controller.dart';
 
 class sidebar extends StatefulWidget {
   final VoidCallback filter_torrent_all;
@@ -213,6 +214,8 @@ class sidebarState extends State<sidebar> {
             update_account_selection(-1);
             dashboard_state();
             accounts_state.currentState.fetch_selected_account();
+            //----------------we need to delete all entries of ids for notification
+            notification.store_ids.clear();
           },
         ),
         //---
@@ -421,7 +424,7 @@ class sidebarState extends State<sidebar> {
                                 selected_account: selecx,
                               )));
                 } else {
-                  Navigator.of(context).pop();//close sidebar
+                  Navigator.of(context).pop(); //close sidebar
                   showCupertinoModalBottomSheet(
                       expand: false,
                       context: context,

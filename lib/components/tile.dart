@@ -416,7 +416,8 @@ class _tileState extends State<tile> {
                           }
                         },
                         elevation: 2.0,
-                        fillColor: theme.base_color,
+                        fillColor:
+                        theme.base_color,
                         child: paused
                             ? Icon(
                                 Icons.play_arrow,

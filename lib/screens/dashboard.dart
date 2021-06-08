@@ -25,6 +25,7 @@ import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:deluge_client/state_ware_house/state_ware_house.dart';
 import 'package:deluge_client/string/sorter.dart';
+import 'package:deluge_client/notification/notification_controller.dart';
 
 class MyApp extends StatefulWidget {
   @override
@@ -116,6 +117,7 @@ class _viewState extends State<view> {
   @override
   void initState() {
     dashboard_state();
+    notification.init();
 
     super.initState();
   }
@@ -568,8 +570,15 @@ class _viewState extends State<view> {
           IconButton(
             icon: Icon(Icons.brightness_5),
             onPressed: () {
-              apis.update_config_settings(cookie,selx_acc.deluge_url,selx_acc.is_reverse_proxied,selx_acc.username,selx_acc.password,selx_acc.via_qr);
-              print("ok");
+              //-------------
+              String id = "6dfe89";
+              String aStr = id.replaceAll(new RegExp(r'[^0-9]'), '');
+              int idt = int.parse(aStr); // '23'
+              print(idt);
+              notification.notification_on_progress(
+                  "6dfe", idt, "torr", "cosmos_laundromat", "15 %", 15);
+              notification.notification_on_progress(
+                  "6dfe", 2, "torr", "cosmos_laundromat", "15 %", 15);
             },
           ),
         ],
@@ -914,14 +923,12 @@ class _viewState extends State<view> {
                 context: context,
                 backgroundColor: Colors.transparent,
                 builder: (context) => multi_account_menu(
-                     
                       cookie_all_account:
                           multidash.currentState.cookie_all_account,
                       refresh: () {
                         multidash.currentState.config();
                       },
                       widget_id: 1,
-
                     ));
           }
 

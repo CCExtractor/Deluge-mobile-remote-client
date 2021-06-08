@@ -10,6 +10,10 @@ import 'package:deluge_client/control_center/theme.dart';
 import 'package:deluge_client/api/apis.dart';
 import 'package:deluge_client/state_ware_house/state_ware_house.dart';
 
+import '../string/controller.dart';
+import '../string/controller.dart';
+import '../string/controller.dart';
+
 class storage_indicator extends StatefulWidget {
   final List<Cookie> cookie;
   storage_indicator({Key key, @required this.cookie}) : super(key: key);
@@ -25,7 +29,7 @@ class _storage_indicatorState extends State<storage_indicator> {
   DbbucketManager account_manager = DbbucketManager();
   int selected_account = 0;
   Bucket selx_acc;
-  String path = "";
+  
   void fetch_selectx_account() async {
     int mid = await states.state_selected_account();
 
@@ -46,19 +50,18 @@ class _storage_indicatorState extends State<storage_indicator> {
           selx_acc.via_qr);
       if (this.mounted) {
         setState(() {
-          path = conf['result']['download_location'];
+          controller.path_controller= conf['result']['download_location'];
         });
       }
     });
   }
 
-  String space = "";
-
+ 
   void get_path_size() async {
     Future.delayed(Duration(seconds: 1), () async {
       int free_space = await apis.fetch_free_space(
           cookie,
-          path,
+          controller.path_controller,
           selx_acc.deluge_url,
           selx_acc.is_reverse_proxied,
           selx_acc.username,
@@ -66,7 +69,7 @@ class _storage_indicatorState extends State<storage_indicator> {
           selx_acc.via_qr);
       if (this.mounted) {
         setState(() {
-          space = filesize(free_space).toString();
+          controller.storage_controller = filesize(free_space).toString();
         });
       }
     });
@@ -90,11 +93,11 @@ class _storage_indicatorState extends State<storage_indicator> {
               dense: true,
               visualDensity: VisualDensity(horizontal: 0, vertical: -4),
               title: Text(
-                path,
+                controller.path_controller,
                 style: theme.sidebar_expansion_children_tile,
               ),
               subtitle: Text(
-                space + " " + "Available ",
+                controller.storage_controller + " " + "Available ",
                 style: theme.sidebar_tile_style,
               ),
               leading: Icon(Icons.sd_storage_sharp),
