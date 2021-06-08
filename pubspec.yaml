@@ -40,6 +40,8 @@ dependencies:
   flutter_slidable:
   intl:
   filesize: ^2.0.1
+  flutter_local_notifications: ^5.0.0
+
  
 
  

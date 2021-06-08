@@ -28,16 +28,12 @@ class root extends StatefulWidget {
 }
 
 class _rootState extends State<root> {
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-     
-     
       title: theme.thread_title,
       theme: ThemeData(primarySwatch: theme.material_color),
       home: splash(),
     );
   }
 }
-

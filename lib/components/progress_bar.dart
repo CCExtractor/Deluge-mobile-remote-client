@@ -5,6 +5,7 @@ import "package:flutter/material.dart";
 import 'package:http/http.dart' as http;
 import 'package:percent_indicator/linear_percent_indicator.dart';
 import 'package:deluge_client/api/apis.dart';
+import 'package:deluge_client/notification/notification_controller.dart';
 
 class download_progress extends StatefulWidget {
   final String torrent_id;
@@ -102,6 +103,17 @@ class _download_progressState extends State<download_progress> {
         }
 
         update_completion_state(completed);
+
+        //--------------------------notification
+        notification.store_ids.add(tor_id);
+        int idt = notification.fetch_noti_id(tor_id);
+        notification.notification_on_progress(
+            tor_id,
+            idt>0?idt:0,
+            "torrents",
+            tor_name,
+            (progress_percent * 100).roundToDouble().toString() + " %",
+            progress_percent.toInt() * 100);
       }
     } catch (e) {
       print(e);
@@ -121,7 +133,7 @@ class _download_progressState extends State<download_progress> {
         if (completed) {
           timer.cancel();
         }
-        
+
         if (this.mounted) {
           setState(() {
             get_status();
@@ -156,7 +168,7 @@ class _download_progressState extends State<download_progress> {
         animationDuration: 2000,
         percent: progress_percent,
         center: Text(
-          (progress_percent * 100).roundToDouble().toString() + " %",
+          (progress_percent * 100.0).roundToDouble().toString() + " %",
           style: TextStyle(
               color: Colors.white,
               fontFamily: theme.font_family,
