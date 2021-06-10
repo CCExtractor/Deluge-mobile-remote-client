@@ -29,7 +29,7 @@ class _splashState extends State<splash> {
                   )));
     } else {
       Navigator.pushReplacement(
-          context, MaterialPageRoute(builder: (context) => MyApp()));
+          context, MaterialPageRoute(builder: (context) => dashboard()));
     }
   }
 

@@ -43,26 +43,6 @@ class notification {
   }
 
   //---------------------------------------------------------------
-  static Future<void> show_normal_notification(String id,
-      int identity_container,
-      String progress_channel,
-      String title,
-      String msg,
-      int percent) async {
-    const AndroidNotificationDetails androidPlatformChannelSpecifics =
-        AndroidNotificationDetails(
-            "1", 'your channel name', 'your channel description',
-            importance: Importance.max,
-            priority: Priority.high,
-            enableVibration: true,
-            playSound: true,
-            ticker: 'ticker');
-    const NotificationDetails platformChannelSpecifics =
-        NotificationDetails(android: androidPlatformChannelSpecifics);
-    await flutterLocalNotificationsPlugin.show(
-        1, 'hi', 'plain body', platformChannelSpecifics,
-        payload: 'item x');
-  }
 
   //----------------------------------------------------------
   static List<String> store_ids = List<String>();

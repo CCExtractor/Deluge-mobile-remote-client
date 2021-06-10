@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:deluge_client/components/loader.dart';
 import 'package:deluge_client/components/storage_indicator.dart';
 import 'package:deluge_client/database/dbmanager.dart';
 import 'package:flutter/material.dart';
@@ -7,6 +8,7 @@ import 'package:deluge_client/control_center/theme.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:deluge_client/state_ware_house/state_ware_house.dart';
+import 'package:deluge_client/control_center/theme_controller.dart';
 
 class accounts extends StatefulWidget {
   final VoidCallback update_account_selection;
@@ -59,7 +61,7 @@ class accountsState extends State<accounts> {
             builder: (BuildContext context, AsyncSnapshot snapshot) {
               if (snapshot.data == null) {
                 return Container(
-                    child: Center(child: Image.asset('assets/loader.gif')));
+                    child: Center(child: loader()));
               } else {
                 List<Bucket> accounts = snapshot.data;
 
@@ -70,7 +72,7 @@ class accountsState extends State<accounts> {
                         visualDensity:
                             VisualDensity(horizontal: 0, vertical: -4),
                         title: Text(accounts[index].deluge_url,
-                            style: theme.sidebar_expansion_children_tile),
+                            style: TextStyle(fontSize: 12.0, fontFamily: theme.font_family, color: theme_controller.is_it_dark()?Colors.white:Colors.black)),
                         leading: Icon(selected_account == accounts[index].id
                             ? Icons.radio_button_checked
                             : Icons.radio_button_unchecked),

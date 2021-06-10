@@ -10,6 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:deluge_client/control_center/theme.dart';
 import 'package:deluge_client/api/apis.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:deluge_client/control_center/theme_controller.dart';
 
 class tile extends StatefulWidget {
   final multtorrent hash_m;
@@ -329,7 +330,9 @@ class _tileState extends State<tile> {
                       Text(
                         inside_res['name'],
                         style: TextStyle(
-                            color: Colors.black,
+                            color: (!theme_controller.is_it_dark()
+                                  ? Colors.black
+                                  : Colors.white),
                             fontSize: 15.0,
                             fontWeight: FontWeight.w300,
                             fontFamily: theme.font_family),
@@ -347,7 +350,9 @@ class _tileState extends State<tile> {
                             (inside_res['total_size'] ~/ 1000000).toString() +
                             " MB",
                         style: TextStyle(
-                            color: Colors.black,
+                            color: (!theme_controller.is_it_dark()
+                                  ? Colors.black
+                                  : Colors.white),
                             fontSize: theme.minimal_font_size,
                             fontFamily: theme.font_family),
                       ),

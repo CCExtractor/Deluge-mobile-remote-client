@@ -5,6 +5,7 @@ import "package:flutter/material.dart";
 import 'package:http/http.dart' as http;
 import 'package:deluge_client/control_center/theme.dart';
 import 'package:deluge_client/api/apis.dart';
+import 'package:deluge_client/control_center/theme_controller.dart';
 
 class network_speed extends StatefulWidget {
   final String torrent_id;
@@ -131,14 +132,18 @@ class _network_speedState extends State<network_speed> {
         Text(
           download_speed_in_kb.toString() + " KB/S",
           style: TextStyle(
-              color: Colors.black,
+              color: (!theme_controller.is_it_dark()
+                                  ? Colors.black
+                                  : Colors.white),
               fontSize: 11.0,
               fontFamily: theme.font_family),
         ),
         Icon(Icons.arrow_upward),
         Text(upload_speed_in_kb.toString() + " KB/S",
             style: TextStyle(
-                color: Colors.black,
+                color: (!theme_controller.is_it_dark()
+                                  ? Colors.black
+                                  : Colors.white),
                 fontSize: 11.0,
                 fontFamily: theme.font_family)),
       ],

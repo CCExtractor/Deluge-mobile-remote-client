@@ -6,9 +6,11 @@ import 'package:deluge_client/components/all_acc.dart';
 import 'package:deluge_client/components/bottom_sheet/choose_account.dart';
 import 'package:deluge_client/components/bottom_sheet/sorter.dart';
 import 'package:deluge_client/components/download_upload_pane.dart';
+import 'package:deluge_client/components/loader.dart';
 import 'package:deluge_client/components/no_data.dart';
 import 'package:deluge_client/components/progress_bar.dart';
 import 'package:deluge_client/components/tile.dart';
+import 'package:deluge_client/control_center/theme_changer.dart';
 import 'package:deluge_client/database/dbmanager.dart';
 import 'package:deluge_client/screens/multi_dash.dart';
 import 'package:flutter/scheduler.dart';
@@ -26,29 +28,14 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:deluge_client/state_ware_house/state_ware_house.dart';
 import 'package:deluge_client/string/sorter.dart';
 import 'package:deluge_client/notification/notification_controller.dart';
+import 'package:deluge_client/control_center/theme_controller.dart';
 
-class MyApp extends StatefulWidget {
+class dashboard extends StatefulWidget {
   @override
-  _MyAppState createState() => _MyAppState();
+  _dashboardState createState() => _dashboardState();
 }
 
-class _MyAppState extends State<MyApp> {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: theme.thread_title,
-      theme: ThemeData(primarySwatch: theme.material_color),
-      home: view(),
-    );
-  }
-}
-
-class view extends StatefulWidget {
-  @override
-  _viewState createState() => _viewState();
-}
-
-class _viewState extends State<view> {
+class _dashboardState extends State<dashboard> {
   Future<Map<String, dynamic>> torrent;
   List<Cookie> cookie = null;
   //----
@@ -202,81 +189,77 @@ class _viewState extends State<view> {
   //----------------------------------------------
   //methods to access in sidebar to filter data
   void filter_torrent_all() {
-    if (!all_account_selected) {
-      if (this.mounted) {
-        setState(() {
-          all_torrent = true;
-          noncompleted = false;
-          completed_torrent = false;
-          torren_seeding = false;
-          paused_torrent = false;
-        });
-      }
-    } else {
+    if (this.mounted) {
+      setState(() {
+        all_torrent = true;
+        noncompleted = false;
+        completed_torrent = false;
+        torren_seeding = false;
+        paused_torrent = false;
+      });
+    }
+    if (all_account_selected) {
       multidash.currentState.multi_filter_torrent_all();
     }
   }
 
   void filter_torrent_completed() {
-    if (!all_account_selected) {
-      if (this.mounted) {
-        setState(() {
-          all_torrent = false;
-          noncompleted = false;
-          completed_torrent = true;
-          torren_seeding = false;
-          paused_torrent = false;
-        });
-      }
-    } else {
+    if (this.mounted) {
+      setState(() {
+        all_torrent = false;
+        noncompleted = false;
+        completed_torrent = true;
+        torren_seeding = false;
+        paused_torrent = false;
+      });
+    }
+    if (all_account_selected) {
       multidash.currentState.multi_filter_torrent_completed();
     }
   }
 
   void filter_torrent_noncompleted() {
-    if (!all_account_selected) {
-      if (this.mounted) {
-        setState(() {
-          all_torrent = false;
-          noncompleted = true;
-          completed_torrent = false;
-          torren_seeding = false;
-          paused_torrent = false;
-        });
-      }
-    } else {
+    if (this.mounted) {
+      setState(() {
+        all_torrent = false;
+        noncompleted = true;
+        completed_torrent = false;
+        torren_seeding = false;
+        paused_torrent = false;
+      });
+    }
+    if (all_account_selected) {
       multidash.currentState.multi_filter_torrent_noncompleted();
     }
   }
 
   void filter_torrent_paused() {
-    if (!all_account_selected) {
-      if (this.mounted) {
-        setState(() {
-          all_torrent = false;
-          noncompleted = false;
-          completed_torrent = false;
-          torren_seeding = false;
-          paused_torrent = true;
-        });
-      }
-    } else {
+    if (this.mounted) {
+      setState(() {
+        all_torrent = false;
+        noncompleted = false;
+        completed_torrent = false;
+        torren_seeding = false;
+        paused_torrent = true;
+      });
+    }
+
+    if (all_account_selected) {
       multidash.currentState.multi_filter_torrent_paused();
     }
   }
 
   void filter_torrent_seeding() {
-    if (!all_account_selected) {
-      if (this.mounted) {
-        setState(() {
-          all_torrent = false;
-          noncompleted = false;
-          completed_torrent = false;
-          torren_seeding = true;
-          paused_torrent = false;
-        });
-      }
-    } else {
+    if (this.mounted) {
+      setState(() {
+        all_torrent = false;
+        noncompleted = false;
+        completed_torrent = false;
+        torren_seeding = true;
+        paused_torrent = false;
+      });
+    }
+    if (all_account_selected) {
       multidash.currentState.multi_filter_torrent_seeding();
     }
   }
@@ -568,17 +551,16 @@ class _viewState extends State<view> {
         backgroundColor: theme.base_color,
         actions: [
           IconButton(
-            icon: Icon(Icons.brightness_5),
+            icon: theme_controller.is_it_dark()
+                ? Icon(Icons.brightness_5)
+                : Icon(Icons.brightness_4),
             onPressed: () {
-              //-------------
-              String id = "6dfe89";
-              String aStr = id.replaceAll(new RegExp(r'[^0-9]'), '');
-              int idt = int.parse(aStr); // '23'
-              print(idt);
-              notification.notification_on_progress(
-                  "6dfe", idt, "torr", "cosmos_laundromat", "15 %", 15);
-              notification.notification_on_progress(
-                  "6dfe", 2, "torr", "cosmos_laundromat", "15 %", 15);
+              ThemeBuilder.of(context).changeTheme();
+              if (theme_controller.is_it_dark()) {
+                states.set_theme_mode(2);
+              }else{
+                 states.set_theme_mode(1);
+              }
             },
           ),
         ],
@@ -624,16 +606,34 @@ class _viewState extends State<view> {
                         controller.search_field_controller.text;
                       });
                     },
+                    style: TextStyle(fontFamily: theme.font_family,color: Colors.black),
                     decoration: new InputDecoration(
+                      focusedBorder: OutlineInputBorder(
+                        borderSide:
+                            BorderSide(color: theme.base_color, width: 2.0),
+                        borderRadius: const BorderRadius.all(
+                          const Radius.circular(10.0),
+                        ),
+                      ),
+                      enabledBorder: OutlineInputBorder(
+                        borderSide:
+                            BorderSide(color: Colors.grey[500], width: 2.0),
+                        borderRadius: const BorderRadius.all(
+                          const Radius.circular(10.0),
+                        ),
+                      ),
                       border: new OutlineInputBorder(
                         borderRadius: const BorderRadius.all(
                           const Radius.circular(10.0),
                         ),
                       ),
                       filled: true,
-                      hintStyle: new TextStyle(color: Colors.grey[800]),
+                      hintStyle: new TextStyle(color: Colors.grey[800],fontFamily: theme.font_family),
                       hintText: "Search torrent by name",
-                      prefixIcon: Icon(Icons.search),
+                      prefixIcon: Icon(
+                        Icons.search,
+                        color: theme.base_color,
+                      ),
                       fillColor: Colors.white70,
                     ),
                     controller: controller.search_field_controller,
@@ -688,7 +688,7 @@ class _viewState extends State<view> {
                       AsyncSnapshot<Map<String, dynamic>> snapshot) {
                     if (snapshot.connectionState != ConnectionState.done) {
                       //------------
-                      return Center(child: Image.asset("assets/loader.gif"));
+                      return Center(child: loader());
                     } else if (snapshot.data == null ||
                         snapshot.data['result'] == null) {
                       return no_data();

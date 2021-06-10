@@ -11,8 +11,8 @@ import 'package:deluge_client/api/apis.dart';
 import 'package:deluge_client/state_ware_house/state_ware_house.dart';
 
 import '../string/controller.dart';
-import '../string/controller.dart';
-import '../string/controller.dart';
+import 'package:deluge_client/control_center/theme_controller.dart';
+
 
 class storage_indicator extends StatefulWidget {
   final List<Cookie> cookie;
@@ -94,7 +94,8 @@ class _storage_indicatorState extends State<storage_indicator> {
               visualDensity: VisualDensity(horizontal: 0, vertical: -4),
               title: Text(
                 controller.path_controller,
-                style: theme.sidebar_expansion_children_tile,
+                style:
+      TextStyle(fontSize: 12.0, fontFamily: theme.font_family, color: theme_controller.is_it_dark()?Colors.white:Colors.black)
               ),
               subtitle: Text(
                 controller.storage_controller + " " + "Available ",
