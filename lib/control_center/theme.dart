@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:deluge_client/control_center/theme_controller.dart';
 
 class theme {
   static String thread_title = "Deluge Mobile client";
@@ -16,13 +17,11 @@ class theme {
       color: Colors.black);
   static TextStyle sidebar_tile_style =
       TextStyle(fontFamily: font_family, fontSize: 15.0, color: base_color);
-  static TextStyle sidebar_expansion_children_tile =
-      TextStyle(fontSize: 12.0, fontFamily: font_family, color: Colors.black);
+  
   static double children_expension_tile_font_size = 12.0;
   static TextStyle app_bar_style = TextStyle(
       fontSize: 20.0, fontFamily: theme.font_family, color: Colors.white);
   static TextStyle warning_style = TextStyle(
       fontFamily: theme.font_family, fontSize: 15.0, color: Colors.white);
-  static TextStyle warning_style2 = TextStyle(
-      fontFamily: theme.font_family, fontSize: 15.0, color: Colors.black);
+  
 }

@@ -9,7 +9,7 @@ import 'package:deluge_client/main.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-import 'package:deluge_client/dashboard.dart';
+import 'package:deluge_client/screens/dashboard.dart';
 
 void main() {
   testWidgets('Counter increments smoke test', (WidgetTester tester) async {

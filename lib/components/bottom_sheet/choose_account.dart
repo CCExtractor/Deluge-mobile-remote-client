@@ -64,7 +64,7 @@ class _multi_account_menuState extends State<multi_account_menu> {
                         padding: EdgeInsets.only(top: 3.0),
                         child: Text("Please Choose Account",
                             style: TextStyle(
-                                color: Colors.black,
+                               
                                 fontSize: theme.bottom_sheet_heading_font_size,
                                 fontFamily: theme.font_family))),
                     Divider(

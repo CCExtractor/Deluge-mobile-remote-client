@@ -48,14 +48,34 @@ class states {
     bool ctxt_state = pref.getBool('is_auth');
     return ctxt_state;
   }
-  
-  static void update_account_state(int id) async{
+
+  static void update_account_state(int id) async {
     SharedPreferences pf = await SharedPreferences.getInstance();
     pf.setInt("selected_account", id);
   }
+
   //-------------------------------------------------------------------------------
-  
-  
+  static void set_theme_mode(int mode) async {
+    SharedPreferences pf = await SharedPreferences.getInstance();
+    pf.setInt("selected_theme", mode);
+  }
 
+  static Future<int> get_theme_mode() async {
+    SharedPreferences pf = await SharedPreferences.getInstance();
+    int t = pf.getInt("selected_theme");
+    return t;
+  }
 
+  static void first_time_theme_selection() async{
+    SharedPreferences pf = await SharedPreferences.getInstance();
+
+    isFirstTime().then((isFirstTime) {
+      if (isFirstTime) {
+        pf.setInt("selected_theme", 1);
+      } else {
+        print("it is not first");
+      }
+    });
+
+  }
 }

@@ -1,4 +1,5 @@
 import 'package:deluge_client/components/download_upload_pane.dart';
+import 'package:deluge_client/components/loader.dart';
 import 'package:deluge_client/components/no_data.dart';
 import 'package:deluge_client/components/progress_bar.dart';
 import 'package:deluge_client/components/tile.dart';
@@ -361,7 +362,7 @@ class multi_accountState extends State<multi_account> {
               AsyncSnapshot<Map<multtorrent, dynamic>> snapshot) {
             if (snapshot.connectionState != ConnectionState.done) {
               //------------
-              return Center(child: Image.asset("assets/loader.gif"));
+              return Center(child: loader());
             } else if (snapshot.data == null) {
               return no_data();
             } else {

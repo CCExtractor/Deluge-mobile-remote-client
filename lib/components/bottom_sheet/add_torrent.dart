@@ -8,6 +8,7 @@ import 'package:deluge_client/components/bottom_sheet/add_magnet_uri.dart';
 import 'package:deluge_client/components/bottom_sheet/qr_magnet_reader.dart';
 import 'package:deluge_client/control_center/theme.dart';
 import 'package:deluge_client/api/apis.dart';
+import 'package:deluge_client/control_center/theme_controller.dart';
 
 class add_new extends StatefulWidget {
   final VoidCallback refresh;
@@ -37,8 +38,7 @@ class add_new extends StatefulWidget {
       is_reverse_proxied: is_reverse_proxied,
       seed_username: seed_username,
       seed_pass: seed_pass,
-      qr_auth: qr_auth
-      );
+      qr_auth: qr_auth);
 }
 
 class _add_newState extends State<add_new> {
@@ -58,8 +58,7 @@ class _add_newState extends State<add_new> {
       this.is_reverse_proxied,
       this.seed_username,
       this.seed_pass,
-      this.qr_auth
-      });
+      this.qr_auth});
 
   void add_new_torrent_file() async {
     try {
@@ -77,7 +76,7 @@ class _add_newState extends State<add_new> {
       if (torrent_byte.isNotEmpty) {
         String base_64_encoded_file = base64Encode(torrent_byte);
         apis.add_torrent_file(base_64_encoded_file, cookie, url,
-            is_reverse_proxied, seed_username, seed_pass,qr_auth);
+            is_reverse_proxied, seed_username, seed_pass, qr_auth);
         Future.delayed(Duration(seconds: 1), () {
           refresh();
         });
@@ -100,7 +99,9 @@ class _add_newState extends State<add_new> {
                       padding: EdgeInsets.only(top: 3.0),
                       child: Text("Add new torrent as",
                           style: TextStyle(
-                              color: Colors.black,
+                              color: (!theme_controller.is_it_dark()
+                                  ? Colors.black
+                                  : Colors.white),
                               fontSize: theme.bottom_sheet_heading_font_size,
                               fontFamily: theme.font_family))),
                   Divider(
@@ -113,23 +114,26 @@ class _add_newState extends State<add_new> {
                     title: Text(
                       'Add torrent file',
                       style: TextStyle(
-                          color: Colors.black,
+                          color: (!theme_controller.is_it_dark()
+                                  ? Colors.black
+                                  : Colors.white),
                           fontSize: theme.alert_box_font_size,
                           fontFamily: theme.font_family),
                     ),
                     leading:
                         Icon(Icons.folder_rounded, color: theme.base_color),
                     onTap: () {
-                       Navigator.of(context).pop();
+                      Navigator.of(context).pop();
                       add_new_torrent_file();
-                     
                     },
                   ),
                   ListTile(
                       title: Text(
                         'Add magnet link',
                         style: TextStyle(
-                            color: Colors.black,
+                            color: (!theme_controller.is_it_dark()
+                                  ? Colors.black
+                                  : Colors.white),
                             fontSize: theme.alert_box_font_size,
                             fontFamily: theme.font_family),
                       ),
@@ -154,7 +158,9 @@ class _add_newState extends State<add_new> {
                       title: Text(
                         'Scan magnet QR',
                         style: TextStyle(
-                            color: Colors.black,
+                            color: (!theme_controller.is_it_dark()
+                                  ? Colors.black
+                                  : Colors.white),
                             fontSize: theme.alert_box_font_size,
                             fontFamily: theme.font_family),
                       ),

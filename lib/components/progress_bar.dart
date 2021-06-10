@@ -168,7 +168,7 @@ class _download_progressState extends State<download_progress> {
         animationDuration: 2000,
         percent: progress_percent,
         center: Text(
-          (progress_percent * 100.0).roundToDouble().toString() + " %",
+          (progress_percent * 100).roundToDouble().toString() + " %",
           style: TextStyle(
               color: Colors.white,
               fontFamily: theme.font_family,

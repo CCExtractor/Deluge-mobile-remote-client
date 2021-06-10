@@ -4,6 +4,7 @@ import 'dart:math';
 import 'package:deluge_client/control_center/theme.dart';
 import 'package:intl/intl.dart';
 import 'package:charcode/charcode.dart';
+import 'package:deluge_client/control_center/theme_controller.dart';
 
 class more_info extends StatelessWidget {
   final Map<String, dynamic> inside_res;

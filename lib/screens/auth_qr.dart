@@ -71,9 +71,9 @@ class _auth_qrState extends State<auth_qr> {
           : toastMessage("Successfully added");
       !tow_attachment
           ? Navigator.pushReplacement(
-              context, MaterialPageRoute(builder: (context) => MyApp()))
+              context, MaterialPageRoute(builder: (context) => dashboard()))
           : Navigator.popUntil(context, (route) {
-              return count++ == 2;
+              return count++ == 1;
             });
     } else {
       toastMessage("Credentials are wrong");
