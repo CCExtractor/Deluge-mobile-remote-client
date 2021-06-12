@@ -37,7 +37,7 @@ class multi_accountState extends State<multi_account> {
     super.initState();
   }
 
-  Map<String, dynamic> cookie_all_account=Map<String,dynamic>();
+  Map<String, dynamic> cookie_all_account = Map<String, dynamic>();
   Future<Map<multtorrent, dynamic>> torrents_all_account;
   void config() async {
     cookie_all_account = await all_account_core.config_cache();
@@ -292,6 +292,7 @@ class multi_accountState extends State<multi_account> {
         paused_torrent = false;
       });
     }
+    config();
   }
 
   void multi_filter_torrent_completed() {
@@ -304,6 +305,7 @@ class multi_accountState extends State<multi_account> {
         paused_torrent = false;
       });
     }
+    config();
   }
 
   void multi_filter_torrent_noncompleted() {
@@ -316,6 +318,7 @@ class multi_accountState extends State<multi_account> {
         paused_torrent = false;
       });
     }
+    config();
   }
 
   void multi_filter_torrent_paused() {
@@ -328,6 +331,7 @@ class multi_accountState extends State<multi_account> {
         paused_torrent = true;
       });
     }
+    config();
   }
 
   void multi_filter_torrent_seeding() {
@@ -340,6 +344,7 @@ class multi_accountState extends State<multi_account> {
         paused_torrent = false;
       });
     }
+    config();
   }
 
   Map<multtorrent, dynamic> sort(Map<multtorrent, dynamic> map) {
@@ -350,8 +355,6 @@ class multi_accountState extends State<multi_account> {
     }
   }
   //----------------------------------------------------------------------
-  
-
 
   @override
   Widget build(BuildContext context) {
@@ -380,8 +383,7 @@ class multi_accountState extends State<multi_account> {
                             //--------for sorted one
                             Map<multtorrent, dynamic> sorted_map =
                                 sort(snapshot.data);
-                            multtorrent key =
-                                sorted_map.keys.elementAt(index);
+                            multtorrent key = sorted_map.keys.elementAt(index);
                             Bucket buc = key.need;
                             String hash = key.hash;
                             //inside the result array

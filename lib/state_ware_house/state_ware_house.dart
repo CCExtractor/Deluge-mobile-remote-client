@@ -66,7 +66,7 @@ class states {
     return t;
   }
 
-  static void first_time_theme_selection() async{
+  static void first_time_theme_selection() async {
     SharedPreferences pf = await SharedPreferences.getInstance();
 
     isFirstTime().then((isFirstTime) {
@@ -76,6 +76,30 @@ class states {
         print("it is not first");
       }
     });
+  }
+
+  //----------------------------------------------------------------------
+  static void set_notification_settings(bool val) async {
+    SharedPreferences pf = await SharedPreferences.getInstance();
+    pf.setBool("notification_settings", val);
+  }
+
+  static Future<bool> fetch_notification_settings() async {
+    SharedPreferences pf = await SharedPreferences.getInstance();
+    return pf.get("notification_settings");
+  }
+
+  static Future<void> set_notification_at_first_launch() async {
+     SharedPreferences pf = await SharedPreferences.getInstance();
+
+    isFirstTime().then((isFirstTime) {
+      if (isFirstTime) {
+        pf.setBool("notification_settings", true);
+      } else {
+        print("it is not first");
+      }
+    });
 
   }
+  //-------------------------------------------------
 }

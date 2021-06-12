@@ -197,7 +197,17 @@ class _dashboardState extends State<dashboard> {
         torren_seeding = false;
         paused_torrent = false;
       });
+
     }
+     non_delayed_torrent_fetch(
+          selx_acc.deluge_url,
+          selx_acc.deluge_pwrd,
+          cookie,
+          selx_acc.has_deluge_pwrd,
+          selx_acc.is_reverse_proxied,
+          selx_acc.username,
+          selx_acc.password,
+          selx_acc.via_qr);// for single account listen changes 
     if (all_account_selected) {
       multidash.currentState.multi_filter_torrent_all();
     }
@@ -213,6 +223,15 @@ class _dashboardState extends State<dashboard> {
         paused_torrent = false;
       });
     }
+     non_delayed_torrent_fetch(
+          selx_acc.deluge_url,
+          selx_acc.deluge_pwrd,
+          cookie,
+          selx_acc.has_deluge_pwrd,
+          selx_acc.is_reverse_proxied,
+          selx_acc.username,
+          selx_acc.password,
+          selx_acc.via_qr);// for single account listen changes 
     if (all_account_selected) {
       multidash.currentState.multi_filter_torrent_completed();
     }
@@ -228,6 +247,16 @@ class _dashboardState extends State<dashboard> {
         paused_torrent = false;
       });
     }
+     non_delayed_torrent_fetch(
+          selx_acc.deluge_url,
+          selx_acc.deluge_pwrd,
+          cookie,
+          selx_acc.has_deluge_pwrd,
+          selx_acc.is_reverse_proxied,
+          selx_acc.username,
+          selx_acc.password,
+          selx_acc.via_qr);// for single account listen changes 
+
     if (all_account_selected) {
       multidash.currentState.multi_filter_torrent_noncompleted();
     }
@@ -243,6 +272,15 @@ class _dashboardState extends State<dashboard> {
         paused_torrent = true;
       });
     }
+     non_delayed_torrent_fetch(
+          selx_acc.deluge_url,
+          selx_acc.deluge_pwrd,
+          cookie,
+          selx_acc.has_deluge_pwrd,
+          selx_acc.is_reverse_proxied,
+          selx_acc.username,
+          selx_acc.password,
+          selx_acc.via_qr);// for single account listen changes 
 
     if (all_account_selected) {
       multidash.currentState.multi_filter_torrent_paused();
@@ -259,6 +297,15 @@ class _dashboardState extends State<dashboard> {
         paused_torrent = false;
       });
     }
+     non_delayed_torrent_fetch(
+          selx_acc.deluge_url,
+          selx_acc.deluge_pwrd,
+          cookie,
+          selx_acc.has_deluge_pwrd,
+          selx_acc.is_reverse_proxied,
+          selx_acc.username,
+          selx_acc.password,
+          selx_acc.via_qr);// for single account listen changes 
     if (all_account_selected) {
       multidash.currentState.multi_filter_torrent_seeding();
     }
@@ -547,7 +594,7 @@ class _dashboardState extends State<dashboard> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("hey", style: theme.app_bar_style),
+        title: Text(!all_account_selected?selx_acc.deluge_url:"All Accounts" ,style: theme.app_bar_style),
         backgroundColor: theme.base_color,
         actions: [
           IconButton(
@@ -558,8 +605,8 @@ class _dashboardState extends State<dashboard> {
               ThemeBuilder.of(context).changeTheme();
               if (theme_controller.is_it_dark()) {
                 states.set_theme_mode(2);
-              }else{
-                 states.set_theme_mode(1);
+              } else {
+                states.set_theme_mode(1);
               }
             },
           ),
@@ -606,7 +653,8 @@ class _dashboardState extends State<dashboard> {
                         controller.search_field_controller.text;
                       });
                     },
-                    style: TextStyle(fontFamily: theme.font_family,color: Colors.black),
+                    style: TextStyle(
+                        fontFamily: theme.font_family, color: Colors.black),
                     decoration: new InputDecoration(
                       focusedBorder: OutlineInputBorder(
                         borderSide:
@@ -628,7 +676,9 @@ class _dashboardState extends State<dashboard> {
                         ),
                       ),
                       filled: true,
-                      hintStyle: new TextStyle(color: Colors.grey[800],fontFamily: theme.font_family),
+                      hintStyle: new TextStyle(
+                          color: Colors.grey[800],
+                          fontFamily: theme.font_family),
                       hintText: "Search torrent by name",
                       prefixIcon: Icon(
                         Icons.search,
