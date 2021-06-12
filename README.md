@@ -1,6 +1,8 @@
 ![](https://i.imgur.com/emdyzUf.png)
 ![issues](https://img.shields.io/github/issues/CCExtractor/Deluge-mobile-remote-client)
 
+![under development](https://www.canoe.ie/wp-content/uploads/2016/11/sl_website-under-construction.jpeg)
+
 ## About The Project
 Deluge is a lightweight, Free Software, cross-platform BitTorrent Monitoring service.
     Deluge mobile client app interact with the deluge via WEB-JSONRPC and gives all the  administrative abilites. The web app and Desktop app and other relevant documentation can be found at
