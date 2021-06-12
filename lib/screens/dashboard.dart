@@ -75,6 +75,7 @@ class _dashboardState extends State<dashboard> {
       if (this.mounted) {
         setState(() {
           all_account_selected = false;
+          head = selx_acc.deluge_url;
         });
       }
     } else {
@@ -197,17 +198,16 @@ class _dashboardState extends State<dashboard> {
         torren_seeding = false;
         paused_torrent = false;
       });
-
     }
-     non_delayed_torrent_fetch(
-          selx_acc.deluge_url,
-          selx_acc.deluge_pwrd,
-          cookie,
-          selx_acc.has_deluge_pwrd,
-          selx_acc.is_reverse_proxied,
-          selx_acc.username,
-          selx_acc.password,
-          selx_acc.via_qr);// for single account listen changes 
+    non_delayed_torrent_fetch(
+        selx_acc.deluge_url,
+        selx_acc.deluge_pwrd,
+        cookie,
+        selx_acc.has_deluge_pwrd,
+        selx_acc.is_reverse_proxied,
+        selx_acc.username,
+        selx_acc.password,
+        selx_acc.via_qr); // for single account listen changes
     if (all_account_selected) {
       multidash.currentState.multi_filter_torrent_all();
     }
@@ -223,15 +223,15 @@ class _dashboardState extends State<dashboard> {
         paused_torrent = false;
       });
     }
-     non_delayed_torrent_fetch(
-          selx_acc.deluge_url,
-          selx_acc.deluge_pwrd,
-          cookie,
-          selx_acc.has_deluge_pwrd,
-          selx_acc.is_reverse_proxied,
-          selx_acc.username,
-          selx_acc.password,
-          selx_acc.via_qr);// for single account listen changes 
+    non_delayed_torrent_fetch(
+        selx_acc.deluge_url,
+        selx_acc.deluge_pwrd,
+        cookie,
+        selx_acc.has_deluge_pwrd,
+        selx_acc.is_reverse_proxied,
+        selx_acc.username,
+        selx_acc.password,
+        selx_acc.via_qr); // for single account listen changes
     if (all_account_selected) {
       multidash.currentState.multi_filter_torrent_completed();
     }
@@ -247,15 +247,15 @@ class _dashboardState extends State<dashboard> {
         paused_torrent = false;
       });
     }
-     non_delayed_torrent_fetch(
-          selx_acc.deluge_url,
-          selx_acc.deluge_pwrd,
-          cookie,
-          selx_acc.has_deluge_pwrd,
-          selx_acc.is_reverse_proxied,
-          selx_acc.username,
-          selx_acc.password,
-          selx_acc.via_qr);// for single account listen changes 
+    non_delayed_torrent_fetch(
+        selx_acc.deluge_url,
+        selx_acc.deluge_pwrd,
+        cookie,
+        selx_acc.has_deluge_pwrd,
+        selx_acc.is_reverse_proxied,
+        selx_acc.username,
+        selx_acc.password,
+        selx_acc.via_qr); // for single account listen changes
 
     if (all_account_selected) {
       multidash.currentState.multi_filter_torrent_noncompleted();
@@ -272,15 +272,15 @@ class _dashboardState extends State<dashboard> {
         paused_torrent = true;
       });
     }
-     non_delayed_torrent_fetch(
-          selx_acc.deluge_url,
-          selx_acc.deluge_pwrd,
-          cookie,
-          selx_acc.has_deluge_pwrd,
-          selx_acc.is_reverse_proxied,
-          selx_acc.username,
-          selx_acc.password,
-          selx_acc.via_qr);// for single account listen changes 
+    non_delayed_torrent_fetch(
+        selx_acc.deluge_url,
+        selx_acc.deluge_pwrd,
+        cookie,
+        selx_acc.has_deluge_pwrd,
+        selx_acc.is_reverse_proxied,
+        selx_acc.username,
+        selx_acc.password,
+        selx_acc.via_qr); // for single account listen changes
 
     if (all_account_selected) {
       multidash.currentState.multi_filter_torrent_paused();
@@ -297,15 +297,15 @@ class _dashboardState extends State<dashboard> {
         paused_torrent = false;
       });
     }
-     non_delayed_torrent_fetch(
-          selx_acc.deluge_url,
-          selx_acc.deluge_pwrd,
-          cookie,
-          selx_acc.has_deluge_pwrd,
-          selx_acc.is_reverse_proxied,
-          selx_acc.username,
-          selx_acc.password,
-          selx_acc.via_qr);// for single account listen changes 
+    non_delayed_torrent_fetch(
+        selx_acc.deluge_url,
+        selx_acc.deluge_pwrd,
+        cookie,
+        selx_acc.has_deluge_pwrd,
+        selx_acc.is_reverse_proxied,
+        selx_acc.username,
+        selx_acc.password,
+        selx_acc.via_qr); // for single account listen changes
     if (all_account_selected) {
       multidash.currentState.multi_filter_torrent_seeding();
     }
@@ -590,11 +590,13 @@ class _dashboardState extends State<dashboard> {
     }
   }
 
+  String head = "";
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(!all_account_selected?selx_acc.deluge_url:"All Accounts" ,style: theme.app_bar_style),
+        title: Text(!all_account_selected ? head : "All Accounts",
+            style: theme.app_bar_style),
         backgroundColor: theme.base_color,
         actions: [
           IconButton(

@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:deluge_client/settings/deluge/core_settings.dart';
 
+
 class apis {
   static int network_request = 0;
   static Future<List<Cookie>> authentication_to_deluge(
@@ -95,6 +96,7 @@ class apis {
       final responseBody = await response.transform(utf8.decoder).join();
 
       Map<String, dynamic> client_output = json.decode(responseBody);
+    
 
       return client_output;
     } catch (e) {
