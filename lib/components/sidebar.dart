@@ -5,6 +5,7 @@ import 'package:deluge_client/database/dbmanager.dart';
 import 'package:deluge_client/screens/auth.dart';
 import 'package:deluge_client/components/accounts.dart';
 import 'package:deluge_client/components/storage_indicator.dart';
+import 'package:deluge_client/settings/client/client_setting.dart';
 import 'package:deluge_client/settings/deluge/deluge_setting.dart';
 import 'package:flutter/material.dart';
 import 'package:deluge_client/control_center/theme.dart';
@@ -453,6 +454,16 @@ class sidebarState extends State<sidebar> {
                 "Client settings",
                 style: TextStyle(fontSize: 12.0, fontFamily: theme.font_family, color: theme_controller.is_it_dark()?Colors.white:Colors.black),
               ),
+              onTap: (){
+                 Navigator.of(context).pop(); //close sidebar
+                  showCupertinoModalBottomSheet(
+                      expand: false,
+                      context: context,
+                      backgroundColor: Colors.transparent,
+                      builder: (context) => clt_st()
+                      
+                      );
+              },
             ),
             ListTile(
               leading: Icon(Icons.settings_outlined),

@@ -59,17 +59,16 @@ class _auth_viewState extends State<auth_view> {
   }
 
   //-----------------
- 
+
   void set_auth_state() async {
     states.set_auth();
   }
-
-
 
   @override
   void initState() {
     states.first_time_setup_selection();
     states.first_time_theme_selection();
+    states.set_notification_at_first_launch();
     super.initState();
   }
 
@@ -98,7 +97,7 @@ class _auth_viewState extends State<auth_view> {
           : toastMessage("Successfully added");
       !tow_attachment
           ? Navigator.push(
-              context, MaterialPageRoute(builder: (context) =>dashboard()))
+              context, MaterialPageRoute(builder: (context) => dashboard()))
           : Navigator.pop(context);
     } else {
       toastMessage("Credentials are wrong");
@@ -359,11 +358,9 @@ class _auth_viewState extends State<auth_view> {
                           isreverse_proxied = !isreverse_proxied;
                         });
                       }),
-                  Text(
-                    "is reverse proxied?",
-                    style: TextStyle(
-                   fontFamily: theme.font_family, fontSize: 15.0)
-                  ),
+                  Text("is reverse proxied?",
+                      style: TextStyle(
+                          fontFamily: theme.font_family, fontSize: 15.0)),
                   Padding(
                       padding: EdgeInsets.only(left: 35.0),
                       child: RaisedButton(
