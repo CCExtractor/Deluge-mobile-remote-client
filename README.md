@@ -1,16 +1,41 @@
-# deluge_client
+![](https://i.imgur.com/emdyzUf.png)
 
-A new Flutter project.
+![under development](https://www.canoe.ie/wp-content/uploads/2016/11/sl_website-under-construction.jpeg)
 
-## Getting Started
+## About The Project
+Deluge is a lightweight, Free Software, cross-platform BitTorrent Monitoring service.
+    Deluge mobile client app interact with the deluge via WEB-JSONRPC and gives all the  administrative abilites. The web app and Desktop app and other relevant documentation can be found at
+    <a href="https://deluge-torrent.org" target="_blank">Deluge</a>.
+  
+  ![issues](https://img.shields.io/github/issues/CCExtractor/Deluge-mobile-remote-client)
 
-This project is a starting point for a Flutter application.
+### Features in Client Application
+| Features                                       | Support         |
+|------------------------------------------------|-----------------|
+| Single Account                                 | ✅ (tested)     |
+| Multiple Account                               | ✅ (tested)      |
+| operation with single account                  | ✅ (tested)      |
+| operate with multiple account at the same time | ✅ (tested)      |
+| dark mode                                      | ✅ (tested)      |
+| Deluge settings with all options               | ✅ (tested)      |
+| Live notification                              | ✅ (tested)      |
+| automatic troubleshoot on cookie expire        | ✅ (tested)      |
+| Filtering and searching sorting .. etc         | ✅ (tested)      |
+| resume pause delete .. all basic functionality | ✅ (tested)      |
+| long press to select and select all            | ✅ (tested)      |
+| Manual login                                   | ✅ (tested)      |
+| Rapid login by Q.R Code on the go              | ✅ (tested)      |
+| can handle reverse proxied                     | ✅ (tested)      |
+| Live storage tile                              | ✅ (tested)      |
+| Add new torrent as file                        | ✅ (tested)      |
+| Add new torrent by magnet link                 | ✅ (tested)      |
+| Add new torrent by Q.R code on the go          | ✅ (tested)      |
+| file exploration                               | ❌ (coming soon) |
+| streaming torrent content                      | ❌ (coming soon) |
 
-A few resources to get you started if this is your first Flutter project:
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## roadmap to contribute
+> coming soon
+
+
