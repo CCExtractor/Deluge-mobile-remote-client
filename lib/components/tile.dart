@@ -94,7 +94,9 @@ class _tileState extends State<tile> {
         selx_acc.is_reverse_proxied,
         selx_acc.username,
         selx_acc.password,
-        selx_acc.via_qr);
+        selx_acc.via_qr,
+        context
+        );
     Future.delayed(Duration(seconds: 1), () async {
       Map<String, dynamic> mid_fetch = await apis.get_torrent_list(
           cookie,
@@ -102,7 +104,9 @@ class _tileState extends State<tile> {
           selx_acc.is_reverse_proxied,
           selx_acc.username,
           selx_acc.password,
-          selx_acc.via_qr);
+          selx_acc.via_qr,
+          context
+          );
 
       Map<String, dynamic> result = mid_fetch['result'];
 
@@ -124,7 +128,9 @@ class _tileState extends State<tile> {
         selx_acc.is_reverse_proxied,
         selx_acc.username,
         selx_acc.password,
-        selx_acc.via_qr);
+        selx_acc.via_qr,
+        context
+        );
         Future.delayed(Duration(seconds: 1), () async {
       Map<String, dynamic> mid_fetch = await apis.get_torrent_list(
           cookie,
@@ -132,7 +138,9 @@ class _tileState extends State<tile> {
           selx_acc.is_reverse_proxied,
           selx_acc.username,
           selx_acc.password,
-          selx_acc.via_qr);
+          selx_acc.via_qr,
+          context
+          );
 
       Map<String, dynamic> result = mid_fetch['result'];
 
@@ -240,7 +248,9 @@ class _tileState extends State<tile> {
             selx_acc.is_reverse_proxied,
             selx_acc.username,
             selx_acc.password,
-            selx_acc.via_qr);
+            selx_acc.via_qr,
+            context
+            );
 
         non_delayed_fetch();
 
@@ -265,7 +275,9 @@ class _tileState extends State<tile> {
             selx_acc.is_reverse_proxied,
             selx_acc.username,
             selx_acc.password,
-            selx_acc.via_qr);
+            selx_acc.via_qr,
+            context
+            );
 
         non_delayed_fetch();
 

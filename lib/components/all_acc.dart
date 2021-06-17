@@ -10,7 +10,7 @@ class all_account_core {
  
 
   static Map<String, dynamic> all_account_cookie = Map<String, dynamic>();
-  static Future<Map<String, dynamic>> config_cache() async {
+  static Future<Map<String, dynamic>> config_cache(BuildContext context) async {
     List<Bucket> acc = await db.getbucketitem();
     for (int i = 0; i < acc.length; i++) {
       apis
@@ -21,7 +21,8 @@ class all_account_core {
               acc[i].is_reverse_proxied,
               acc[i].username,
               acc[i].password,
-              acc[i].via_qr)
+              acc[i].via_qr,
+              context)
           .then((List<Cookie> t) => {
                 print(t),
                 if (t != null)
@@ -37,7 +38,7 @@ class all_account_core {
 
   static Map<multtorrent, dynamic> output = Map<multtorrent, dynamic>();
   static Future<Map<multtorrent, dynamic>> config_torrent_list(
-      Map<String, dynamic> cookies) async {
+      Map<String, dynamic> cookies,BuildContext context) async {
     List<Bucket> acc = await db.getbucketitem();
     // @todo i need to add that already logged in account can not logged in to make unique
         if (output.length > 0) {
@@ -52,7 +53,9 @@ class all_account_core {
           acc[i].is_reverse_proxied,
           acc[i].username,
           acc[i].password,
-          acc[i].via_qr);
+          acc[i].via_qr,
+          context
+          );
       t = t['result'];
       print(t);
       // todo i will add url with the hash of map

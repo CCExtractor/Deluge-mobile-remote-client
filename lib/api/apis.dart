@@ -1,19 +1,22 @@
 import 'dart:convert';
 import 'dart:io';
 import 'package:deluge_client/settings/deluge/core_settings.dart';
-
+import 'package:flutter/material.dart';
+import 'package:deluge_client/control_center/theme.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_phoenix/flutter_phoenix.dart';
 
 class apis {
   static int network_request = 0;
   static Future<List<Cookie>> authentication_to_deluge(
-    String url,
-    String password,
-    String has_deluge_pass,
-    String is_reverse_proxied,
-    String seed_username,
-    String seed_pass,
-    String qr_auth,
-  ) async {
+      String url,
+      String password,
+      String has_deluge_pass,
+      String is_reverse_proxied,
+      String seed_username,
+      String seed_pass,
+      String qr_auth,
+      BuildContext context) async {
     Map<String, dynamic> payload = {
       "id": network_request++,
       "method": "auth.login",
@@ -50,6 +53,8 @@ class apis {
       // print(responseBody);
       // print(jsonDecode(responseBody));
       // final result = Model.fromJson(json.decode(responseBody));
+    } on SocketException catch (_) {
+      dialogue_prompt.show_prompt(context);
     } catch (error) {
       print(error);
     }
@@ -62,7 +67,8 @@ class apis {
       String is_reverse_proxied,
       String seed_username,
       String seed_pass,
-      String qr_auth) async {
+      String qr_auth,
+      BuildContext context) async {
     try {
       Map<String, dynamic> requestPayload = {
         "method": "core.get_torrents_status",
@@ -96,9 +102,10 @@ class apis {
       final responseBody = await response.transform(utf8.decoder).join();
 
       Map<String, dynamic> client_output = json.decode(responseBody);
-    
 
       return client_output;
+    } on SocketException catch (_) {
+      dialogue_prompt.show_prompt(context);
     } catch (e) {
       return new Map();
     }
@@ -112,7 +119,8 @@ class apis {
       String is_reverse_proxied,
       String seed_username,
       String seed_pass,
-      String qr_auth) async {
+      String qr_auth,
+      BuildContext context) async {
     Map<String, dynamic> requestPayload = {
       "method": "core.resume_torrent",
       "params": [
@@ -148,6 +156,8 @@ class apis {
       final responseBody = await response.transform(utf8.decoder).join();
       // we do not need response body here
 
+    } on SocketException catch (_) {
+      dialogue_prompt.show_prompt(context);
     } catch (e) {
       print(e);
     }
@@ -161,7 +171,8 @@ class apis {
       String is_reverse_proxied,
       String seed_username,
       String seed_pass,
-      String qr_auth) async {
+      String qr_auth,
+      BuildContext context) async {
     Map<String, dynamic> requestPayload = {
       "method": "core.pause_torrent",
       "params": [
@@ -195,6 +206,8 @@ class apis {
 
       cookie = response.cookies;
       final responseBody = await response.transform(utf8.decoder).join();
+    } on SocketException catch (_) {
+      dialogue_prompt.show_prompt(context);
     } catch (e) {
       print(e);
     }
@@ -209,7 +222,8 @@ class apis {
       String is_reverse_proxied,
       String seed_username,
       String seed_pass,
-      String qr_auth) async {
+      String qr_auth,
+      BuildContext context) async {
     Map<String, dynamic> requestPayload = {
       "method": "core.remove_torrent",
       "params": ["$key", remove_file],
@@ -241,6 +255,8 @@ class apis {
 
       cookie = response.cookies;
       final responseBody = await response.transform(utf8.decoder).join();
+    } on SocketException catch (_) {
+      dialogue_prompt.show_prompt(context);
     } catch (e) {
       print(e);
     }
@@ -248,13 +264,14 @@ class apis {
 
   //--
   static Future<bool> auth_validity(
-      String url,
-      String password,
-      String has_deluge_pass,
-      String is_reverse_proxied,
-      String seed_username,
-      String seed_pass,
-      String qr_auth) async {
+    String url,
+    String password,
+    String has_deluge_pass,
+    String is_reverse_proxied,
+    String seed_username,
+    String seed_pass,
+    String qr_auth,
+  ) async {
     Map<String, dynamic> payload = {
       "id": network_request++,
       "method": "auth.login",
@@ -311,7 +328,8 @@ class apis {
       String is_reverse_proxied,
       String seed_username,
       String seed_pass,
-      String qr_auth) async {
+      String qr_auth,
+      BuildContext context) async {
     Map<String, dynamic> requestPayload = {
       "method": "core.add_torrent_file",
       "params": ["", "$base64", ""],
@@ -345,6 +363,8 @@ class apis {
       final responseBody = await response.transform(utf8.decoder).join();
       print(jsonDecode(responseBody));
       // after adding file then it should refresh it self;
+    } on SocketException catch (_) {
+      dialogue_prompt.show_prompt(context);
     } catch (e) {
       print(e);
     }
@@ -358,7 +378,8 @@ class apis {
       String is_reverse_proxied,
       String seed_username,
       String seed_pass,
-      String qr_auth) async {
+      String qr_auth,
+      BuildContext context) async {
     Map<String, dynamic> requestPayload = {
       "method": "core.add_torrent_magnet",
       "params": ["$link", {}],
@@ -390,6 +411,8 @@ class apis {
 
       // cookie = response.cookies;
       final responseBody = await response.transform(utf8.decoder).join();
+    } on SocketException catch (_) {
+      dialogue_prompt.show_prompt(context);
     } catch (e) {
       print(e);
     }
@@ -402,7 +425,8 @@ class apis {
       String is_reverse_proxied,
       String seed_username,
       String seed_pass,
-      String qr_auth) async {
+      String qr_auth,
+      BuildContext context) async {
     Map<String, dynamic> requestPayload = {
       "method": "core.get_config",
       "params": [],
@@ -436,6 +460,8 @@ class apis {
       final responseBody = await response.transform(utf8.decoder).join();
       Map<String, dynamic> res = json.decode(responseBody);
       return res;
+    } on SocketException catch (_) {
+      dialogue_prompt.show_prompt(context);
     } catch (e) {
       print(e);
     }
@@ -448,7 +474,8 @@ class apis {
       String is_reverse_proxied,
       String seed_username,
       String seed_pass,
-      String qr_auth) async {
+      String qr_auth,
+      BuildContext context) async {
     Map<String, dynamic> requestPayload = {
       "method": "core.get_free_space",
       "params": [download_path],
@@ -482,6 +509,8 @@ class apis {
       final responseBody = await response.transform(utf8.decoder).join();
       Map<String, dynamic> res = json.decode(responseBody);
       return res['result'];
+    } on SocketException catch (_) {
+      dialogue_prompt.show_prompt(context);
     } catch (e) {
       print(e);
     }
@@ -493,7 +522,8 @@ class apis {
       String is_reverse_proxied,
       String seed_username,
       String seed_pass,
-      String qr_auth) async {
+      String qr_auth,
+      BuildContext context) async {
     List out_going_port_param =
         core_settings.outgoing_ports.text.toString().split(",");
     List listen_port_param =
@@ -592,6 +622,8 @@ class apis {
       final responseBody = await response.transform(utf8.decoder).join();
       Map<String, dynamic> res = json.decode(responseBody);
       print(res);
+    } on SocketException catch (_) {
+      dialogue_prompt.show_prompt(context);
     } catch (e) {
       print(e);
     }
@@ -604,7 +636,8 @@ class apis {
       String is_reverse_proxied,
       String seed_username,
       String seed_pass,
-      String qr_auth) async {
+      String qr_auth,
+      BuildContext context) async {
     Map<String, dynamic> requestPayload = {
       "method": "core.get_config",
       "params": [],
@@ -638,10 +671,71 @@ class apis {
       final responseBody = await response.transform(utf8.decoder).join();
       Map<String, dynamic> res = json.decode(responseBody);
       return res;
+    } on SocketException catch (_) {
+      dialogue_prompt.show_prompt(context);
     } catch (e) {
       print(e);
     }
   }
-  //----------------------------------------
 
+  //-----------------------------------------------------
+
+}
+
+class dialogue_prompt {
+  static void  show_prompt(BuildContext context) {
+    Widget cancelButton = FlatButton(
+      child: Text(
+        "Exit",
+        style: TextStyle(
+            color: Colors.blue,
+            fontSize: theme.alert_box_font_size,
+            fontWeight: FontWeight.bold,
+            fontFamily: theme.font_family),
+      ),
+      onPressed: () {
+        return false;
+        SystemNavigator.pop();
+      },
+    );
+    Widget continueButton = FlatButton(
+      child: Text(
+        "Re-Check",
+        style: TextStyle(
+            color: Colors.white,
+            fontSize: theme.alert_box_font_size,
+            fontWeight: FontWeight.bold,
+            fontFamily: theme.font_family),
+      ),
+      onPressed: () {
+       Phoenix.rebirth(context);
+        
+      },
+    );
+
+    // set up the AlertDialog
+    AlertDialog alert = AlertDialog(
+      backgroundColor: theme.base_color,
+      title: Text("Alert: No Internet Connection",
+          style: TextStyle(color: Colors.white, fontFamily: theme.font_family)),
+      content: Text(
+        "You are not connected with the active network, We cannot connect with the Server, Please try to troubleshoot or recheck connectivity",
+        style: TextStyle(
+            fontSize: theme.alert_box_font_size,
+            color: Colors.white,
+            fontFamily: theme.font_family),
+      ),
+      actions: [
+        continueButton,
+        cancelButton,
+      ],
+    );
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
+  }
 }

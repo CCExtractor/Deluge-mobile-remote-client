@@ -36,7 +36,9 @@ class _deluge_settingsState extends State<deluge_settings> {
         selected_account.is_reverse_proxied,
         selected_account.username,
         selected_account.password,
-        selected_account.via_qr);
+        selected_account.via_qr,
+        context
+        );
     // TODO: implement initState
     super.initState();
   }
@@ -78,7 +80,9 @@ class _deluge_settingsState extends State<deluge_settings> {
                   selected_account.is_reverse_proxied,
                   selected_account.username,
                   selected_account.password,
-                  selected_account.via_qr);
+                  selected_account.via_qr,
+                  context
+                  );
               toastMessage("setting updated");
             },
           )

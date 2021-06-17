@@ -47,7 +47,9 @@ class _storage_indicatorState extends State<storage_indicator> {
           selx_acc.is_reverse_proxied,
           selx_acc.username,
           selx_acc.password,
-          selx_acc.via_qr);
+          selx_acc.via_qr,
+          context
+          );
       if (this.mounted) {
         setState(() {
           controller.path_controller= conf['result']['download_location'];
@@ -66,7 +68,9 @@ class _storage_indicatorState extends State<storage_indicator> {
           selx_acc.is_reverse_proxied,
           selx_acc.username,
           selx_acc.password,
-          selx_acc.via_qr);
+          selx_acc.via_qr,
+          context
+          );
       if (this.mounted) {
         setState(() {
           controller.storage_controller = filesize(free_space).toString();

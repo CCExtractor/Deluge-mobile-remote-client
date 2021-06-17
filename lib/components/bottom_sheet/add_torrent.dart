@@ -76,7 +76,7 @@ class _add_newState extends State<add_new> {
       if (torrent_byte.isNotEmpty) {
         String base_64_encoded_file = base64Encode(torrent_byte);
         apis.add_torrent_file(base_64_encoded_file, cookie, url,
-            is_reverse_proxied, seed_username, seed_pass, qr_auth);
+            is_reverse_proxied, seed_username, seed_pass, qr_auth,context);
         Future.delayed(Duration(seconds: 1), () {
           refresh();
         });

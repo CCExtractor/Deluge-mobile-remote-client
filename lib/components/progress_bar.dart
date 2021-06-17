@@ -87,7 +87,7 @@ class _download_progressState extends State<download_progress> {
   void get_status() async {
     try {
       Map<String, dynamic> api_output = await apis.get_torrent_list(
-          cookie, url, is_reverse_proxied, seed_username, seed_pass, qr_auth);
+          cookie, url, is_reverse_proxied, seed_username, seed_pass, qr_auth,context);
       Map<String, dynamic> result = await api_output['result'];
       if (result != null) {
         Map<String, dynamic> content = await result[tor_id];
