@@ -61,9 +61,9 @@ class core_settings {
   static bool proxy_tracker_connections = false;
 
   static void fetch(List<Cookie> cookie, String url, String is_reverse_proxied,
-      String seed_username, String seed_pass, String qr_auth) async {
+      String seed_username, String seed_pass, String qr_auth,BuildContext context) async {
     Map<String, dynamic> temp = await apis.fetch_settings(
-        cookie, url, is_reverse_proxied, seed_username, seed_pass, qr_auth);
+        cookie, url, is_reverse_proxied, seed_username, seed_pass, qr_auth,context);
 
     settings = temp['result'];
     Future.delayed(Duration(seconds: 1), () {

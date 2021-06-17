@@ -98,6 +98,12 @@
       "languageVersion": "2.12"
     },
     {
+      "name": "flutter_phoenix",
+      "rootUri": "file:///C:/flutter/.pub-cache/hosted/pub.dartlang.org/flutter_phoenix-1.0.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
       "name": "flutter_slidable",
       "rootUri": "file:///C:/flutter/.pub-cache/hosted/pub.dartlang.org/flutter_slidable-0.6.0",
       "packageUri": "lib/",
@@ -356,7 +362,7 @@
       "languageVersion": "2.7"
     }
   ],
-  "generated": "2021-06-12T07:05:45.429503Z",
+  "generated": "2021-06-17T09:10:52.671869Z",
   "generator": "pub",
   "generatorVersion": "2.12.3"
 }

@@ -40,11 +40,11 @@ class multi_accountState extends State<multi_account> {
   Map<String, dynamic> cookie_all_account = Map<String, dynamic>();
   Future<Map<multtorrent, dynamic>> torrents_all_account;
   void config() async {
-    cookie_all_account = await all_account_core.config_cache();
+    cookie_all_account = await all_account_core.config_cache(context);
     Future.delayed(Duration(seconds: 4), () async {
       setState(() {
         torrents_all_account =
-            all_account_core.config_torrent_list(cookie_all_account);
+            all_account_core.config_torrent_list(cookie_all_account,context);
       });
     });
   }
@@ -81,7 +81,9 @@ class multi_accountState extends State<multi_account> {
           key.need.is_reverse_proxied,
           key.need.username,
           key.need.password,
-          key.need.via_qr);
+          key.need.via_qr,
+          context
+          );
     }
     config();
     if (this.mounted) {
@@ -103,7 +105,9 @@ class multi_accountState extends State<multi_account> {
           key.need.is_reverse_proxied,
           key.need.username,
           key.need.password,
-          key.need.via_qr);
+          key.need.via_qr,
+          context
+          );
     }
     config();
     if (this.mounted) {
@@ -209,7 +213,9 @@ class multi_accountState extends State<multi_account> {
               key.need.is_reverse_proxied,
               key.need.username,
               key.need.password,
-              key.need.via_qr);
+              key.need.via_qr,
+              context
+              );
         }
         config();
         if (this.mounted) {
@@ -240,7 +246,9 @@ class multi_accountState extends State<multi_account> {
               key.need.is_reverse_proxied,
               key.need.username,
               key.need.password,
-              key.need.via_qr);
+              key.need.via_qr,
+              context
+              );
         }
         config();
         if (this.mounted) {

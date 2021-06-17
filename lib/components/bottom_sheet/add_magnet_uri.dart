@@ -82,7 +82,7 @@ class _add_magnetState extends State<add_magnet> {
   void add_torrent_by_magnet_uri(String link) async {
     if (magnet_detect.parse(link)) {
       apis.add_magnet(link, cookie, url, is_reverse_proxied, seed_username,
-          seed_pass, qr_auth);
+          seed_pass, qr_auth,context);
 
       // after adding file then it should refresh it self;
        Navigator.of(context).pop();//bottom sheet should get closed

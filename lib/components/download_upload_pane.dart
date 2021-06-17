@@ -75,7 +75,7 @@ class _network_speedState extends State<network_speed> {
   Future<void> fetch_speed() async {
     try {
       Map<String, dynamic> api_output = await apis.get_torrent_list(
-          cookie, url, is_reverse_proxied, seed_username, seed_pass, qr_auth);
+          cookie, url, is_reverse_proxied, seed_username, seed_pass, qr_auth,context);
       if (api_output != null) {
         Map<String, dynamic> result = api_output['result'];
         Map<String, dynamic> properties = result[tor_id];

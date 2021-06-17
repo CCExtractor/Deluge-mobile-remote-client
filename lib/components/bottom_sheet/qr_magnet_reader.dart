@@ -91,7 +91,7 @@ class _magnet_qr_readerState extends State<magnet_qr_reader> {
     
     if (magnet_detect.parse(link)) {
       apis.add_magnet(link, cookie, url, is_reverse_proxied, seed_username,
-          seed_pass, qr_auth);
+          seed_pass, qr_auth,context);
 
       // after adding file then it should refresh it self;
        

@@ -99,7 +99,7 @@ class _dashboardState extends State<dashboard> {
       String seed_pass,
       String qr_auth) async {
     cookie = await apis.authentication_to_deluge(url, password, has_deluge_pass,
-        is_reverse_proxied, seed_username, seed_pass, qr_auth);
+        is_reverse_proxied, seed_username, seed_pass, qr_auth,context);
   }
 
   @override
@@ -117,7 +117,7 @@ class _dashboardState extends State<dashboard> {
       if (this.mounted) {
         setState(() {
           torrent = apis.get_torrent_list(cookie, url, is_reverse_proxied,
-              seed_username, seed_pass, qr_auth);
+              seed_username, seed_pass, qr_auth,context);
 
           // setting state for ui changes realtime
         });
@@ -160,7 +160,7 @@ class _dashboardState extends State<dashboard> {
         if (this.mounted) {
           setState(() {
             torrent = apis.get_torrent_list(cookie, url, is_reverse_proxied,
-                seed_username, seed_pass, qr_auth);
+                seed_username, seed_pass, qr_auth,context);
 
             // setting state for ui changes realtime
           });
@@ -327,7 +327,9 @@ class _dashboardState extends State<dashboard> {
             selx_acc.is_reverse_proxied,
             selx_acc.username,
             selx_acc.password,
-            selx_acc.via_qr);
+            selx_acc.via_qr,
+            context
+            );
       }
       non_delayed_torrent_fetch(
           selx_acc.deluge_url,
@@ -360,7 +362,9 @@ class _dashboardState extends State<dashboard> {
             selx_acc.is_reverse_proxied,
             selx_acc.username,
             selx_acc.password,
-            selx_acc.via_qr);
+            selx_acc.via_qr,
+            context
+            );
       }
       non_delayed_torrent_fetch(
           selx_acc.deluge_url,
@@ -479,7 +483,9 @@ class _dashboardState extends State<dashboard> {
               selx_acc.is_reverse_proxied,
               selx_acc.username,
               selx_acc.password,
-              selx_acc.via_qr);
+              selx_acc.via_qr,
+              context
+              );
         }
         non_delayed_torrent_fetch(
             selx_acc.deluge_url,
@@ -517,7 +523,9 @@ class _dashboardState extends State<dashboard> {
               selx_acc.is_reverse_proxied,
               selx_acc.username,
               selx_acc.password,
-              selx_acc.via_qr);
+              selx_acc.via_qr,
+              context
+              );
         }
         non_delayed_torrent_fetch(
             selx_acc.deluge_url,
@@ -610,6 +618,7 @@ class _dashboardState extends State<dashboard> {
               } else {
                 states.set_theme_mode(1);
               }
+              
             },
           ),
         ],

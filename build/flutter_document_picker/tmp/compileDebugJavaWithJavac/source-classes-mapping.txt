@@ -1,0 +1,2 @@
+com/sidlatau/flutterdocumentpicker/BuildConfig.java
+ com.sidlatau.flutterdocumentpicker.BuildConfig
