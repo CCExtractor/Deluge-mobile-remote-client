@@ -59,11 +59,32 @@ class core_settings {
   static bool proxy_hostnames = false;
   static bool proxy_peer_connections = false;
   static bool proxy_tracker_connections = false;
+  //----------------------------------------------------------------------------------
+  //editing controller for the sftp and streamer config
+  static var sftp_host = TextEditingController();
+  static var sftpport = TextEditingController();
+  static var sftp_username = TextEditingController();
+  static var sftp_pass = TextEditingController();
+  static var sftp_route_url = TextEditingController();
+  //------------------------------------------------------------------------------------------
 
-  static void fetch(List<Cookie> cookie, String url, String is_reverse_proxied,
-      String seed_username, String seed_pass, String qr_auth,BuildContext context) async {
-    Map<String, dynamic> temp = await apis.fetch_settings(
-        cookie, url, is_reverse_proxied, seed_username, seed_pass, qr_auth,context);
+  
+
+
+  
+
+  
+
+  static void fetch(
+      List<Cookie> cookie,
+      String url,
+      String is_reverse_proxied,
+      String seed_username,
+      String seed_pass,
+      String qr_auth,
+      BuildContext context) async {
+    Map<String, dynamic> temp = await apis.fetch_settings(cookie, url,
+        is_reverse_proxied, seed_username, seed_pass, qr_auth, context);
 
     settings = temp['result'];
     Future.delayed(Duration(seconds: 1), () {
@@ -111,8 +132,4 @@ class core_settings {
     cache_expiry.text = settings['cache_expiry'].toString();
     //--------------------------------------------
   }
-
- 
-
-
 }
