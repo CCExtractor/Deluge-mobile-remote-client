@@ -1,4 +1,0 @@
-io/flutter/plugins/GeneratedPluginRegistrant.java
- io.flutter.plugins.GeneratedPluginRegistrant
-com/example/deluge_client/BuildConfig.java
- com.example.deluge_client.BuildConfig
