@@ -90,7 +90,7 @@ class states {
   }
 
   static Future<void> set_notification_at_first_launch() async {
-     SharedPreferences pf = await SharedPreferences.getInstance();
+    SharedPreferences pf = await SharedPreferences.getInstance();
 
     isFirstTime().then((isFirstTime) {
       if (isFirstTime) {
@@ -99,7 +99,55 @@ class states {
         print("it is not first");
       }
     });
-
   }
-  //-------------------------------------------------
+
+  //-------------------------------------------------sftp area
+  static Future<void> set_sftp_host(String host) async {
+    SharedPreferences pf = await SharedPreferences.getInstance();
+    pf.setString("sftp_host", host);
+  }
+
+  static Future<void> set_sftp_port(String port) async {
+    SharedPreferences pf = await SharedPreferences.getInstance();
+    pf.setString("sftp_port", port);
+  }
+
+  static Future<void> set_sftp_username(String user) async {
+    SharedPreferences pf = await SharedPreferences.getInstance();
+    pf.setString("sftp_username", user);
+  }
+
+  static Future<void> set_sftp_pass(String password) async {
+    SharedPreferences pf = await SharedPreferences.getInstance();
+    pf.setString("sftp_pass", password);
+  }
+
+  static Future<void> set_sftp_route(String route) async {
+    SharedPreferences pf = await SharedPreferences.getInstance();
+    pf.setString("sftp_dir_route", route);
+  }
+
+  //-------------
+  static Future<String> get_sftp_route() async {
+    SharedPreferences pf = await SharedPreferences.getInstance();
+    return pf.getString("sftp_dir_route");
+  }
+  static Future<String> get_sftp_host() async {
+    SharedPreferences pf = await SharedPreferences.getInstance();
+    return pf.getString("sftp_host");
+  }
+   static Future<String> get_sftp_port() async {
+    SharedPreferences pf = await SharedPreferences.getInstance();
+    return pf.getString("sftp_port");
+  }
+  static Future<String> get_sftp_username() async {
+    SharedPreferences pf = await SharedPreferences.getInstance();
+    return pf.getString("sftp_username");
+  }
+    static Future<String> get_sftp_password() async {
+    SharedPreferences pf = await SharedPreferences.getInstance();
+    return pf.getString("sftp_pass");
+  }
+
+
 }

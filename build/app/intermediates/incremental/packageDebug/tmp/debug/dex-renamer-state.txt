@@ -1,4 +1,0 @@
-#Thu Jun 17 14:43:16 IST 2021
-base.0=D\:\\current_work\\google\\deluge client\\build\\app\\intermediates\\dex\\debug\\mergeDexDebug\\classes.dex
-path.0=classes.dex
-renamed.0=classes.dex

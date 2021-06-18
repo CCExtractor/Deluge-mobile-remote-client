@@ -4,11 +4,13 @@ import 'package:deluge_client/database/dbmanager.dart';
 import 'package:deluge_client/settings/deluge/type/advance.dart';
 import 'package:deluge_client/settings/deluge/type/basic.dart';
 import 'package:deluge_client/settings/deluge/type/general.dart';
+import 'package:deluge_client/settings/deluge/type/sftp_streaming_settings.dart';
 import 'package:flutter/material.dart';
 import 'package:deluge_client/control_center/theme.dart';
 import 'package:deluge_client/api/apis.dart';
 import 'package:deluge_client/settings/deluge/core_settings.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:deluge_client/state_ware_house/state_ware_house.dart';
 
 class deluge_settings extends StatefulWidget {
   final List<Cookie> cookie;
@@ -37,8 +39,7 @@ class _deluge_settingsState extends State<deluge_settings> {
         selected_account.username,
         selected_account.password,
         selected_account.via_qr,
-        context
-        );
+        context);
     // TODO: implement initState
     super.initState();
   }
@@ -51,6 +52,15 @@ class _deluge_settingsState extends State<deluge_settings> {
       fontSize: 16.0,
       backgroundColor: Colors.black,
     );
+  }
+
+  // update sftp and streaming config
+  void update_sftp_settings() async {
+    states.set_sftp_host(core_settings.sftp_host.text.toString());
+    states.set_sftp_pass(core_settings.sftp_pass.text.toString());
+    states.set_sftp_port(core_settings.sftpport.text.toString());
+    states.set_sftp_route(core_settings.sftp_route_url.text.toString());
+    states.set_sftp_username(core_settings.sftp_username.text.toString());
   }
 
   @override
@@ -81,9 +91,12 @@ class _deluge_settingsState extends State<deluge_settings> {
                   selected_account.username,
                   selected_account.password,
                   selected_account.via_qr,
-                  context
-                  );
-              toastMessage("setting updated");
+                  context);
+                update_sftp_settings();
+              toastMessage("Setting updated");
+              
+              
+
             },
           )
         ],
@@ -127,6 +140,16 @@ class _deluge_settingsState extends State<deluge_settings> {
             children: <Widget>[
               advance(),
             ],
+          ),
+          ExpansionTile(
+            title: Text(
+              "SFTP & Streaming Configuration",
+              style: TextStyle(
+                  fontSize: 16.0,
+                  fontWeight: FontWeight.w500,
+                  fontFamily: theme.font_family),
+            ),
+            children: <Widget>[ssh()],
           ),
         ],
       )),
