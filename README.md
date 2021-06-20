@@ -12,7 +12,7 @@ Deluge is a lightweight, Free Software, cross-platform BitTorrent Monitoring ser
 ### Features in Client Application
 | Features                                       | Support         |
 |------------------------------------------------|-----------------|
-| Single Account                                 | ✅ (tested)     |
+| Single Account                                 |  ✅ (tested)     |
 | Multiple Account                               | ✅ (tested)      |
 | operation with single account                  | ✅ (tested)      |
 | operate with multiple account at the same time | ✅ (tested)      |
@@ -30,8 +30,8 @@ Deluge is a lightweight, Free Software, cross-platform BitTorrent Monitoring ser
 | Add new torrent as file                        | ✅ (tested)      |
 | Add new torrent by magnet link                 | ✅ (tested)      |
 | Add new torrent by Q.R code on the go          | ✅ (tested)      |
-| file exploration                               | ❌ (coming soon) |
-| streaming torrent content                      | ❌ (coming soon) |
+| file exploration                               |✅ (tested)  
+| streaming torrent content                      | ✅ (tested)  |
 
 
 
