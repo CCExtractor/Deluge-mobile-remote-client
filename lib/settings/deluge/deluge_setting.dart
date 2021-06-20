@@ -54,14 +54,7 @@ class _deluge_settingsState extends State<deluge_settings> {
     );
   }
 
-  // update sftp and streaming config
-  void update_sftp_settings() async {
-    states.set_sftp_host(core_settings.sftp_host.text.toString());
-    states.set_sftp_pass(core_settings.sftp_pass.text.toString());
-    states.set_sftp_port(core_settings.sftpport.text.toString());
-    states.set_sftp_route(core_settings.sftp_route_url.text.toString());
-    states.set_sftp_username(core_settings.sftp_username.text.toString());
-  }
+  
 
   @override
   Widget build(BuildContext context) {
@@ -92,7 +85,7 @@ class _deluge_settingsState extends State<deluge_settings> {
                   selected_account.password,
                   selected_account.via_qr,
                   context);
-                update_sftp_settings();
+               
               toastMessage("Setting updated");
               
               
@@ -141,16 +134,7 @@ class _deluge_settingsState extends State<deluge_settings> {
               advance(),
             ],
           ),
-          ExpansionTile(
-            title: Text(
-              "SFTP & Streaming Configuration",
-              style: TextStyle(
-                  fontSize: 16.0,
-                  fontWeight: FontWeight.w500,
-                  fontFamily: theme.font_family),
-            ),
-            children: <Widget>[ssh()],
-          ),
+          
         ],
       )),
     );

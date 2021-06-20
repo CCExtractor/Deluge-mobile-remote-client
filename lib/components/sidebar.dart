@@ -8,6 +8,8 @@ import 'package:deluge_client/components/accounts.dart';
 import 'package:deluge_client/components/storage_indicator.dart';
 import 'package:deluge_client/settings/client/client_setting.dart';
 import 'package:deluge_client/settings/deluge/deluge_setting.dart';
+import 'package:deluge_client/settings/deluge/type/sftp_streaming_settings.dart';
+import 'package:deluge_client/sftp_streaming/sftp_explorer.dart';
 import 'package:flutter/material.dart';
 import 'package:deluge_client/control_center/theme.dart';
 import 'package:flutter/scheduler.dart';
@@ -127,18 +129,24 @@ class sidebarState extends State<sidebar> {
   }
 
   // for managing the state of accounts
+  String sftp_host;
+  String sftp_port;
+  String sftp_username;
+  String sftp_password;
+  String sftp_route_dir;
+
   GlobalKey<accountsState> accounts_state = GlobalKey();
   Future<bool> handle_streaming_action() async {
-    String sftp_host = await states.get_sftp_host();
-    String sftp_port = await states.get_sftp_port();
-    String sftp_username = await states.get_sftp_username();
-    String sftp_password = await states.get_sftp_password();
-    String sftp_route_dir = await states.get_sftp_route();
-    if (sftp_host.isNotEmpty &&
-        sftp_port.isNotEmpty &&
-        sftp_username.isNotEmpty &&
-        sftp_password.isNotEmpty &&
-        sftp_route_dir.isNotEmpty) {
+    sftp_host = await states.get_sftp_host();
+    sftp_port = await states.get_sftp_port();
+    sftp_username = await states.get_sftp_username();
+    sftp_password = await states.get_sftp_password();
+    sftp_route_dir = await states.get_sftp_route();
+    if (sftp_host!=null &&
+        sftp_port!=null &&
+        sftp_username!=null &&
+        sftp_password!=null &&
+        sftp_route_dir!=null) {
       return true;
     }
     return false;
@@ -540,6 +548,8 @@ class sidebarState extends State<sidebar> {
                   color: theme.base_color,
                 ),
                 children: [
+                  
+
                   ListTile(
                     title: Text(
                       "Stream and Explore",
@@ -554,20 +564,58 @@ class sidebarState extends State<sidebar> {
                     onTap: () async {
                       if (await handle_streaming_action()) {
                         // user already configured sftp account
-                        print("print_redirect_to_explorer");
+                         Navigator.push(context,
+                          MaterialPageRoute(builder: (context) => files(
+                          direx: "/",
+                          path: sftp_route_dir,
+                          host: sftp_host,
+                          password: sftp_password,
+                          port: sftp_port,
+                          username: sftp_username,
+                          choosen_account: selecx,
+                        )));
+                        
                       } else {
                         // we need to prompt that user first configure sftp acc
                         Navigator.of(context).pop();
                         showModalBottomSheet(
-                          
                             isScrollControlled: true,
                             context: context,
                             backgroundColor: Colors.transparent,
-                            builder: (context) => ssh_config());
+                            builder: (context) => ssh_config(
+                              sftp_host: sftp_host,
+                              sftp_username: sftp_username,
+                              sftp_password: sftp_password,
+                              sftp_port: sftp_port,
+                              dir_route:sftp_route_dir,
+                              direx: "/",
+                              selected_account: selecx,
+
+
+                            ));
                       }
                       // now we can plug our plugin from here very easily
                     },
-                  )
+                  ),
+                  ListTile(
+                    title: Text(
+                      "Sftp settings",
+                      style: TextStyle(
+                          fontSize: 12.0,
+                          fontFamily: theme.font_family,
+                          color: theme_controller.is_it_dark()
+                              ? Colors.white
+                              : Colors.black),
+                    ),
+                    leading: Icon(Icons.settings_applications_sharp),
+                    onTap: (){
+                        Navigator.push(context,
+                          MaterialPageRoute(builder: (context) => 
+                          ssh()
+                          ));
+
+                    },
+                  ),
                 ],
               )
             : new Container(
