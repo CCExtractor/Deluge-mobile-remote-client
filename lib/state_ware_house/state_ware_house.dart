@@ -24,6 +24,13 @@ class states {
     isFirstTime().then((isFirstTime) {
       if (isFirstTime) {
         pref.setInt("selected_account", 1);
+        pref.setInt("selected_theme", 1);
+        pref.setBool("notification_settings", true);
+        pref.setString("sftp_host","");
+        pref.setString("sftp_port","");
+        pref.setString("sftp_username","");
+        pref.setString("sftp_pass", "");
+        pref.setString("sftp_dir_route","");
       } else {
         print("it is not first");
       }
@@ -66,17 +73,7 @@ class states {
     return t;
   }
 
-  static void first_time_theme_selection() async {
-    SharedPreferences pf = await SharedPreferences.getInstance();
 
-    isFirstTime().then((isFirstTime) {
-      if (isFirstTime) {
-        pf.setInt("selected_theme", 1);
-      } else {
-        print("it is not first");
-      }
-    });
-  }
 
   //----------------------------------------------------------------------
   static void set_notification_settings(bool val) async {
@@ -89,17 +86,7 @@ class states {
     return pf.get("notification_settings");
   }
 
-  static Future<void> set_notification_at_first_launch() async {
-    SharedPreferences pf = await SharedPreferences.getInstance();
-
-    isFirstTime().then((isFirstTime) {
-      if (isFirstTime) {
-        pf.setBool("notification_settings", true);
-      } else {
-        print("it is not first");
-      }
-    });
-  }
+ 
 
   //-------------------------------------------------sftp area
   static Future<void> set_sftp_host(String host) async {

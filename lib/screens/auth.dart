@@ -67,8 +67,7 @@ class _auth_viewState extends State<auth_view> {
   @override
   void initState() {
     states.first_time_setup_selection();
-    states.first_time_theme_selection();
-    states.set_notification_at_first_launch();
+    
     super.initState();
   }
 
