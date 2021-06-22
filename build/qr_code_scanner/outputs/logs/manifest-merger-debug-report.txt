@@ -1,0 +1,23 @@
+-- Merging decision tree log ---
+manifest
+ADDED from C:\flutter\.pub-cache\hosted\pub.dartlang.org\qr_code_scanner-0.4.0\android\src\main\AndroidManifest.xml:1:1-4:12
+INJECTED from C:\flutter\.pub-cache\hosted\pub.dartlang.org\qr_code_scanner-0.4.0\android\src\main\AndroidManifest.xml:1:1-4:12
+INJECTED from C:\flutter\.pub-cache\hosted\pub.dartlang.org\qr_code_scanner-0.4.0\android\src\main\AndroidManifest.xml:1:1-4:12
+	package
+		ADDED from C:\flutter\.pub-cache\hosted\pub.dartlang.org\qr_code_scanner-0.4.0\android\src\main\AndroidManifest.xml:1:70-109
+		INJECTED from C:\flutter\.pub-cache\hosted\pub.dartlang.org\qr_code_scanner-0.4.0\android\src\main\AndroidManifest.xml
+		INJECTED from C:\flutter\.pub-cache\hosted\pub.dartlang.org\qr_code_scanner-0.4.0\android\src\main\AndroidManifest.xml
+	xmlns:tools
+		ADDED from C:\flutter\.pub-cache\hosted\pub.dartlang.org\qr_code_scanner-0.4.0\android\src\main\AndroidManifest.xml:2:3-49
+	xmlns:android
+		ADDED from C:\flutter\.pub-cache\hosted\pub.dartlang.org\qr_code_scanner-0.4.0\android\src\main\AndroidManifest.xml:1:11-69
+uses-sdk
+ADDED from C:\flutter\.pub-cache\hosted\pub.dartlang.org\qr_code_scanner-0.4.0\android\src\main\AndroidManifest.xml:3:3-71
+INJECTED from C:\flutter\.pub-cache\hosted\pub.dartlang.org\qr_code_scanner-0.4.0\android\src\main\AndroidManifest.xml:3:3-71
+INJECTED from C:\flutter\.pub-cache\hosted\pub.dartlang.org\qr_code_scanner-0.4.0\android\src\main\AndroidManifest.xml:3:3-71
+	tools:overrideLibrary
+		ADDED from C:\flutter\.pub-cache\hosted\pub.dartlang.org\qr_code_scanner-0.4.0\android\src\main\AndroidManifest.xml:3:13-68
+	android:minSdkVersion
+		INJECTED from C:\flutter\.pub-cache\hosted\pub.dartlang.org\qr_code_scanner-0.4.0\android\src\main\AndroidManifest.xml
+		ADDED from C:\flutter\.pub-cache\hosted\pub.dartlang.org\qr_code_scanner-0.4.0\android\src\main\AndroidManifest.xml:3:3-71
+		INJECTED from C:\flutter\.pub-cache\hosted\pub.dartlang.org\qr_code_scanner-0.4.0\android\src\main\AndroidManifest.xml

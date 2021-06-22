@@ -49,12 +49,12 @@ class _media_streamState extends State<media_stream> {
                     BetterPlayerDataSourceType.network,
                     // videoListData!.videoUrl,
                     selected_file,
-                    // "https://fremicro045.xirvik.com/downloads/The%20WIRED%20CD%20-%20Rip.%20Sample.%20Mash.%20Share/01%20-%20Beastie%20Boys%20-%20Now%20Get%20Busy.mp3",
+                  
                     notificationConfiguration:
                         BetterPlayerNotificationConfiguration(
                             showNotification: true,
                             title: "Streaming on",
-                            author: "Deluge mobile Client"),
+                            author:file_name.toString()),
                     headers: headers),
 
                 configuration: BetterPlayerConfiguration(

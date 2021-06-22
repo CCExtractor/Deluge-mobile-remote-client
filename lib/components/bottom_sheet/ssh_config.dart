@@ -7,56 +7,26 @@ import 'package:deluge_client/state_ware_house/state_ware_house.dart';
 import 'package:deluge_client/settings/deluge/core_settings.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:deluge_client/control_center/theme_controller.dart';
+import 'package:deluge_client/settings/deluge/type/sftp_setting_field.dart';
 
 class ssh_config extends StatefulWidget {
-  final String sftp_host;
-  final String sftp_port;
-  final String sftp_username;
-  final String sftp_password;
   final String direx;
-  final String dir_route;
+
   final Bucket selected_account;
-  ssh_config(
-      {Key key,
-      @required this.sftp_host,
-      @required this.sftp_port,
-      @required this.sftp_username,
-      @required this.sftp_password,
-      @required this.direx,
-      @required this.dir_route,
-      @required this.selected_account})
+  ssh_config({Key key, @required this.direx, @required this.selected_account})
       : super(key: key);
 
   @override
-  _ssh_configState createState() => _ssh_configState(
-      dir_route: dir_route,
-      direx: direx,
-      sftp_host: sftp_host,
-      sftp_password: sftp_password,
-      sftp_port: sftp_port,
-      sftp_username: sftp_username,
-      selected_account: selected_account
-      );
+  _ssh_configState createState() =>
+      _ssh_configState(direx: direx, selected_account: selected_account);
 }
 
 class _ssh_configState extends State<ssh_config> {
-  final String sftp_host;
-  final String sftp_port;
-  final String sftp_username;
-  final String sftp_password;
   final String direx;
-  final String dir_route;
+
   final Bucket selected_account;
   _ssh_configState(
-      {Key key,
-      @required this.sftp_host,
-      @required this.sftp_port,
-      @required this.sftp_username,
-      @required this.sftp_password,
-      @required this.direx,
-      @required this.dir_route,
-      @required this.selected_account
-      });
+      {Key key, @required this.direx, @required this.selected_account});
 
   void update_sftp_settings() async {
     states.set_sftp_host(core_settings.sftp_host.text.toString());
@@ -104,7 +74,7 @@ class _ssh_configState extends State<ssh_config> {
                   indent: 70.0,
                   endIndent: 70.0,
                 ),
-                ssh(),
+                sftp_settings_fields(),
                 Row(
                   children: [
                     Padding(
@@ -127,16 +97,22 @@ class _ssh_configState extends State<ssh_config> {
                     onPressed: () {
                       update_sftp_settings();
                       toastMessage("Added Config");
+                      Navigator.of(context).pop();//close bottom sheet
                       Navigator.push(
                           context,
                           MaterialPageRoute(
                               builder: (context) => files(
                                     direx: direx,
-                                    host: sftp_host,
-                                    password: sftp_password,
-                                    path: dir_route,
-                                    port: sftp_port,
-                                    username: sftp_username,
+                                    host:
+                                        core_settings.sftp_host.text.toString(),
+                                    password:
+                                        core_settings.sftp_pass.text.toString(),
+                                    path: core_settings.sftp_route_url.text
+                                        .toString(),
+                                    port:
+                                        core_settings.sftpport.text.toString(),
+                                    username: core_settings.sftp_username.text
+                                        .toString(),
                                     choosen_account: selected_account,
                                   )));
                     },

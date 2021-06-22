@@ -142,11 +142,12 @@ class sidebarState extends State<sidebar> {
     sftp_username = await states.get_sftp_username();
     sftp_password = await states.get_sftp_password();
     sftp_route_dir = await states.get_sftp_route();
-    if (sftp_host!=null &&
-        sftp_port!=null &&
-        sftp_username!=null &&
-        sftp_password!=null &&
-        sftp_route_dir!=null) {
+    
+    if (sftp_host.isNotEmpty &&
+        sftp_port.isNotEmpty&
+        sftp_username.isNotEmpty &&
+        sftp_password.isNotEmpty &&
+        sftp_route_dir.isNotEmpty) {
       return true;
     }
     return false;
@@ -548,8 +549,6 @@ class sidebarState extends State<sidebar> {
                   color: theme.base_color,
                 ),
                 children: [
-                  
-
                   ListTile(
                     title: Text(
                       "Stream and Explore",
@@ -564,17 +563,18 @@ class sidebarState extends State<sidebar> {
                     onTap: () async {
                       if (await handle_streaming_action()) {
                         // user already configured sftp account
-                         Navigator.push(context,
-                          MaterialPageRoute(builder: (context) => files(
-                          direx: "/",
-                          path: sftp_route_dir,
-                          host: sftp_host,
-                          password: sftp_password,
-                          port: sftp_port,
-                          username: sftp_username,
-                          choosen_account: selecx,
-                        )));
-                        
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => files(
+                                      direx: "/",
+                                      path: sftp_route_dir,
+                                      host: sftp_host,
+                                      password: sftp_password,
+                                      port: sftp_port,
+                                      username: sftp_username,
+                                      choosen_account: selecx,
+                                    )));
                       } else {
                         // we need to prompt that user first configure sftp acc
                         Navigator.of(context).pop();
@@ -583,16 +583,10 @@ class sidebarState extends State<sidebar> {
                             context: context,
                             backgroundColor: Colors.transparent,
                             builder: (context) => ssh_config(
-                              sftp_host: sftp_host,
-                              sftp_username: sftp_username,
-                              sftp_password: sftp_password,
-                              sftp_port: sftp_port,
-                              dir_route:sftp_route_dir,
-                              direx: "/",
-                              selected_account: selecx,
-
-
-                            ));
+                          
+                                  direx: "/",
+                                  selected_account: selecx,
+                                ));
                       }
                       // now we can plug our plugin from here very easily
                     },
@@ -608,12 +602,9 @@ class sidebarState extends State<sidebar> {
                               : Colors.black),
                     ),
                     leading: Icon(Icons.settings_applications_sharp),
-                    onTap: (){
-                        Navigator.push(context,
-                          MaterialPageRoute(builder: (context) => 
-                          ssh()
-                          ));
-
+                    onTap: () {
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) => ssh()));
                     },
                   ),
                 ],
