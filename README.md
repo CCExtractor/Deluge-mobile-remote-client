@@ -1,6 +1,10 @@
 ![](https://i.imgur.com/emdyzUf.png)
+![Catalogue 1](https://i.imgur.com/AcsglH8.png)
+![Catalogue 2](https://i.imgur.com/b3d5lCs.png)
+![catalogue 3](https://i.imgur.com/X2AG1mA.png)
+![Catalogue 4](https://i.imgur.com/qhCSXlH.png)
 
-![under development](https://www.canoe.ie/wp-content/uploads/2016/11/sl_website-under-construction.jpeg)
+
 
 ## About The Project
 Deluge is a lightweight, Free Software, cross-platform BitTorrent Monitoring service.
