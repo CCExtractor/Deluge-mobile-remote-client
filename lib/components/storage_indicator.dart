@@ -13,23 +13,27 @@ import 'package:deluge_client/state_ware_house/state_ware_house.dart';
 import '../string/controller.dart';
 import 'package:deluge_client/control_center/theme_controller.dart';
 
-
 class storage_indicator extends StatefulWidget {
   final List<Cookie> cookie;
-  storage_indicator({Key key, @required this.cookie}) : super(key: key);
+  final BuildContext context;
+  storage_indicator({Key key, @required this.cookie, @required this.context})
+      : super(key: key);
   @override
   _storage_indicatorState createState() =>
-      _storage_indicatorState(cookie: cookie);
+      _storage_indicatorState(cookie: cookie,
+      context: context
+      );
 }
 
 class _storage_indicatorState extends State<storage_indicator> {
   final List<Cookie> cookie;
-  _storage_indicatorState({Key key, @required this.cookie});
+  final BuildContext context;
+  _storage_indicatorState({Key key, @required this.cookie,@required this.context});
 
   DbbucketManager account_manager = DbbucketManager();
   int selected_account = 0;
   Bucket selx_acc;
-  
+
   void fetch_selectx_account() async {
     int mid = await states.state_selected_account();
 
@@ -48,17 +52,15 @@ class _storage_indicatorState extends State<storage_indicator> {
           selx_acc.username,
           selx_acc.password,
           selx_acc.via_qr,
-          context
-          );
+          context);
       if (this.mounted) {
         setState(() {
-          controller.path_controller= conf['result']['download_location'];
+          controller.path_controller = conf['result']['download_location'];
         });
       }
     });
   }
 
- 
   void get_path_size() async {
     Future.delayed(Duration(seconds: 1), () async {
       int free_space = await apis.fetch_free_space(
@@ -69,8 +71,7 @@ class _storage_indicatorState extends State<storage_indicator> {
           selx_acc.username,
           selx_acc.password,
           selx_acc.via_qr,
-          context
-          );
+          context);
       if (this.mounted) {
         setState(() {
           controller.storage_controller = filesize(free_space).toString();
@@ -96,11 +97,13 @@ class _storage_indicatorState extends State<storage_indicator> {
                 child: ListTile(
               dense: true,
               visualDensity: VisualDensity(horizontal: 0, vertical: -4),
-              title: Text(
-                controller.path_controller,
-                style:
-      TextStyle(fontSize: 12.0, fontFamily: theme.font_family, color: theme_controller.is_it_dark()?Colors.white:Colors.black)
-              ),
+              title: Text(controller.path_controller,
+                  style: TextStyle(
+                      fontSize: 12.0,
+                      fontFamily: theme.font_family,
+                      color: theme_controller.is_it_dark()
+                          ? Colors.white
+                          : Colors.black)),
               subtitle: Text(
                 controller.storage_controller + " " + "Available ",
                 style: theme.sidebar_tile_style,

@@ -341,6 +341,7 @@ class _tileState extends State<tile> {
                     children: [
                       Text(
                         inside_res['name'],
+                        overflow: TextOverflow.ellipsis,
                         style: TextStyle(
                             color: (!theme_controller.is_it_dark()
                                   ? Colors.black

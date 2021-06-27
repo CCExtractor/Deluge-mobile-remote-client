@@ -193,6 +193,7 @@ class sidebarState extends State<sidebar> {
                 children: [
                   storage_indicator(
                     cookie: cookie,
+                    context: context,
                   )
                 ],
               )

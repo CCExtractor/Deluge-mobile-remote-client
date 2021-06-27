@@ -121,14 +121,23 @@ class _magnet_qr_readerState extends State<magnet_qr_reader> {
             top: false,
             child: Container(
               child: Column(mainAxisSize: MainAxisSize.min, children: <Widget>[
+                Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Flexible(
+                  fit: FlexFit.tight,
+                  child: Container(
+                    color: Colors.transparent,
+                    height: MediaQuery.of(context).orientation ==
+                            Orientation.portrait
+                        ? 300.0
+                        : 150.0,
+                    child: _build_qr(context),
+                  )),
+            ],
+          ),
                 Flexible(
-                    fit: FlexFit.tight,
-                    child: Container(
-                      color: Colors.transparent,
-                      height: 300.0,
-                      child: _build_qr(context),
-                    )),
-                Flexible(
+                 
                     child: RaisedButton(
                         color: theme.base_color,
                         onPressed: () {
