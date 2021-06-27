@@ -22,7 +22,6 @@ import 'package:deluge_client/control_center/theme.dart';
 import 'package:deluge_client/components/sidebar.dart';
 import 'dart:io';
 import 'package:deluge_client/string/controller.dart';
-
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:deluge_client/state_ware_house/state_ware_house.dart';

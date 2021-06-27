@@ -86,7 +86,7 @@ class _ssh_configState extends State<ssh_config> {
                       child: Padding(
                           padding: EdgeInsets.only(left: 3.0),
                           child: Text(
-                            "These Settings can be change later, from Deluge settings option",
+                            "These Settings can be change later, from SFTP settings option",
                             style: TextStyle(fontFamily: theme.font_family),
                           )),
                     )
