@@ -46,7 +46,41 @@ Deluge is a lightweight, Free Software, cross-platform BitTorrent Monitoring ser
 
 
 
-## roadmap to contribute
-> coming soon
+
+## Getting Started
+
+For setting up the development environment, follow the steps given below.
+
+1. For making changes to the project, fork this repository using the green button on this page.
+
+2. Clone your fork or this repository, as applicable.
+
+```bash
+git clone https://github.com/CCExtractor/Deluge-mobile-remote-client.git
+cd Deluge-mobile-remote-client
+```
+
+3. Check for flutter setup and connected devices
+
+```bash
+flutter doctor
+```
+
+4. Run the app using 
+```bash
+flutter run 
+```
+
+For help getting started with Flutter, view our
+[online documentation](https://flutter.dev/docs), which offers tutorials,
+samples, guidance on mobile development, and a full API reference.
+
+
+
+
+note: some of the images are taken from internet, Iam not claiming that those images belongs to me. All the credit and copyrights belongs to their respective owner
+## Contact
+<a href="https://www.linkedin.com/in/arshadverified/" target="_blank">Mohammad Arshad</a>
+
 
 
