@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:deluge_client/components/all_acc.dart';
+import 'package:deluge_client/core/all_acc.dart';
 import 'package:deluge_client/components/all_info.dart';
 import 'package:deluge_client/components/download_upload_pane.dart';
 import 'package:deluge_client/components/progress_bar.dart';

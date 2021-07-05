@@ -342,6 +342,7 @@ class _filesState extends State<files> {
     return Scaffold(
         appBar: AppBar(
           title: Text(direx,style: theme.app_bar_style),
+            backgroundColor: theme.base_color,
           actions: [
             IconButton(
                 icon: Icon(Icons.create_new_folder),

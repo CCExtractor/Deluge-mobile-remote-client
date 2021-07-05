@@ -1,8 +1,9 @@
 import 'dart:collection';
 import 'dart:convert';
 import 'package:deluge_client/api/apis.dart';
-import 'package:deluge_client/components/all_acc.dart';
-import 'package:deluge_client/components/all_acc.dart';
+import 'package:deluge_client/components/error_on_dash.dart';
+import 'package:deluge_client/core/all_acc.dart';
+import 'package:deluge_client/core/all_acc.dart';
 import 'package:deluge_client/components/bottom_sheet/choose_account.dart';
 import 'package:deluge_client/components/bottom_sheet/sorter.dart';
 import 'package:deluge_client/components/download_upload_pane.dart';
@@ -751,7 +752,17 @@ class _dashboardState extends State<dashboard> {
                       return Center(child: loader());
                     } else if (snapshot.data == null ||
                         snapshot.data['result'] == null) {
-                      return no_data();
+                      return error(retry:(){
+                         non_delayed_torrent_fetch(
+                                    selx_acc.deluge_url,
+                                    selx_acc.deluge_pwrd,
+                                    cookie,
+                                    selx_acc.has_deluge_pwrd,
+                                    selx_acc.is_reverse_proxied,
+                                    selx_acc.username,
+                                    selx_acc.password,
+                                    selx_acc.via_qr);
+                      });
                     } else {
                       return Expanded(
                           child: RefreshIndicator(

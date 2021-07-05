@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:deluge_client/control_center/theme.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_phoenix/flutter_phoenix.dart';
+import 'package:deluge_client/core/auth_valid.dart';
 
 class apis {
   static int network_request = 0;
@@ -263,7 +264,7 @@ class apis {
   }
 
   //--
-  static Future<bool> auth_validity(
+  static Future<auth_valid> auth_validity(
     String url,
     String password,
     String has_deluge_pass,
@@ -301,19 +302,32 @@ class apis {
 
       final response = await request.close();
       // print(response.cookies);
-      List<Cookie> cookie = response.cookies;
-      final responseBody = await response.transform(utf8.decoder).join();
-      print(responseBody);
-      Map<String, dynamic> auth_out = await json.decode(responseBody);
-      bool output = auth_out["result"];
-      return output;
+      // print(response.statusCode);
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        List<Cookie> cookie = response.cookies;
+        final responseBody = await response.transform(utf8.decoder).join();
+        print(responseBody);
+        Map<String, dynamic> auth_out = await json.decode(responseBody);
+        bool output = auth_out["result"];
+        if (output == true) {
+          return auth_valid(valid: 1, cookie: response.cookies);
+        } else if (output == false) {
+          return auth_valid(valid: 0, cookie: response.cookies);
+        }
+      } else if (response.statusCode == 401) {
+        return auth_valid(valid: -2, cookie: null);
+      } else {
+        print("deluge is down");
+
+        return auth_valid(valid: -1, cookie: null);
+      }
 
       // print(responseBody);
       // print(jsonDecode(responseBody));
       // final result = Model.fromJson(json.decode(responseBody));
-    } catch (error) {
-      print(error);
-      return false;
+      //--------------------
+    } on SocketException catch (_) {
+      return auth_valid(valid: -11, cookie: null);
     }
   }
   //---------------------------------
@@ -678,12 +692,62 @@ class apis {
     }
   }
 
-  //-----------------------------------------------------
+  //-----------------------------------------------------------------------------
+  static Future<List<String>> version_deluge(
+      List<Cookie> cookie,
+      String url,
+      String is_reverse_proxied,
+      String seed_username,
+      String seed_pass,
+      String qr_auth,
+      BuildContext context) async {
+    Map<String, dynamic> requestPayload = {
+      "method": "daemon.get_version",
+      "params": [],
+      "id": network_request++
+    };
 
+    final httpclient = new HttpClient();
+    try {
+      final request = await httpclient.postUrl(Uri.parse(
+          is_reverse_proxied == 'true' ? "$url/deluge/json" : "$url/json"));
+      request.headers.contentType = new ContentType("application", "json");
+      request.headers.add("Cookie", cookie);
+
+      if (seed_username.length > 0 && seed_pass.length > 0) {
+        print("k");
+        String auth =
+            'Basic ' + base64Encode(utf8.encode('$seed_username:$seed_pass'));
+        request.headers.add('authorization', auth);
+      }
+      if (qr_auth.length > 0) {
+        request.headers.add('X-QR-AUTH', qr_auth);
+      }
+
+      request.add(
+        utf8.encode(
+          jsonEncode(requestPayload),
+        ),
+      );
+
+      final response = await request.close();
+
+      // cookie = response.cookies;
+      final responseBody = await response.transform(utf8.decoder).join();
+      Map<String, dynamic> res = json.decode(responseBody);
+      List<String> versioning = res['result'].toString().split("-");
+ 
+      return versioning;
+    } on SocketException catch (_) {
+      dialogue_prompt.show_prompt(context);
+    } catch (e) {
+      print(e);
+    }
+  }
 }
 
 class dialogue_prompt {
-  static void  show_prompt(BuildContext context) {
+  static void show_prompt(BuildContext context) {
     Widget cancelButton = FlatButton(
       child: Text(
         "Exit",
@@ -708,8 +772,7 @@ class dialogue_prompt {
             fontFamily: theme.font_family),
       ),
       onPressed: () {
-       Phoenix.rebirth(context);
-        
+        Phoenix.rebirth(context);
       },
     );
 
