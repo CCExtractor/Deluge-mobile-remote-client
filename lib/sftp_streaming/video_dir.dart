@@ -1,5 +1,7 @@
 import 'package:better_player/better_player.dart';
 import 'package:flutter/material.dart';
+import 'package:deluge_client/control_center/theme.dart';
+import 'package:flutter/services.dart';
 
 class media_stream extends StatefulWidget {
   final String file_name;
@@ -24,6 +26,7 @@ class _media_streamState extends State<media_stream> {
   final Map<String, dynamic> headers;
   _media_streamState({this.selected_file, this.file_name,this.headers});
   BetterPlayerListVideoPlayerController controller;
+
   void initState() {
     super.initState();
     controller = BetterPlayerListVideoPlayerController();
@@ -34,17 +37,19 @@ class _media_streamState extends State<media_stream> {
 
   @override
   Widget build(BuildContext context) {
+    
     return Scaffold(
         backgroundColor: Colors.black,
-        appBar: AppBar(title: Text(file_name)),
-        body: SingleChildScrollView(
-            child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Container(
-              height: MediaQuery.of(context).size.height,
-              width: MediaQuery.of(context).size.width,
-              child: BetterPlayerListVideoPlayer(
+        appBar: AppBar(title: Text(file_name),
+          backgroundColor: theme.base_color,
+        ),
+        body:  Column(
+         
+         
+          children: [Expanded(
+            flex: 10,
+            child:
+               BetterPlayerListVideoPlayer(
                 BetterPlayerDataSource(
                     BetterPlayerDataSourceType.network,
                     // videoListData!.videoUrl,
@@ -59,14 +64,16 @@ class _media_streamState extends State<media_stream> {
 
                 configuration: BetterPlayerConfiguration(
                   autoPlay: false,
-                  aspectRatio: 1,
+                  
+             
                 ),
                 //key: Key(videoListData.hashCode.toString()),
                 playFraction: 0.8,
                 betterPlayerListVideoPlayerController: controller,
-              ),
-            ),
+                
+              )),
+            
           ],
-        )));
+        ));
   }
 }

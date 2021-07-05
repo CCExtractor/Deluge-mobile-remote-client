@@ -56,19 +56,14 @@ class _splashState extends State<splash> {
     return Scaffold(
       backgroundColor: theme.base_color,
       body: Center(
-          child: SingleChildScrollView(
-              child: Column(
+          child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Flexible(
-                  fit: FlexFit.tight,
-                  child: Image.asset("assets/animation.gif"),
-                )
-              ]),
+          Image.asset(
+            "assets/animation.gif",
+             height: 350.0,
+             
+          ),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -83,7 +78,7 @@ class _splashState extends State<splash> {
             ],
           )
         ],
-      ))),
+      )),
     );
   }
 }

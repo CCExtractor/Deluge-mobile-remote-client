@@ -10,6 +10,7 @@ import 'package:qr_code_scanner/qr_code_scanner.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:deluge_client/api/apis.dart';
 import 'package:deluge_client/state_ware_house/state_ware_house.dart';
+import 'package:deluge_client/core/auth_valid.dart';
 
 class auth_qr extends StatefulWidget {
   final bool tow_attachment;
@@ -59,26 +60,42 @@ class _auth_qrState extends State<auth_qr> {
 
   int count = 0;
   void check_validity(String url, String auth_qr) async {
-    bool validity = await apis.auth_validity("https://" + url, "",
+    auth_valid validity = await apis.auth_validity("https://" + url, "",
         false.toString(), true.toString(), "", "", auth_qr);
-    if (validity) {
-      controller.stopCamera();
-      add_in_db(url, auth_qr);
-      set_auth_state();
 
-      !tow_attachment
-          ? toastMessage("Successfully Authorized")
-          : toastMessage("Successfully added");
-      !tow_attachment
-          ? Navigator.pushReplacement(
-              context, MaterialPageRoute(builder: (context) => dashboard()))
-          : Navigator.popUntil(context, (route) {
-              return count++ == 1;
-            });
-    } else {
+    List<String> version = await apis.version_deluge(
+        validity.cookie,"https://" + url, true.toString(), "", "", auth_qr, context);
+    print("version is : " + version[0]);
+    if (validity.valid == 1) {
+      
+        controller.stopCamera();
+        add_in_db(url, auth_qr);
+        set_auth_state();
+
+        !tow_attachment
+            ? toastMessage("Successfully Authorized")
+            : toastMessage("Successfully added");
+        !tow_attachment
+            ? Navigator.pushReplacement(
+                context, MaterialPageRoute(builder: (context) => dashboard()))
+            : Navigator.popUntil(context, (route) {
+                return count++ == 1;
+              });
+      
+    } else if (validity.valid == 0) {
       toastMessage("Credentials are wrong");
+    } else if (validity.valid == -1) {
+      toastMessage("Deluge is not responding, Might be it is down");
+    } else if (validity.valid == -11) {
+      toastMessage("Deluge is not reachable");
+    } else if (validity.valid == -2) {
+      toastMessage("Seedbox doesnot get authenticated");
+    } else {
+      toastMessage("Something goes wrong");
     }
   }
+
+ 
 
   Barcode result;
   QRViewController controller;

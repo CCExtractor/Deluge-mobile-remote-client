@@ -72,6 +72,7 @@ flutter:
     - assets/loader.gif
     - assets/no_data.png
     - assets/animation.gif
+    - assets/server_end_error.png
 
 
   #   - images/a_dot_ham.jpeg

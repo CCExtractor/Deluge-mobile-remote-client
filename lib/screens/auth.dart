@@ -10,6 +10,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:deluge_client/api/apis.dart';
 import 'package:deluge_client/state_ware_house/state_ware_house.dart';
+import 'package:deluge_client/core/auth_valid.dart';
 
 class auth_view extends StatefulWidget {
   final bool tow_attachment;
@@ -67,7 +68,7 @@ class _auth_viewState extends State<auth_view> {
   @override
   void initState() {
     states.first_time_setup_selection();
-    
+
     super.initState();
   }
 
@@ -85,23 +86,37 @@ class _auth_viewState extends State<auth_view> {
 
   void check_validity(String url, String password, String has_deluge_pass,
       String is_reverse_proxied, String seed_username, seed_pass) async {
-    bool validity = await apis.auth_validity(url, password, has_deluge_pass,
-        is_reverse_proxied, seed_username, seed_pass, "");
-    if (validity) {
-      add_in_db(url, has_deluge_pass, password, is_reverse_proxied,
-          seed_username, seed_pass);
-      set_auth_state();
-      !tow_attachment
-          ? toastMessage("Successfully Authorized")
-          : toastMessage("Successfully added");
-      !tow_attachment
-          ? Navigator.push(
-              context, MaterialPageRoute(builder: (context) => dashboard()))
-          : Navigator.pop(context);
-    } else {
+    auth_valid validity = await apis.auth_validity(url, password,
+        has_deluge_pass, is_reverse_proxied, seed_username, seed_pass, "");
+
+
+    if (validity.valid == 1) {
+     
+        add_in_db(url, has_deluge_pass, password, is_reverse_proxied,
+            seed_username, seed_pass);
+        set_auth_state();
+        !tow_attachment
+            ? toastMessage("Successfully Authorized")
+            : toastMessage("Successfully added");
+        !tow_attachment
+            ? Navigator.push(
+                context, MaterialPageRoute(builder: (context) => dashboard()))
+            : Navigator.pop(context);
+      
+    } else if (validity.valid == 0) {
       toastMessage("Credentials are wrong");
+    } else if (validity.valid == -1) {
+      toastMessage("Deluge is not responding, Might be it is down");
+    } else if (validity.valid == -11) {
+      toastMessage("Deluge is not reachable");
+    } else if (validity.valid == -2) {
+      toastMessage("Seedbox doesnot get authenticated");
+    } else {
+      toastMessage("Something goes wrong");
     }
   }
+
+ 
 
   @override
   Widget build(BuildContext context) {
