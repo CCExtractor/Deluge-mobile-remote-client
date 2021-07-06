@@ -63,9 +63,7 @@ class _auth_qrState extends State<auth_qr> {
     auth_valid validity = await apis.auth_validity("https://" + url, "",
         false.toString(), true.toString(), "", "", auth_qr);
 
-    List<String> version = await apis.version_deluge(
-        validity.cookie,"https://" + url, true.toString(), "", "", auth_qr, context);
-    print("version is : " + version[0]);
+  
     if (validity.valid == 1) {
       
         controller.stopCamera();

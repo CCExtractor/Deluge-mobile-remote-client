@@ -26,14 +26,28 @@ class _media_streamState extends State<media_stream> {
   final Map<String, dynamic> headers;
   _media_streamState({this.selected_file, this.file_name,this.headers});
   BetterPlayerListVideoPlayerController controller;
-
+     List<DeviceOrientation> orientations=[DeviceOrientation.portraitUp];
   void initState() {
     super.initState();
+     SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+      
+  ]);
     controller = BetterPlayerListVideoPlayerController();
     Future.delayed(Duration(seconds: 1), () {
       controller.play();
     });
   }
+  @override
+dispose(){
+  SystemChrome.setPreferredOrientations([
+    DeviceOrientation.landscapeRight,
+    DeviceOrientation.landscapeLeft,
+    DeviceOrientation.portraitUp,
+    DeviceOrientation.portraitDown,
+  ]);
+  super.dispose();
+}
 
   @override
   Widget build(BuildContext context) {
@@ -64,6 +78,7 @@ class _media_streamState extends State<media_stream> {
 
                 configuration: BetterPlayerConfiguration(
                   autoPlay: false,
+                  deviceOrientationsAfterFullScreen: orientations
                   
              
                 ),
