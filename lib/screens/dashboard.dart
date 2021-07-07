@@ -99,7 +99,7 @@ class _dashboardState extends State<dashboard> {
       String seed_pass,
       String qr_auth) async {
     cookie = await apis.authentication_to_deluge(url, password, has_deluge_pass,
-        is_reverse_proxied, seed_username, seed_pass, qr_auth,context);
+        is_reverse_proxied, seed_username, seed_pass, qr_auth, context);
   }
 
   @override
@@ -117,7 +117,7 @@ class _dashboardState extends State<dashboard> {
       if (this.mounted) {
         setState(() {
           torrent = apis.get_torrent_list(cookie, url, is_reverse_proxied,
-              seed_username, seed_pass, qr_auth,context);
+              seed_username, seed_pass, qr_auth, context);
 
           // setting state for ui changes realtime
         });
@@ -160,7 +160,7 @@ class _dashboardState extends State<dashboard> {
         if (this.mounted) {
           setState(() {
             torrent = apis.get_torrent_list(cookie, url, is_reverse_proxied,
-                seed_username, seed_pass, qr_auth,context);
+                seed_username, seed_pass, qr_auth, context);
 
             // setting state for ui changes realtime
           });
@@ -328,8 +328,7 @@ class _dashboardState extends State<dashboard> {
             selx_acc.username,
             selx_acc.password,
             selx_acc.via_qr,
-            context
-            );
+            context);
       }
       non_delayed_torrent_fetch(
           selx_acc.deluge_url,
@@ -363,8 +362,7 @@ class _dashboardState extends State<dashboard> {
             selx_acc.username,
             selx_acc.password,
             selx_acc.via_qr,
-            context
-            );
+            context);
       }
       non_delayed_torrent_fetch(
           selx_acc.deluge_url,
@@ -484,8 +482,7 @@ class _dashboardState extends State<dashboard> {
               selx_acc.username,
               selx_acc.password,
               selx_acc.via_qr,
-              context
-              );
+              context);
         }
         non_delayed_torrent_fetch(
             selx_acc.deluge_url,
@@ -524,8 +521,7 @@ class _dashboardState extends State<dashboard> {
               selx_acc.username,
               selx_acc.password,
               selx_acc.via_qr,
-              context
-              );
+              context);
         }
         non_delayed_torrent_fetch(
             selx_acc.deluge_url,
@@ -593,8 +589,12 @@ class _dashboardState extends State<dashboard> {
   Map<String, dynamic> sort(Map<String, dynamic> map) {
     if (sort_helper.non_reverse_order) {
       return map;
-    } else {
+    } else if (sort_helper.reverse_order) {
       return sort_helper.sort(map);
+    } else if (sort_helper.by_size_order) {
+      return sort_helper.sort_by_size(map);
+    } else if (sort_helper.by_date_time) {
+      return sort_helper.sort_by_date_time(map);
     }
   }
 
@@ -618,7 +618,6 @@ class _dashboardState extends State<dashboard> {
               } else {
                 states.set_theme_mode(1);
               }
-              
             },
           ),
         ],
@@ -752,16 +751,16 @@ class _dashboardState extends State<dashboard> {
                       return Center(child: loader());
                     } else if (snapshot.data == null ||
                         snapshot.data['result'] == null) {
-                      return error(retry:(){
-                         non_delayed_torrent_fetch(
-                                    selx_acc.deluge_url,
-                                    selx_acc.deluge_pwrd,
-                                    cookie,
-                                    selx_acc.has_deluge_pwrd,
-                                    selx_acc.is_reverse_proxied,
-                                    selx_acc.username,
-                                    selx_acc.password,
-                                    selx_acc.via_qr);
+                      return error(retry: () {
+                        non_delayed_torrent_fetch(
+                            selx_acc.deluge_url,
+                            selx_acc.deluge_pwrd,
+                            cookie,
+                            selx_acc.has_deluge_pwrd,
+                            selx_acc.is_reverse_proxied,
+                            selx_acc.username,
+                            selx_acc.password,
+                            selx_acc.via_qr);
                       });
                     } else {
                       return Expanded(

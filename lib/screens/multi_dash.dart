@@ -355,8 +355,12 @@ class multi_accountState extends State<multi_account> {
   Map<multtorrent, dynamic> sort(Map<multtorrent, dynamic> map) {
     if (sort_helper.non_reverse_order) {
       return map;
-    } else {
+    } else if (sort_helper.reverse_order) {
       return sort_helper.sort_for_multi(map);
+    } else if (sort_helper.by_size_order) {
+      return sort_helper.sort_by_size_for_multi(map);
+    } else if (sort_helper.by_date_time) {
+      return sort_helper.sort_by_date_time_for_multi(map);
     }
   }
   //----------------------------------------------------------------------
