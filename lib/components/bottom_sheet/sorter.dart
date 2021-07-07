@@ -36,7 +36,9 @@ class _sorterState extends State<sorter> {
                       padding: EdgeInsets.only(top: 3.0),
                       child: Text("Sort as",
                           style: TextStyle(
-                              color: !theme_controller.is_it_dark()?Colors.black:Colors.white,
+                              color: !theme_controller.is_it_dark()
+                                  ? Colors.black
+                                  : Colors.white,
                               fontSize: theme.bottom_sheet_heading_font_size,
                               fontFamily: theme.font_family))),
                   Divider(
@@ -46,20 +48,28 @@ class _sorterState extends State<sorter> {
                     endIndent: 55.0,
                   ),
                   ListTile(
-                  
                     title: Text(
-                      'Non-Reversed',
+                      'Sort by non-reverse order',
                       style: TextStyle(
-                          color:  sort_helper.non_reverse_order?theme.base_color:(!theme_controller.is_it_dark()?Colors.black:Colors.white),
+                          color: sort_helper.non_reverse_order
+                              ? theme.base_color
+                              : (!theme_controller.is_it_dark()
+                                  ? Colors.black
+                                  : Colors.white),
                           fontSize: theme.alert_box_font_size,
                           fontFamily: theme.font_family),
                     ),
-                    leading: Icon(Icons.arrow_upward, color: sort_helper.non_reverse_order?theme.base_color:Colors.black),
+                    leading: Icon(Icons.arrow_upward,
+                        color: sort_helper.non_reverse_order
+                            ? theme.base_color
+                            : Colors.black),
                     onTap: () {
                       if (this.mounted) {
                         setState(() {
                           sort_helper.reverse_order = false;
                           sort_helper.non_reverse_order = true;
+                          sort_helper.by_size_order = false;
+                          sort_helper.by_date_time = false;
                         });
                       }
                       rebuilt_list();
@@ -67,21 +77,92 @@ class _sorterState extends State<sorter> {
                     },
                   ),
                   ListTile(
-                  
                       title: Text(
-                        'Reversed',
+                        'Sort by reverse order',
                         style: TextStyle(
-                            color: sort_helper.reverse_order?theme.base_color:(!theme_controller.is_it_dark()?Colors.black:Colors.white),
+                            color: sort_helper.reverse_order
+                                ? theme.base_color
+                                : (!theme_controller.is_it_dark()
+                                    ? Colors.black
+                                    : Colors.white),
                             fontSize: theme.alert_box_font_size,
                             fontFamily: theme.font_family),
                       ),
-                      leading: Icon(Icons.arrow_downward_rounded,
-                          color:  sort_helper.reverse_order?theme.base_color:Colors.black,),
+                      leading: Icon(
+                        Icons.arrow_downward_rounded,
+                        color: sort_helper.reverse_order
+                            ? theme.base_color
+                            : Colors.black,
+                      ),
                       onTap: () {
                         if (this.mounted) {
                           setState(() {
                             sort_helper.reverse_order = true;
                             sort_helper.non_reverse_order = false;
+                            sort_helper.by_size_order = false;
+                            sort_helper.by_date_time = false;
+                          });
+                        }
+                        rebuilt_list();
+
+                        Navigator.of(context).pop();
+                      }),
+                  ListTile(
+                      title: Text(
+                        'Sort by size',
+                        style: TextStyle(
+                            color: sort_helper.by_size_order
+                                ? theme.base_color
+                                : (!theme_controller.is_it_dark()
+                                    ? Colors.black
+                                    : Colors.white),
+                            fontSize: theme.alert_box_font_size,
+                            fontFamily: theme.font_family),
+                      ),
+                      leading: Icon(
+                        Icons.sd_storage_outlined,
+                        color: sort_helper.by_size_order
+                            ? theme.base_color
+                            : Colors.black,
+                      ),
+                      onTap: () {
+                        if (this.mounted) {
+                          setState(() {
+                            sort_helper.reverse_order = false;
+                            sort_helper.non_reverse_order = false;
+                            sort_helper.by_size_order = true;
+                            sort_helper.by_date_time = false;
+                          });
+                        }
+                        rebuilt_list();
+
+                        Navigator.of(context).pop();
+                      }),
+                       ListTile(
+                      title: Text(
+                        'Sort by date and time added',
+                        style: TextStyle(
+                            color: sort_helper.by_date_time
+                                ? theme.base_color
+                                : (!theme_controller.is_it_dark()
+                                    ? Colors.black
+                                    : Colors.white),
+                            fontSize: theme.alert_box_font_size,
+                            fontFamily: theme.font_family),
+                      ),
+                      leading: Icon(
+                        Icons.watch,
+                        color: sort_helper.by_date_time
+                            ? theme.base_color
+                            : Colors.black,
+                      ),
+                      onTap: () {
+                        if (this.mounted) {
+                          setState(() {
+                            sort_helper.reverse_order = false;
+                            sort_helper.non_reverse_order = false;
+                            sort_helper.by_size_order = false;
+                            sort_helper.by_date_time = true;
                           });
                         }
                         rebuilt_list();
