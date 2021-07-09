@@ -62,7 +62,9 @@ class _sorterState extends State<sorter> {
                     leading: Icon(Icons.arrow_upward,
                         color: sort_helper.non_reverse_order
                             ? theme.base_color
-                            : Colors.black),
+                            :  (!theme_controller.is_it_dark()
+                                  ? Colors.black
+                                  : Colors.white)),
                     onTap: () {
                       if (this.mounted) {
                         setState(() {
@@ -92,7 +94,9 @@ class _sorterState extends State<sorter> {
                         Icons.arrow_downward_rounded,
                         color: sort_helper.reverse_order
                             ? theme.base_color
-                            : Colors.black,
+                            :  (!theme_controller.is_it_dark()
+                                  ? Colors.black
+                                  : Colors.white),
                       ),
                       onTap: () {
                         if (this.mounted) {
@@ -123,7 +127,9 @@ class _sorterState extends State<sorter> {
                         Icons.sd_storage_outlined,
                         color: sort_helper.by_size_order
                             ? theme.base_color
-                            : Colors.black,
+                            : (!theme_controller.is_it_dark()
+                                  ? Colors.black
+                                  : Colors.white),
                       ),
                       onTap: () {
                         if (this.mounted) {
@@ -154,7 +160,9 @@ class _sorterState extends State<sorter> {
                         Icons.watch,
                         color: sort_helper.by_date_time
                             ? theme.base_color
-                            : Colors.black,
+                            : (!theme_controller.is_it_dark()
+                                  ? Colors.black
+                                  : Colors.white),
                       ),
                       onTap: () {
                         if (this.mounted) {
