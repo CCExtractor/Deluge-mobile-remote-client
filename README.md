@@ -5,7 +5,7 @@
 ![Catalogue 4](https://i.imgur.com/qhCSXlH.png)
 ![readmeasset](https://user-images.githubusercontent.com/57806993/123543677-5efd5580-d76d-11eb-8213-e6f54188cdae.png)
 [![button](https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png)](https://play.google.com/store/apps/details?id=com.cc_extractor.deluge_client)
-[![button](https://www.seekpng.com/png/full/119-1190052_click-here-download-png-download-button.png)](https://github.com/CCExtractor/Deluge-mobile-remote-client/releases/tag/0.1.1)
+[![button](https://www.gyaantapari.com/wp-content/uploads/2020/02/download-here.png)](https://github.com/CCExtractor/Deluge-mobile-remote-client/releases/tag/0.1.1)
 
 
 https://user-images.githubusercontent.com/57806993/123542889-936f1280-d769-11eb-859c-431d7281313f.mov
