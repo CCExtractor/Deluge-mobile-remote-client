@@ -1,6 +1,7 @@
 name: deluge_client
 description: A new Flutter project.
 
+
 # The following line prevents the package from being accidentally published to
 # pub.dev using `pub publish`. This is preferred for private packages.
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
@@ -15,7 +16,15 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 # In iOS, build-name is used as CFBundleShortVersionString while build-number used as CFBundleVersion.
 # Read more about iOS versioning at
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
-version: 0.1.0+2
+version: 0.1.1+4
+#versioning example
+#You can update both the version name and the version code number in the same place in pubspec.yaml. Just separate them with a + sign. For example:
+
+# version: 2.0.0+8
+# This means
+
+# The version name is 2.0.0
+# The version code is 8
 
 environment:
   sdk: ">=2.7.0 <3.0.0"
@@ -46,6 +55,8 @@ dependencies:
   better_player:
   photo_view: ^0.11.1
   url_launcher: ^6.0.6
+  keyboard_dismisser: ^2.0.0
+
 
  
 

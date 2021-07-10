@@ -6,6 +6,7 @@ import 'package:deluge_client/control_center/theme.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_phoenix/flutter_phoenix.dart';
 import 'package:deluge_client/core/auth_valid.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class apis {
   static int network_request = 0;
@@ -62,6 +63,7 @@ class apis {
   }
 
   //-------------------------------------------------------------------------
+  static bool has_prompt_fired_for_repetative = false;
   static Future<Map<String, dynamic>> get_torrent_list(
       List<Cookie> cookie,
       String url,
@@ -106,7 +108,10 @@ class apis {
 
       return client_output;
     } on SocketException catch (_) {
-      dialogue_prompt.show_prompt(context);
+      if (has_prompt_fired_for_repetative == false) {// so that it will fire only once cause this api will repeatedly call
+        dialogue_prompt.show_prompt(context);
+        has_prompt_fired_for_repetative = true;
+      }
     } catch (e) {
       return new Map();
     }
@@ -376,6 +381,12 @@ class apis {
       // cookie = response.cookies;
       final responseBody = await response.transform(utf8.decoder).join();
       print(jsonDecode(responseBody));
+
+      if (jsonDecode(responseBody)
+          .toString()
+          .contains("Torrent already in session")) {
+        toastMessage("this file cannot be added, it is already in session");
+      }
       // after adding file then it should refresh it self;
     } on SocketException catch (_) {
       dialogue_prompt.show_prompt(context);
@@ -383,7 +394,17 @@ class apis {
       print(e);
     }
   }
-  //--------------------------------------------------------------
+
+  //--------------------------------------------------------------// for prompt
+  static void toastMessage(String message) {
+    Fluttertoast.showToast(
+      msg: message,
+      toastLength: Toast.LENGTH_SHORT,
+      gravity: ToastGravity.BOTTOM,
+      fontSize: 16.0,
+      backgroundColor: Colors.black,
+    );
+  }
 
   static void add_magnet(
       String link,
@@ -425,6 +446,12 @@ class apis {
 
       // cookie = response.cookies;
       final responseBody = await response.transform(utf8.decoder).join();
+      print(jsonDecode(responseBody));
+      if (jsonDecode(responseBody)
+          .toString()
+          .contains("Torrent already in session")) {
+        toastMessage("this file cannot be added, it is already in session");
+      }
     } on SocketException catch (_) {
       dialogue_prompt.show_prompt(context);
     } catch (e) {
@@ -736,7 +763,7 @@ class apis {
       final responseBody = await response.transform(utf8.decoder).join();
       Map<String, dynamic> res = json.decode(responseBody);
       List<String> versioning = res['result'].toString().split("-");
- 
+
       return versioning;
     } on SocketException catch (_) {
       dialogue_prompt.show_prompt(context);
@@ -758,7 +785,6 @@ class dialogue_prompt {
             fontFamily: theme.font_family),
       ),
       onPressed: () {
-        return false;
         SystemNavigator.pop();
       },
     );
