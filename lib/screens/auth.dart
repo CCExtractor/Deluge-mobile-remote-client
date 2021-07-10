@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:deluge_client/control_center/theme.dart';
 import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:keyboard_dismisser/keyboard_dismisser.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:deluge_client/api/apis.dart';
 import 'package:deluge_client/state_ware_house/state_ware_house.dart';
@@ -120,7 +121,13 @@ class _auth_viewState extends State<auth_view> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return KeyboardDismisser(
+        gestures: [
+          GestureType.onTap,
+          GestureType.onPanUpdateDownDirection,
+        ],
+        child:
+    Scaffold(
         appBar: AppBar(
           title: Text(
             "Authorization",
@@ -439,6 +446,6 @@ class _auth_viewState extends State<auth_view> {
               //---
             ],
           ),
-        ));
+        )));
   }
 }

@@ -11,6 +11,7 @@ import 'package:deluge_client/api/apis.dart';
 import 'package:deluge_client/settings/deluge/core_settings.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:deluge_client/state_ware_house/state_ware_house.dart';
+import 'package:keyboard_dismisser/keyboard_dismisser.dart';
 
 class deluge_settings extends StatefulWidget {
   final List<Cookie> cookie;
@@ -58,7 +59,13 @@ class _deluge_settingsState extends State<deluge_settings> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return KeyboardDismisser(
+        gestures: [
+          GestureType.onTap,
+          GestureType.onPanUpdateDownDirection,
+        ],
+        child:
+    Scaffold(
       appBar: AppBar(
         backgroundColor: theme.base_color,
         title: Text("Deluge's Settings", style: theme.app_bar_style),
@@ -137,6 +144,6 @@ class _deluge_settingsState extends State<deluge_settings> {
           
         ],
       )),
-    );
+    ));
   }
 }

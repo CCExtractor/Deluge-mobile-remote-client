@@ -23,6 +23,7 @@ import 'package:deluge_client/control_center/theme.dart';
 import 'package:deluge_client/components/sidebar.dart';
 import 'dart:io';
 import 'package:deluge_client/string/controller.dart';
+import 'package:keyboard_dismisser/keyboard_dismisser.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:deluge_client/state_ware_house/state_ware_house.dart';
@@ -601,7 +602,13 @@ class _dashboardState extends State<dashboard> {
   String head = "";
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return KeyboardDismisser(
+        gestures: [
+          GestureType.onTap,
+          GestureType.onPanUpdateDownDirection,
+        ],
+        child:
+    Scaffold(
       appBar: AppBar(
         title: Text(!all_account_selected ? head : "All Accounts",
             style: theme.app_bar_style),
@@ -1094,6 +1101,6 @@ class _dashboardState extends State<dashboard> {
                   width: 0.0,
                 ),
       //-----------------------------------
-    );
+    ));
   }
 }
