@@ -84,6 +84,9 @@ flutter:
     - assets/no_data.png
     - assets/animation.gif
     - assets/server_end_error.png
+    - assets/poster.png
+    - assets/slack.png
+    - assets/github.png
 
 
   #   - images/a_dot_ham.jpeg

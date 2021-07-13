@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:deluge_client/components/bottom_sheet/choose_account.dart';
 import 'package:deluge_client/components/bottom_sheet/ssh_config.dart';
 import 'package:deluge_client/database/dbmanager.dart';
+import 'package:deluge_client/screens/about.dart';
 import 'package:deluge_client/screens/auth.dart';
 import 'package:deluge_client/components/accounts.dart';
 import 'package:deluge_client/components/storage_indicator.dart';
@@ -614,6 +615,24 @@ class sidebarState extends State<sidebar> {
                 height: 0.0,
                 width: 0.0,
               ),
+                // for abount
+              ListTile(
+                    title: Text(
+                      "About",
+                      style: TextStyle(
+                          fontSize: 12.0,
+                          fontFamily: theme.font_family,
+                          color: theme_controller.is_it_dark()
+                              ? Colors.white
+                              : Colors.black),
+                    ),
+                    leading: Icon(Icons.info_outline),
+                    onTap: () {
+                      
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) => about()));
+                    },
+                  ),
       ],
     )));
   }
