@@ -145,7 +145,7 @@ class sidebarState extends State<sidebar> {
     sftp_route_dir = await states.get_sftp_route();
     
     if (sftp_host.isNotEmpty &&
-        sftp_port.isNotEmpty&
+        sftp_port.isNotEmpty &&
         sftp_username.isNotEmpty &&
         sftp_password.isNotEmpty &&
         sftp_route_dir.isNotEmpty) {
@@ -606,7 +606,7 @@ class sidebarState extends State<sidebar> {
                     leading: Icon(Icons.settings_applications_sharp),
                     onTap: () {
                       Navigator.push(context,
-                          MaterialPageRoute(builder: (context) => ssh()));
+                          MaterialPageRoute(builder: (context) => ssh(selected_account: selecx)));
                     },
                   ),
                 ],
@@ -620,7 +620,7 @@ class sidebarState extends State<sidebar> {
                     title: Text(
                       "About",
                       style: TextStyle(
-                          fontSize: 12.0,
+                          fontSize: 15.0,
                           fontFamily: theme.font_family,
                           color: theme_controller.is_it_dark()
                               ? Colors.white

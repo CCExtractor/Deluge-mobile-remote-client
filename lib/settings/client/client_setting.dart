@@ -12,20 +12,29 @@ class clt_st extends StatefulWidget {
 
 class _clt_stState extends State<clt_st> {
   bool notification = false;
+  bool sftp_reset = false;
   @override
   void initState() {
     super.initState();
 
-    fetch_notification_settings();
+    fetch_client_settings();
   }
 
-  void fetch_notification_settings() async {
-    bool mid = await states.fetch_notification_settings();
+  void fetch_client_settings() async {
+    bool mid1 = await states.fetch_notification_settings();
     if (this.mounted) {
       setState(() {
-        notification = mid;
+        notification = mid1;
       });
     }
+
+    bool mid2 = await states.get_sftP_reset_bool();
+        if (this.mounted) {
+      setState(() {
+        sftp_reset = mid2;
+      });
+    }
+
   }
 
   @override
@@ -61,6 +70,18 @@ class _clt_stState extends State<clt_st> {
                           notification = val;
                         });
                         states.set_notification_settings(val);
+                      },
+                    ),
+                  ),
+                  ListTile(
+                    title: Text("sftp settings reset on account change"),
+                    trailing: Switch(
+                      value: sftp_reset,
+                      onChanged: (val) {
+                        setState(() {
+                          sftp_reset = val;
+                        });
+                        states.set_sftP_reset_bool(val);
                       },
                     ),
                   ),

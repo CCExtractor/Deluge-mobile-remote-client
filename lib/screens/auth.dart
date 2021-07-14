@@ -185,7 +185,7 @@ class _auth_viewState extends State<auth_view> {
                                     filled: true,
                                     hintStyle:
                                         new TextStyle(color: Colors.grey[800]),
-                                    hintText: "Location of Deluge",
+                                    hintText: "Location of Deluge host",
                                     suffixIcon: InkWell(
                                       child: Icon(Icons.paste),
                                       onTap: () {

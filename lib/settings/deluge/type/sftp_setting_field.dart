@@ -11,11 +11,45 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:deluge_client/control_center/theme_controller.dart';
 
 class sftp_settings_fields extends StatefulWidget {
+  final Bucket selected_account;
+  sftp_settings_fields({Key key, @required this.selected_account})
+      : super(key: key);
   @override
-  _sftp_settings_fieldsState createState() => _sftp_settings_fieldsState();
+  _sftp_settings_fieldsState createState() =>
+      _sftp_settings_fieldsState(selected_account: selected_account);
 }
 
 class _sftp_settings_fieldsState extends State<sftp_settings_fields> {
+  final Bucket selected_account;
+  _sftp_settings_fieldsState({@required this.selected_account});
+
+  Future<void> handle_streaming_action() async {
+    String sftp_host = await states.get_sftp_host();
+    String sftp_port = await states.get_sftp_port();
+    String sftp_username = await states.get_sftp_username();
+    String sftp_password = await states.get_sftp_password();
+    String sftp_route_dir = await states.get_sftp_route();
+
+    if (sftp_host.isEmpty &&
+        sftp_port.isEmpty &&
+        sftp_username.isEmpty &&
+        sftp_password.isEmpty &&
+        sftp_route_dir.isEmpty) {
+      //-----------------
+      core_settings.sftp_host.text = selected_account.deluge_url.replaceFirst("https://", "");
+      core_settings.sftpport.text = "54022";
+
+      core_settings.sftp_route_url.text =
+        selected_account.deluge_url + "/downloads/";
+    }
+  }
+
+  @override
+  void initState() {
+    handle_streaming_action();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(

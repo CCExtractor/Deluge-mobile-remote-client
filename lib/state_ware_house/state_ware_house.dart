@@ -26,6 +26,7 @@ class states {
         pref.setInt("selected_account", 1);
         pref.setInt("selected_theme", 1);
         pref.setBool("notification_settings", true);
+        pref.setBool("sftp_reset",false);
         pref.setString("sftp_host","");
         pref.setString("sftp_port","");
         pref.setString("sftp_username","");
@@ -135,6 +136,31 @@ class states {
     SharedPreferences pf = await SharedPreferences.getInstance();
     return pf.getString("sftp_pass");
   }
+  //-------------------------------------------------------------------------
+  // it should return sftp true false
+    static Future<bool>get_sftP_reset_bool() async {
+    SharedPreferences pf = await SharedPreferences.getInstance();
+    return pf.get("sftp_reset");
+  }
+   static Future<void> set_sftP_reset_bool(bool val) async {
+    SharedPreferences pf = await SharedPreferences.getInstance();
+    pf.setBool("sftp_reset", val);
+  }
+
+  static Future<void> reset_sftp_config() async{
+     SharedPreferences pf = await SharedPreferences.getInstance();
+     pf.setString("sftp_host","");
+      pf.setString("sftp_port","");
+       pf.setString("sftp_username", "");
+         pf.setString("sftp_pass", "");
+          pf.setString("sftp_dir_route","");
+
+
+  }
+  
+
+
+
 
 
 }
