@@ -45,6 +45,22 @@ Deluge is a lightweight, Free Software, cross-platform BitTorrent Monitoring ser
 | file exploration                               |✅ (tested)  
 | streaming torrent content                      | ✅ (tested)  |
 
+## Usage
+
+In order to use this flutter application you should have Deluge configured on your system, after which you can connect your mobile on the same network as your system and use the app by entering the configuration (IP address).
+
+If you find any difficulty to run Deluge on your system, you can use this [docker image](https://hub.docker.com/r/linuxserver/deluge).
+
+Though the primary usage of this application is to control Deluge hosted on your seedbox account.
+
+## Seedbox
+
+A seedbox is a dedicated BitTorrent server. Oftentimes they are rented out by companies called seedbox providers.
+
+Seedboxes usually have a high speed Internet connection. This allows users to download torrents quickly and seed the torrents for a long time.
+
+You can learn more about seedbox [here](https://en.wikipedia.org/wiki/Seedbox).
+
 
 
 
@@ -75,6 +91,14 @@ flutter run
 For help getting started with Flutter, view our
 [online documentation](https://flutter.dev/docs), which offers tutorials,
 samples, guidance on mobile development, and a full API reference.
+
+## Community
+
+* CCExtractor Development on [Slack](https://rhccgsoc15.slack.com/)
+
+## License
+
+The project is released under the [MIT License](http://www.opensource.org/licenses/mit-license.php). The license can be found [here](LICENSE).
 
 
 
