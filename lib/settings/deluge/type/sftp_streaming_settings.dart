@@ -10,11 +10,15 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:deluge_client/settings/deluge/type/sftp_setting_field.dart';
 
 class ssh extends StatefulWidget {
+  final Bucket selected_account;
+  ssh({Key key, @required this.selected_account}) : super(key: key);
   @override
-  _sshState createState() => _sshState();
+  _sshState createState() => _sshState(selected_account: selected_account);
 }
 
 class _sshState extends State<ssh> {
+  final Bucket selected_account;
+  _sshState({Key key, @required this.selected_account});
   void initiate_setup() async {
     core_settings.sftp_host.text = await states.get_sftp_host();
     core_settings.sftp_pass.text = await states.get_sftp_password();
@@ -75,6 +79,6 @@ class _sshState extends State<ssh> {
             )
           ],
         ),
-        body: sftp_settings_fields());
+        body: sftp_settings_fields(selected_account: selected_account,));
   }
 }

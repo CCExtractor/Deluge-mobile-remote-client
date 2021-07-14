@@ -74,7 +74,7 @@ class _ssh_configState extends State<ssh_config> {
                   indent: 70.0,
                   endIndent: 70.0,
                 ),
-                sftp_settings_fields(),
+                sftp_settings_fields(selected_account: selected_account,),
                 Row(
                   children: [
                     Padding(

@@ -155,7 +155,8 @@ class accountsState extends State<accounts> {
                         leading: Icon(selected_account == accounts[index].id
                             ? Icons.radio_button_checked
                             : Icons.radio_button_unchecked),
-                        trailing: (accounts.length > 1 && selected_account != accounts[index].id)
+                        trailing: (accounts.length > 1 &&
+                                selected_account != accounts[index].id)
                             ? IconButton(
                                 // if there is more than 1 account then it will visible
                                 icon: Icon(
@@ -169,7 +170,7 @@ class accountsState extends State<accounts> {
                                 },
                               )
                             : new Container(height: 0.0, width: 0.0),
-                        onTap: () {
+                        onTap: () async {
                           if (this.mounted) {
                             setState(() {
                               selected_account = accounts[index].id;
@@ -179,6 +180,10 @@ class accountsState extends State<accounts> {
                           }
                           update_account_selection();
                           dashboard_state();
+                          //here i will add logic to reset sftp
+                          if (await states.get_sftP_reset_bool()) {
+                            states.reset_sftp_config();
+                          }
                           Navigator.of(context).pop(); //closing side bar
                         },
                       );
