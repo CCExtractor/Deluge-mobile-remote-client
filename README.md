@@ -7,6 +7,8 @@
 [![button](https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png)](https://play.google.com/store/apps/details?id=com.cc_extractor.deluge_client)
 [![button](https://www.gyaantapari.com/wp-content/uploads/2020/02/download-here.png)](https://github.com/CCExtractor/Deluge-mobile-remote-client/releases/tag/0.1.1)
 
+<a href="https://www.producthunt.com/posts/deluge-mobile-client?utm_source=badge-featured&utm_medium=badge&utm_souce=badge-deluge-mobile-client" target="_blank"><img src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=304533&theme=light" alt="Deluge mobile client - Manage deluge with ease | Product Hunt" style="width: 250px; height: 54px;" width="250" height="54" /></a>
+
 
 https://user-images.githubusercontent.com/57806993/123542889-936f1280-d769-11eb-859c-431d7281313f.mov
 
