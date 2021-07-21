@@ -133,7 +133,7 @@ class _download_progressState extends State<download_progress> {
     });
     handle_first_progress();
     if (!paused || !completed) {
-      Timer.periodic(Duration(seconds: 2), (timer) {
+      Timer.periodic(Duration(milliseconds: 2), (timer) {
         if (completed) {
           timer.cancel();
         }
@@ -181,14 +181,14 @@ class _download_progressState extends State<download_progress> {
         animationDuration: 2000,
         percent: progress_percent,
         center: Text(
-          (progress_percent * 100).roundToDouble().toString() + " %",
+        (progress_percent * 100).toString().length>=5?(progress_percent * 100).toString().substring(0,5)+ " %":(progress_percent * 100).roundToDouble().toString()+ " %",
           style: TextStyle(
               color: Colors.white,
               fontFamily: theme.font_family,
               fontSize: 11.0),
         ),
         linearStrokeCap: LinearStrokeCap.roundAll,
-        progressColor: theme.base_color,
+        progressColor:(progress_percent * 100).roundToDouble()==100.0?theme.base_color:Colors.green,
       ),
     ));
   }
