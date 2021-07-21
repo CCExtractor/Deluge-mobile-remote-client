@@ -3,6 +3,7 @@ import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
 import 'package:deluge_client/control_center/theme.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:deluge_client/control_center/theme_controller.dart';
 
 class about extends StatefulWidget {
   @override
@@ -44,7 +45,7 @@ class _aboutState extends State<about> {
             ),
             RichText(
               text: TextSpan(
-                style: TextStyle(color: Colors.black, fontSize: 36),
+                style: TextStyle(color: theme_controller.is_it_dark()?Colors.white:Colors.black, fontSize: 36),
                 children: <TextSpan>[
                   TextSpan(
                       text: 'Deluge mobile client is open-source project.',

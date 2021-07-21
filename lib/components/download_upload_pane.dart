@@ -109,7 +109,7 @@ class _network_speedState extends State<network_speed> {
       paused;
     });
     if (!paused || !completed) {
-      Timer.periodic(Duration(seconds: 2), (timer) {
+      Timer.periodic(Duration(seconds: 1), (timer) {
         if (completed) {
           timer.cancel();
         }
