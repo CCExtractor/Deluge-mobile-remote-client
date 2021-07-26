@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
+import 'package:filesize/filesize.dart';
 import "package:flutter/material.dart";
 import 'package:http/http.dart' as http;
 import 'package:deluge_client/control_center/theme.dart';
@@ -70,12 +71,12 @@ class _network_speedState extends State<network_speed> {
       this.completed});
   int download_speed_in_byte = 0;
   int upload_speed_in_byte = 0;
-  double download_speed_in_kb = 0.0;
-  double upload_speed_in_kb = 0.0;
+  String download_speed = "0.0 KB";
+  String  upload_speed = "0.0 KB";
   Future<void> fetch_speed() async {
     try {
-      Map<String, dynamic> api_output = await apis.get_torrent_list(
-          cookie, url, is_reverse_proxied, seed_username, seed_pass, qr_auth,context);
+      Map<String, dynamic> api_output = await apis.get_torrent_list(cookie, url,
+          is_reverse_proxied, seed_username, seed_pass, qr_auth, context);
       if (api_output != null) {
         Map<String, dynamic> result = api_output['result'];
         Map<String, dynamic> properties = result[tor_id];
@@ -88,10 +89,11 @@ class _network_speedState extends State<network_speed> {
         download_speed_in_byte = properties['download_payload_rate'].toInt();
 
         upload_speed_in_byte = properties['upload_payload_rate'].toInt();
+        print("Download size: " + filesize(download_speed_in_byte));
         if (this.mounted) {
           setState(() {
-            download_speed_in_kb = download_speed_in_byte / 1000;
-            upload_speed_in_kb = upload_speed_in_byte / 1000;
+            download_speed = filesize(download_speed_in_byte);
+            upload_speed =filesize(upload_speed_in_byte);
           });
         }
       }
@@ -108,17 +110,19 @@ class _network_speedState extends State<network_speed> {
     setState(() {
       paused;
     });
-    if (!paused || !completed) {
-      Timer.periodic(Duration(seconds: 1), (timer) {
-        if (completed) {
-          timer.cancel();
-        }
-        if (this.mounted) {
-          setState(() {
-            fetch_speed();
-          });
-        }
-      });
+    if (!completed) {
+      if (!paused) {
+        Timer.periodic(Duration(seconds: 1), (timer) {
+          if (completed) {
+            timer.cancel();
+          }
+          if (this.mounted) {
+            setState(() {
+              fetch_speed();
+            });
+          }
+        });
+      }
     }
 
     super.initState();
@@ -130,20 +134,20 @@ class _network_speedState extends State<network_speed> {
       children: [
         Icon(Icons.arrow_downward_sharp),
         Text(
-          download_speed_in_kb.toString() + " KB/S",
+          download_speed + "/S",
           style: TextStyle(
               color: (!theme_controller.is_it_dark()
-                                  ? Colors.black
-                                  : Colors.white),
+                  ? Colors.black
+                  : Colors.white),
               fontSize: 11.0,
               fontFamily: theme.font_family),
         ),
         Icon(Icons.arrow_upward),
-        Text(upload_speed_in_kb.toString() + " KB/S",
+        Text(upload_speed + "/S",
             style: TextStyle(
                 color: (!theme_controller.is_it_dark()
-                                  ? Colors.black
-                                  : Colors.white),
+                    ? Colors.black
+                    : Colors.white),
                 fontSize: 11.0,
                 fontFamily: theme.font_family)),
       ],

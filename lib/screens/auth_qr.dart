@@ -83,7 +83,7 @@ class _auth_qrState extends State<auth_qr> {
     } else if (validity.valid == 0) {
       toastMessage("Credentials are wrong");
     } else if (validity.valid == -1) {
-      toastMessage("Deluge is not responding, Might be it is down");
+      toastMessage("Deluge is not responding, May be it is down");
     } else if (validity.valid == -11) {
       toastMessage("Deluge is not reachable");
     } else if (validity.valid == -2) {

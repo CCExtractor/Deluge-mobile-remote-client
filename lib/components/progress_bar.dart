@@ -86,8 +86,8 @@ class _download_progressState extends State<download_progress> {
   //-----------------
   void get_status() async {
     try {
-      Map<String, dynamic> api_output = await apis.get_torrent_list(
-          cookie, url, is_reverse_proxied, seed_username, seed_pass, qr_auth,context);
+      Map<String, dynamic> api_output = await apis.get_torrent_list(cookie, url,
+          is_reverse_proxied, seed_username, seed_pass, qr_auth, context);
       Map<String, dynamic> result = await api_output['result'];
       if (result != null) {
         Map<String, dynamic> content = await result[tor_id];
@@ -117,6 +117,7 @@ class _download_progressState extends State<download_progress> {
               (progress_percent * 100).roundToDouble().toString() + " %",
               progress_percent.toInt() * 100);
         }
+        
       }
     } catch (e) {
       print(e);
@@ -132,18 +133,21 @@ class _download_progressState extends State<download_progress> {
       paused;
     });
     handle_first_progress();
-    if (!paused || !completed) {
-      Timer.periodic(Duration(milliseconds: 2), (timer) {
-        if (completed) {
-          timer.cancel();
-        }
+  
+    if (!completed) {
+      if (!paused) {
+        Timer.periodic(Duration(milliseconds: 50), (timer) {
+          if (completed) {
+            timer.cancel();
+          }
 
-        if (this.mounted) {
-          setState(() {
-            get_status();
-          });
-        }
-      });
+          if (this.mounted) {
+            setState(() {
+              get_status();
+            });
+          }
+        });
+      }
     }
     //----------------------
     fetch_notification_settings();
@@ -181,14 +185,18 @@ class _download_progressState extends State<download_progress> {
         animationDuration: 2000,
         percent: progress_percent,
         center: Text(
-        (progress_percent * 100).toString().length>=5?(progress_percent * 100).toString().substring(0,5)+ " %":(progress_percent * 100).roundToDouble().toString()+ " %",
+          (progress_percent * 100).toString().length >= 5
+              ? (progress_percent * 100).toString().substring(0, 5) + " %"
+              : (progress_percent * 100).roundToDouble().toString() + " %",
           style: TextStyle(
               color: Colors.white,
               fontFamily: theme.font_family,
               fontSize: 11.0),
         ),
         linearStrokeCap: LinearStrokeCap.roundAll,
-        progressColor:(progress_percent * 100).roundToDouble()==100.0?theme.base_color:Colors.green,
+        progressColor: (progress_percent * 100).roundToDouble() == 100.0
+            ? theme.base_color
+            : Colors.green,
       ),
     ));
   }
