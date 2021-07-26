@@ -62,7 +62,7 @@ class _errorState extends State<error> {
                 child: Padding(
                     padding: EdgeInsets.only(left: 20.0),
                     child: Text(
-                        "If you have just installed deluge at your remote location, you might need to log in on the web ui once.",
+                        "If you have just installed deluge at your remote location, you may need to log in on the web ui once.",
                         style: TextStyle(fontFamily: theme.font_family))))
           ],
         ),
@@ -73,19 +73,7 @@ class _errorState extends State<error> {
                 fit: FlexFit.tight,
                 child: Padding(
                     padding: EdgeInsets.only(left: 20.0),
-                    child: Text("Deluge might be down.",
-                        style: TextStyle(fontFamily: theme.font_family))))
-          ],
-        ),
-        Row(
-          children: [
-            Icon(Icons.insights_outlined),
-            Flexible(
-                fit: FlexFit.tight,
-                child: Padding(
-                    padding: EdgeInsets.only(left: 20.0),
-                    child: Text(
-                        "Deluge is taking time to respond might be some internal problem.",
+                    child: Text("Deluge may be down.",
                         style: TextStyle(fontFamily: theme.font_family))))
           ],
         ),
@@ -97,7 +85,19 @@ class _errorState extends State<error> {
                 child: Padding(
                     padding: EdgeInsets.only(left: 20.0),
                     child: Text(
-                        "It might also possible that Deluge is working but it is taking time to respond, As solution you can retry.",
+                        "Deluge is taking time to respond, May be some internal problem.",
+                        style: TextStyle(fontFamily: theme.font_family))))
+          ],
+        ),
+        Row(
+          children: [
+            Icon(Icons.insights_outlined),
+            Flexible(
+                fit: FlexFit.tight,
+                child: Padding(
+                    padding: EdgeInsets.only(left: 20.0),
+                    child: Text(
+                        "It may also possible that Deluge is working but it is taking time to respond, As solution you can retry.",
                         style: TextStyle(fontFamily: theme.font_family))))
           ],
         ),

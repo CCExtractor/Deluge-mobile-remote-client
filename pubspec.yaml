@@ -1,5 +1,5 @@
 name: deluge_client
-description: A new Flutter project.
+description: A mobile client for Deluge bittorrent monitoring service.
 
 
 # The following line prevents the package from being accidentally published to

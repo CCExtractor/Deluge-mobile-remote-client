@@ -339,6 +339,9 @@ class _tileState extends State<tile> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
+                      Flexible(
+                        fit: FlexFit.tight,
+                        child: 
                       Text(
                         inside_res['name'],
                         overflow: TextOverflow.ellipsis,
@@ -350,6 +353,7 @@ class _tileState extends State<tile> {
                             fontWeight: FontWeight.w300,
                             fontFamily: theme.font_family),
                       ),
+                      )
                     ],
                   ),
                 ),
