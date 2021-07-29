@@ -7,6 +7,7 @@ import 'package:percent_indicator/linear_percent_indicator.dart';
 import 'package:deluge_client/api/apis.dart';
 import 'package:deluge_client/notification/notification_controller.dart';
 import 'package:deluge_client/state_ware_house/state_ware_house.dart';
+import 'package:deluge_client/api/models/model.dart';
 
 class download_progress extends StatefulWidget {
   final String torrent_id;
@@ -22,20 +23,23 @@ class download_progress extends StatefulWidget {
   final bool paused;
   final bool completed;
   final Function(bool) update_completion_state;
+  //-------------asking refresh function so we can refresh if  it get download
+  final VoidCallback refresh_list;
   const download_progress(
       {Key key,
       @required this.torrent_id,
-      this.cookie,
-      this.tor_name,
-      this.url,
-      this.is_reverse_proxied,
-      this.seed_username,
-      this.seed_pass,
-      this.qr_auth,
-      this.paused,
-      this.initial_progress,
+      @required this.cookie,
+      @required this.tor_name,
+      @required this.url,
+      @required this.is_reverse_proxied,
+      @required this.seed_username,
+      @required this.seed_pass,
+      @required this.qr_auth,
+      @required this.paused,
+      @required this.initial_progress,
       @required this.update_completion_state,
-      this.completed})
+      @required this.completed,
+      @required this.refresh_list})
       : super(key: key);
 
   @override
@@ -51,7 +55,8 @@ class download_progress extends StatefulWidget {
       paused: paused,
       initial_progress: initial_progress,
       update_completion_state: update_completion_state,
-      completed: completed);
+      completed: completed,
+      refresh: refresh_list);
 }
 
 class _download_progressState extends State<download_progress> {
@@ -69,6 +74,7 @@ class _download_progressState extends State<download_progress> {
   final String seed_pass;
   final String qr_auth;
   final bool paused;
+  final VoidCallback refresh;
   _download_progressState(
       {this.tor_id,
       this.cookie,
@@ -81,17 +87,19 @@ class _download_progressState extends State<download_progress> {
       this.paused,
       this.initial_progress,
       this.update_completion_state,
-      this.completed});
+      this.completed,
+      this.refresh});
   double progress_percent = 0;
   //-----------------
+  bool stop_listening_progress = false;
   void get_status() async {
     try {
-      Map<String, dynamic> api_output = await apis.get_torrent_list(cookie, url,
-          is_reverse_proxied, seed_username, seed_pass, qr_auth, context);
-      Map<String, dynamic> result = await api_output['result'];
-      if (result != null) {
-        Map<String, dynamic> content = await result[tor_id];
-        double middletemp = content['progress'];
+      Map<String, Properties> api_output = await apis.get_torrent_list(cookie,
+          url, is_reverse_proxied, seed_username, seed_pass, qr_auth, context);
+
+      if (api_output != null) {
+        Properties content = await api_output[tor_id];
+        double middletemp = content.progress;
 
         double temp = (middletemp / 100.0);
         print(temp);
@@ -99,7 +107,7 @@ class _download_progressState extends State<download_progress> {
         if (this.mounted) {
           setState(() {
             progress_percent = temp;
-            completed = content['is_finished'];
+            completed = content.isFinished;
           });
         }
 
@@ -117,7 +125,10 @@ class _download_progressState extends State<download_progress> {
               (progress_percent * 100).roundToDouble().toString() + " %",
               progress_percent.toInt() * 100);
         }
-        
+
+        if (temp == 1.0) {
+          stop_listening_progress = true;
+        }
       }
     } catch (e) {
       print(e);
@@ -133,11 +144,11 @@ class _download_progressState extends State<download_progress> {
       paused;
     });
     handle_first_progress();
-  
+
     if (!completed) {
       if (!paused) {
-        Timer.periodic(Duration(milliseconds: 50), (timer) {
-          if (completed) {
+        Timer.periodic(Duration(seconds: 1), (timer) {
+          if (stop_listening_progress) {
             timer.cancel();
           }
 

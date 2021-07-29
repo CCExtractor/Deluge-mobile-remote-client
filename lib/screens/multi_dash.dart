@@ -13,6 +13,7 @@ import 'package:deluge_client/api/apis.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:deluge_client/string/controller.dart';
 import 'package:deluge_client/string/sorter.dart';
+import 'package:deluge_client/api/models/model.dart';
 
 class multi_account extends StatefulWidget {
   final Function(List<multtorrent>) manage_multi;
@@ -39,7 +40,7 @@ class multi_accountState extends State<multi_account> {
   }
 
   Map<String, dynamic> cookie_all_account = Map<String, dynamic>();
-  Future<Map<multtorrent, dynamic>> torrents_all_account;
+  Future<Map<multtorrent, Properties>> torrents_all_account;
   void config() async {
     cookie_all_account = await all_account_core.config_cache(context);
     Future.delayed(Duration(seconds: 4), () async {
@@ -352,7 +353,7 @@ class multi_accountState extends State<multi_account> {
     config();
   }
 
-  Map<multtorrent, dynamic> sort(Map<multtorrent, dynamic> map) {
+  Map<multtorrent, Properties> sort(Map<multtorrent, Properties> map) {
     if (sort_helper.non_reverse_order) {
       return map;
     } else if (sort_helper.reverse_order) {
@@ -368,10 +369,10 @@ class multi_accountState extends State<multi_account> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: FutureBuilder<Map<multtorrent, dynamic>>(
+      child: FutureBuilder<Map<multtorrent,Properties>>(
           future: torrents_all_account,
           builder: (BuildContext context,
-              AsyncSnapshot<Map<multtorrent, dynamic>> snapshot) {
+              AsyncSnapshot<Map<multtorrent, Properties>> snapshot) {
             if (snapshot.connectionState != ConnectionState.done) {
               //------------
               return Center(child: loader());
@@ -395,20 +396,19 @@ class multi_accountState extends State<multi_account> {
                               itemBuilder: (context, index) {
                                 // it is the key that is basically idententity of list
                                 //--------for sorted one
-                                Map<multtorrent, dynamic> sorted_map =
+                                Map<multtorrent, Properties> sorted_map =
                                     sort(snapshot.data);
                                 multtorrent key =
                                     sorted_map.keys.elementAt(index);
                                 Bucket buc = key.need;
                                 String hash = key.hash;
                                 //inside the result array
-                                Map<String, dynamic> inside_res =
-                                    snapshot.data[key];
+                                Properties inside_res = snapshot.data[key];
 
-                                bool paused = inside_res['paused'];
+                                bool paused = inside_res.paused;
 
-                                bool completed = inside_res['is_finished'];
-                                bool seeding = inside_res['is_seed'];
+                                bool completed = inside_res.isFinished;
+                                bool seeding = inside_res.isSeed;
 
                                 bool query;
                                 if (completed_torrent) {
@@ -431,7 +431,7 @@ class multi_accountState extends State<multi_account> {
                                 // we will be returning row and col
 
                                 return query
-                                    ? inside_res['name']
+                                    ? inside_res.name
                                             .toString()
                                             .toLowerCase()
                                             .contains(controller
@@ -509,7 +509,7 @@ class multi_accountState extends State<multi_account> {
                                               seeding: seeding,
                                               selx_acc: buc,
                                               hash_m: key,
-                                              non_delayed_fetch: () {
+                                              non_delayed_fetch: (){
                                                 config();
                                               },
                                             ),

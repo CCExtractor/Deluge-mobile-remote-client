@@ -5,9 +5,10 @@ import 'package:deluge_client/control_center/theme.dart';
 import 'package:intl/intl.dart';
 import 'package:charcode/charcode.dart';
 import 'package:deluge_client/control_center/theme_controller.dart';
+import 'package:deluge_client/api/models/model.dart';
 
 class more_info extends StatelessWidget {
-  final Map<String, dynamic> inside_res;
+  final Properties inside_res;
   final bool paused;
   more_info({Key key, @required this.inside_res,this.paused}) : super(key: key);
 
@@ -35,8 +36,8 @@ class more_info extends StatelessWidget {
             ),
             subtitle: Text(
               !paused?
-                (inside_res['eta']~/60)
-                  .toString()+":"+(inside_res['eta']%60).toString():"_:_",
+                (inside_res.eta~/60)
+                  .toString()+":"+(inside_res.eta%60).toString():"_:_",
               style: TextStyle(fontSize: 14.0, fontFamily: theme.font_family),
             ),
           ),
@@ -48,7 +49,7 @@ class more_info extends StatelessWidget {
               style: TextStyle(fontSize: 12.0, fontFamily: theme.font_family),
             ),
             subtitle: Text(
-              inside_res['save_path'],
+              inside_res.savePath,
               style: TextStyle(fontSize: 14.0, fontFamily: theme.font_family),
             ),
           ),
@@ -60,7 +61,7 @@ class more_info extends StatelessWidget {
               style: TextStyle(fontSize: 12.0, fontFamily: theme.font_family),
             ),
             subtitle: Text(
-              inside_res['shared'].toString(),
+              inside_res.shared.toString(),
               style: TextStyle(fontSize: 14.0, fontFamily: theme.font_family),
             ),
           ),
@@ -72,7 +73,7 @@ class more_info extends StatelessWidget {
               style: TextStyle(fontSize: 12.0, fontFamily: theme.font_family),
             ),
             subtitle: Text(
-              inside_res['private'].toString(),
+              inside_res.private.toString(),
               style: TextStyle(fontSize: 14.0, fontFamily: theme.font_family),
             ),
           ),
@@ -84,7 +85,7 @@ class more_info extends StatelessWidget {
               style: TextStyle(fontSize: 12.0, fontFamily: theme.font_family),
             ),
             subtitle: Text(
-              inside_res['num_peers'].toString(),
+              inside_res.numPeers.toString(),
               style: TextStyle(fontSize: 14.0, fontFamily: theme.font_family),
             ),
           ),
@@ -96,7 +97,7 @@ class more_info extends StatelessWidget {
               style: TextStyle(fontSize: 12.0, fontFamily: theme.font_family),
             ),
             subtitle: Text(
-              inside_res['num_seeds'].toString(),
+              inside_res.numSeeds.toString(),
               style: TextStyle(fontSize: 14.0, fontFamily: theme.font_family),
             ),
           ),
@@ -110,7 +111,7 @@ class more_info extends StatelessWidget {
             subtitle: Text(
               format
                   .format(DateTime.fromMillisecondsSinceEpoch(
-                      inside_res['time_added'] * 1000))
+                      inside_res.timeAdded * 1000))
                   .toString(),
               style: TextStyle(fontSize: 14.0, fontFamily: theme.font_family),
             ),

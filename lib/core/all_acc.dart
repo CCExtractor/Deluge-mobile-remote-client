@@ -3,11 +3,10 @@ import 'dart:io';
 import 'package:deluge_client/database/dbmanager.dart';
 import 'package:deluge_client/api/apis.dart';
 import 'package:flutter/widgets.dart';
+import 'package:deluge_client/api/models/model.dart';
 
 class all_account_core {
   static final DbbucketManager db = new DbbucketManager();
-
- 
 
   static Map<String, dynamic> all_account_cookie = Map<String, dynamic>();
   static Future<Map<String, dynamic>> config_cache(BuildContext context) async {
@@ -36,32 +35,33 @@ class all_account_core {
     return all_account_cookie;
   }
 
-  static Map<multtorrent, dynamic> output = Map<multtorrent, dynamic>();
-  static Future<Map<multtorrent, dynamic>> config_torrent_list(
-      Map<String, dynamic> cookies,BuildContext context) async {
+  static Map<multtorrent, Properties> output = Map<multtorrent, Properties>();
+  static Future<Map<multtorrent, Properties>> config_torrent_list(
+      Map<String, dynamic> cookies, BuildContext context) async {
     List<Bucket> acc = await db.getbucketitem();
     // @todo i need to add that already logged in account can not logged in to make unique
-        if (output.length > 0) {
-          output.clear();
-        }
+    print("before it have :" + output.length.toString());
+    print("its content is:" + output.toString());
+    if (output.length > 0) {
+      output.clear();
+    }
     for (int i = 0; i < acc.length; i++) {
       List<Cookie> cke = cookies[acc[i].deluge_url];
 
-      Map<String, dynamic> t = await apis.get_torrent_list(
+      Map<String, Properties> t = await apis.get_torrent_list(
           cke,
           acc[i].deluge_url,
           acc[i].is_reverse_proxied,
           acc[i].username,
           acc[i].password,
           acc[i].via_qr,
-          context
-          );
-      t = t['result'];
+          context);
+
       print(t);
       // todo i will add url with the hash of map
       for (int j = 0; j < t.length; j++) {
         String hash = t.keys.elementAt(j);
-        dynamic cont = t[hash];
+        Properties cont = t[hash];
         output.putIfAbsent(multtorrent(hash: hash, need: acc[i]), () => cont);
       }
     }
