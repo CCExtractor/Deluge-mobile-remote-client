@@ -7,6 +7,7 @@ import 'package:http/http.dart' as http;
 import 'package:deluge_client/control_center/theme.dart';
 import 'package:deluge_client/api/apis.dart';
 import 'package:deluge_client/control_center/theme_controller.dart';
+import 'package:deluge_client/api/models/model.dart';
 
 class network_speed extends StatefulWidget {
   final String torrent_id;
@@ -72,30 +73,40 @@ class _network_speedState extends State<network_speed> {
   int download_speed_in_byte = 0;
   int upload_speed_in_byte = 0;
   String download_speed = "0.0 KB";
-  String  upload_speed = "0.0 KB";
+  String upload_speed = "0.0 KB";
+  bool stop_listening_speeds = false;
   Future<void> fetch_speed() async {
     try {
-      Map<String, dynamic> api_output = await apis.get_torrent_list(cookie, url,
-          is_reverse_proxied, seed_username, seed_pass, qr_auth, context);
+      Map<String, Properties> api_output = await apis.get_torrent_list(cookie,
+          url, is_reverse_proxied, seed_username, seed_pass, qr_auth, context);
       if (api_output != null) {
-        Map<String, dynamic> result = api_output['result'];
-        Map<String, dynamic> properties = result[tor_id];
+        Properties properties = api_output[tor_id];
         if (this.mounted) {
           setState(() {
-            completed = properties["is_finished"];
+            completed = properties.isFinished;
           });
         }
 
-        download_speed_in_byte = properties['download_payload_rate'].toInt();
+        download_speed_in_byte = properties.downloadPayloadRate;
 
-        upload_speed_in_byte = properties['upload_payload_rate'].toInt();
+        upload_speed_in_byte = properties.uploadPayloadRate;
         print("Download size: " + filesize(download_speed_in_byte));
         if (this.mounted) {
           setState(() {
             download_speed = filesize(download_speed_in_byte);
-            upload_speed =filesize(upload_speed_in_byte);
+            upload_speed = filesize(upload_speed_in_byte);
           });
         }
+
+       
+
+        
+         if (download_speed_in_byte == 0) {
+         
+          stop_listening_speeds = true;
+        }
+
+
       }
     }
     // print(progress_percent);
@@ -113,7 +124,7 @@ class _network_speedState extends State<network_speed> {
     if (!completed) {
       if (!paused) {
         Timer.periodic(Duration(seconds: 1), (timer) {
-          if (completed) {
+          if (stop_listening_speeds) {
             timer.cancel();
           }
           if (this.mounted) {

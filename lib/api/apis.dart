@@ -7,6 +7,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_phoenix/flutter_phoenix.dart';
 import 'package:deluge_client/core/auth_valid.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:deluge_client/api/models/model.dart';
 
 class apis {
   static int network_request = 0;
@@ -64,7 +65,7 @@ class apis {
 
   //-------------------------------------------------------------------------
   static bool has_prompt_fired_for_repetative = false;
-  static Future<Map<String, dynamic>> get_torrent_list(
+  static Future<Map<String, Properties>> get_torrent_list(
       List<Cookie> cookie,
       String url,
       String is_reverse_proxied,
@@ -106,9 +107,13 @@ class apis {
 
       Map<String, dynamic> client_output = json.decode(responseBody);
 
-      return client_output;
+      Map<String, Properties> list_torrent =
+          propertiesFromJson(json.encode(client_output['result']));
+     
+      return list_torrent;
     } on SocketException catch (_) {
-      if (has_prompt_fired_for_repetative == false) {// so that it will fire only once cause this api will repeatedly call
+      if (has_prompt_fired_for_repetative == false) {
+        // so that it will fire only once cause this api will repeatedly call
         dialogue_prompt.show_prompt(context);
         has_prompt_fired_for_repetative = true;
       }

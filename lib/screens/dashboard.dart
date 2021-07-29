@@ -30,6 +30,7 @@ import 'package:deluge_client/state_ware_house/state_ware_house.dart';
 import 'package:deluge_client/string/sorter.dart';
 import 'package:deluge_client/notification/notification_controller.dart';
 import 'package:deluge_client/control_center/theme_controller.dart';
+import 'package:deluge_client/api/models/model.dart';
 
 class dashboard extends StatefulWidget {
   @override
@@ -37,7 +38,7 @@ class dashboard extends StatefulWidget {
 }
 
 class _dashboardState extends State<dashboard> {
-  Future<Map<String, dynamic>> torrent;
+  Future<Map<String,Properties>> torrent;
   List<Cookie> cookie = null;
   //----
   bool all_torrent = true;
@@ -579,7 +580,7 @@ class _dashboardState extends State<dashboard> {
 
   //---------
   void rebuild_list() {
-    Future<Map<String, dynamic>> temp = torrent;
+    Future<Map<String, Properties>> temp = torrent;
     if (this.mounted) {
       setState(() {
         torrent = temp;
@@ -587,7 +588,7 @@ class _dashboardState extends State<dashboard> {
     }
   }
 
-  Map<String, dynamic> sort(Map<String, dynamic> map) {
+  Map<String, Properties> sort(Map<String, Properties> map) {
     if (sort_helper.non_reverse_order) {
       return map;
     } else if (sort_helper.reverse_order) {
@@ -749,15 +750,15 @@ class _dashboardState extends State<dashboard> {
               )),
           //--
           !all_account_selected
-              ? FutureBuilder<Map<String, dynamic>>(
+              ? FutureBuilder<Map<String, Properties>>(
                   future: torrent,
                   builder: (BuildContext context,
-                      AsyncSnapshot<Map<String, dynamic>> snapshot) {
+                      AsyncSnapshot<Map<String, Properties>> snapshot) {
                     if (snapshot.connectionState != ConnectionState.done) {
                       //------------
                       return Center(child: loader());
                     } else if (snapshot.data == null ||
-                        snapshot.data['result'] == null) {
+                           snapshot.data.length == null) {
                       return error(retry: () {
                         non_delayed_torrent_fetch(
                             selx_acc.deluge_url,
@@ -783,30 +784,30 @@ class _dashboardState extends State<dashboard> {
                                     selx_acc.password,
                                     selx_acc.via_qr);
                               },
-                              child: snapshot.data['result'].length > 0
+                              child: snapshot.data.length > 0
                                   ? ListView.builder(
                                       // where snapshot data means here is torrent=snapshot.data
 
-                                      itemCount: snapshot.data['result'].length,
+                                      itemCount: snapshot.data.length,
                                       itemBuilder: (context, index) {
-                                        Map<String, dynamic> res_torrent =
+                                        Map<String,Properties> res_torrent =
                                             new Map();
 
                                         res_torrent =
-                                            sort(snapshot.data['result']);
+                                            sort(snapshot.data);
 
                                         // it is the key that is basically idententity of list
                                         String key =
                                             res_torrent.keys.elementAt(index);
 
                                         //inside the result array
-                                        Map<String, dynamic> inside_res =
+                                      Properties inside_res =
                                             res_torrent[key];
 
-                                        bool paused = inside_res['paused'];
+                                        bool paused = inside_res.paused;
                                         bool completed =
-                                            inside_res['is_finished'];
-                                        bool seeding = inside_res['is_seed'];
+                                            inside_res.isFinished;
+                                        bool seeding = inside_res.isSeed;
 
                                         bool query;
                                         if (completed_torrent) {
@@ -829,7 +830,7 @@ class _dashboardState extends State<dashboard> {
                                         // we will be returning row and col
 
                                         return (query)
-                                            ? inside_res['name']
+                                            ? inside_res.name
                                                     .toString()
                                                     .toLowerCase()
                                                     .contains(controller
