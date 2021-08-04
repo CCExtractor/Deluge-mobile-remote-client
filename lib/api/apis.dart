@@ -7,7 +7,8 @@ import 'package:flutter/services.dart';
 import 'package:flutter_phoenix/flutter_phoenix.dart';
 import 'package:deluge_client/core/auth_valid.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:deluge_client/api/models/model.dart';
+import 'package:deluge_client/api/models/torrent_prop.dart';
+import 'package:deluge_client/api/models/deluge_settings.dart';
 
 class apis {
   static int network_request = 0;
@@ -676,7 +677,7 @@ class apis {
   }
 
   //----------------------------------------
-  static Future<Map<String, dynamic>> fetch_settings(
+  static Future<DelugeSettings> fetch_settings(
       List<Cookie> cookie,
       String url,
       String is_reverse_proxied,
@@ -716,7 +717,8 @@ class apis {
       // cookie = response.cookies;
       final responseBody = await response.transform(utf8.decoder).join();
       Map<String, dynamic> res = json.decode(responseBody);
-      return res;
+       DelugeSettings settings_output = delugeSettingsFromJson(json.encode(res));  
+      return settings_output;
     } on SocketException catch (_) {
       dialogue_prompt.show_prompt(context);
     } catch (e) {

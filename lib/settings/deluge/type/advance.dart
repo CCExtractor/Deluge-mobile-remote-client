@@ -12,27 +12,16 @@ class _advanceState extends State<advance> {
     try {
       if (this.mounted) {
         setState(() {
-          core_settings.force_proxy =
-              core_settings.settings['proxy']['force_proxy'] == null
-                  ? false
-                  : core_settings.settings['proxy']['force_proxy'];
+          core_settings.force_proxy = core_settings.settings.proxy.forceProxy;
           core_settings.anonymous_mode =
-              core_settings.settings['proxy']['anonymous_mode'] == null
-                  ? false
-                  : core_settings.settings['proxy']['anonymous_mode'];
+              core_settings.settings.proxy.anonymousMode;
           core_settings.proxy_hostnames =
-              core_settings.settings['proxy']['proxy_hostnames'] == null
-                  ? false
-                  : core_settings.settings['proxy']['proxy_hostnames'];
+              core_settings.settings.proxy.proxyHostnames;
+
           core_settings.proxy_peer_connections =
-              core_settings.settings['proxy']['proxy_peer_connections'] == null
-                  ? false
-                  : core_settings.settings['proxy']['proxy_peer_connections'];
+              core_settings.settings.proxy.proxyPeerConnections;
           core_settings.proxy_tracker_connections = core_settings
-                      .settings['proxy']['proxy_tracker_connections'] ==
-                  null
-              ? false
-              : core_settings.settings['proxy']['proxy_tracker_connections'];
+                      .settings.proxy.proxyTrackerConnections;
         });
       }
     } catch (e) {

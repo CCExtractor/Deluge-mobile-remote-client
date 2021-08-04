@@ -12,7 +12,7 @@ import 'package:deluge_client/control_center/theme.dart';
 import 'package:deluge_client/api/apis.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:deluge_client/control_center/theme_controller.dart';
-import 'package:deluge_client/api/models/model.dart';
+import 'package:deluge_client/api/models/torrent_prop.dart';
 
 class tile extends StatefulWidget {
   final multtorrent hash_m;

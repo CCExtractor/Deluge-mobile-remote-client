@@ -181,6 +181,7 @@ class _sftp_settings_fieldsState extends State<sftp_settings_fields> {
                     hintStyle: new TextStyle(color: Colors.grey[800]),
                     hintText: "sftp Password",
                     fillColor: Colors.white70,
+                    
                     suffixIcon: InkWell(
                       child: Icon(Icons.paste),
                       onTap: () async {
@@ -190,6 +191,7 @@ class _sftp_settings_fieldsState extends State<sftp_settings_fields> {
                       },
                     ),
                   ),
+                   obscureText:true,
                   controller: core_settings.sftp_pass,
                   autofocus: false,
                 ))),

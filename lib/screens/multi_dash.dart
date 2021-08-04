@@ -13,7 +13,7 @@ import 'package:deluge_client/api/apis.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:deluge_client/string/controller.dart';
 import 'package:deluge_client/string/sorter.dart';
-import 'package:deluge_client/api/models/model.dart';
+import 'package:deluge_client/api/models/torrent_prop.dart';
 
 class multi_account extends StatefulWidget {
   final Function(List<multtorrent>) manage_multi;
@@ -376,7 +376,7 @@ class multi_accountState extends State<multi_account> {
             if (snapshot.connectionState != ConnectionState.done) {
               //------------
               return Center(child: loader());
-            } else if (snapshot.data == null) {
+            } else if (snapshot.data.isEmpty) {
               return error(
                 retry: () {
                   config();
