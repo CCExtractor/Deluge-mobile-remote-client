@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:deluge_client/database/dbmanager.dart';
 import 'package:deluge_client/api/apis.dart';
 import 'package:flutter/widgets.dart';
-import 'package:deluge_client/api/models/model.dart';
+import 'package:deluge_client/api/models/torrent_prop.dart';
 
 class all_account_core {
   static final DbbucketManager db = new DbbucketManager();

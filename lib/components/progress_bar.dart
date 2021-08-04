@@ -7,7 +7,7 @@ import 'package:percent_indicator/linear_percent_indicator.dart';
 import 'package:deluge_client/api/apis.dart';
 import 'package:deluge_client/notification/notification_controller.dart';
 import 'package:deluge_client/state_ware_house/state_ware_house.dart';
-import 'package:deluge_client/api/models/model.dart';
+import 'package:deluge_client/api/models/torrent_prop.dart';
 
 class download_progress extends StatefulWidget {
   final String torrent_id;

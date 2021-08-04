@@ -7,7 +7,7 @@ import 'package:http/http.dart' as http;
 import 'package:deluge_client/control_center/theme.dart';
 import 'package:deluge_client/api/apis.dart';
 import 'package:deluge_client/control_center/theme_controller.dart';
-import 'package:deluge_client/api/models/model.dart';
+import 'package:deluge_client/api/models/torrent_prop.dart';
 
 class network_speed extends StatefulWidget {
   final String torrent_id;

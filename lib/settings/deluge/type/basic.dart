@@ -11,63 +11,43 @@ class _basicState extends State<basic> {
     try {
       if (this.mounted) {
         setState(() {
-          core_settings.send_info = core_settings.settings['send_info'];
-          core_settings.allow_remote = core_settings.settings['allow_remote'];
+          core_settings.send_info = core_settings.settings.sendInfo;
+          core_settings.allow_remote = core_settings.settings.allowRemote;
           core_settings.pre_allocate_storage =
-              core_settings.settings['pre_allocate_storage'];
+              core_settings.settings.preAllocateStorage;
           core_settings.random_port =
-              core_settings.settings['random_port'].toString() == "False"
+              core_settings.settings.randomPort.toString() == "False"
                   ? false
                   : true;
           core_settings.listen_use_sys_port =
-              core_settings.settings['listen_use_sys_port'];
+              core_settings.settings.listenUseSysPort;
 
           core_settings.listen_reuse_port =
-              core_settings.settings['listen_reuse_port'];
+              core_settings.settings.listenReusePort;
           core_settings.random_outgoing_ports =
-              core_settings.settings['random_outgoing_ports'].toString() ==
-                      "False"
+              core_settings.settings.randomOutgoingPorts.toString() == "False"
                   ? false
                   : true;
 
-          core_settings.copy_torrent =
-              core_settings.settings['copy_torrent_file'];
+          core_settings.copy_torrent = core_settings.settings.copyTorrentFile;
           core_settings.delete_copy_torrent_file =
-              core_settings.settings['del_copy_torrent_file'];
+              core_settings.settings.delCopyTorrentFile;
           core_settings.prioritize_first_last_pieces =
-              core_settings.settings['prioritize_first_last_pieces'];
+              core_settings.settings.prioritizeFirstLastPieces;
           core_settings.sequential_download =
-              core_settings.settings['sequential_download'];
-          core_settings.dht = core_settings.settings['dht'] == null
-              ? false
-              : core_settings.settings['dht'];
-          core_settings.upnp = core_settings.settings['upnp'] == null
-              ? false
-              : core_settings.settings['upnp'];
-          core_settings.natpmp = core_settings.settings['natpmp'] == null
-              ? false
-              : core_settings.settings['natpmp'];
-          core_settings.utpex = core_settings.settings['utpex'] == null
-              ? false
-              : core_settings.settings['utpex'];
-          core_settings.lsd = core_settings.settings['lsd'] == null
-              ? false
-              : core_settings.settings['lsd'];
+              core_settings.settings.sequentialDownload;
+          core_settings.dht = core_settings.settings.dht;
+          core_settings.upnp = core_settings.settings.upnp;
+          core_settings.natpmp = core_settings.settings.natpmp;
+          core_settings.utpex = core_settings.settings.utpex;
+          core_settings.lsd = core_settings.settings.lsd;
           core_settings.rate_limit_ip_overhead =
-              core_settings.settings['rate_limit_ip_overhead'] == null
-                  ? false
-                  : core_settings.settings['rate_limit_ip_overhead'];
+              core_settings.settings.rateLimitIpOverhead;
+
           core_settings.auto_manage_prefer_seeds =
-              core_settings.settings['auto_manage_prefer_seeds'] == null
-                  ? false
-                  : core_settings.settings['auto_manage_prefer_seeds'];
-          core_settings.shared = core_settings.settings['shared'] == null
-              ? false
-              : core_settings.settings['shared'];
-          core_settings.super_seeding =
-              core_settings.settings['super_seeding'] == null
-                  ? false
-                  : core_settings.settings['super_seeding'];
+              core_settings.settings.autoManagePreferSeeds;
+          core_settings.shared = core_settings.settings.shared;
+          core_settings.super_seeding = core_settings.settings.superSeeding;
         });
       }
     } catch (e) {

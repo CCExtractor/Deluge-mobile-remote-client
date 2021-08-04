@@ -1,11 +1,12 @@
 import 'dart:io';
 
+import 'package:deluge_client/api/models/deluge_settings.dart';
 import 'package:flutter/material.dart';
 import 'package:deluge_client/api/apis.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
 class core_settings {
-  static Map<String, dynamic> settings = Map<String, dynamic>();
+  static Result settings;
 
   static var download_Directory = TextEditingController();
   static var torrent_file_Directory = TextEditingController();
@@ -68,13 +69,6 @@ class core_settings {
   static var sftp_route_url = TextEditingController();
   //------------------------------------------------------------------------------------------
 
-  
-
-
-  
-
-  
-
   static void fetch(
       List<Cookie> cookie,
       String url,
@@ -83,53 +77,51 @@ class core_settings {
       String seed_pass,
       String qr_auth,
       BuildContext context) async {
-    Map<String, dynamic> temp = await apis.fetch_settings(cookie, url,
+    DelugeSettings temp = await apis.fetch_settings(cookie, url,
         is_reverse_proxied, seed_username, seed_pass, qr_auth, context);
 
-    settings = temp['result'];
+    settings = temp.result;
     Future.delayed(Duration(seconds: 1), () {
       initiate_workspace();
     });
   }
 
   static void initiate_workspace() {
-    download_Directory.text = settings['download_location'].toString();
-    torrent_file_Directory.text = settings['torrentfiles_location'].toString();
-    move_after_completion_path.text =
-        settings['move_completed_path'].toString();
-    max_connection_global.text = settings['max_connections_global'].toString();
-    max_upload_slots.text = settings['max_upload_slots_global'].toString();
-    max_half_open_connection.text =
-        settings['max_half_open_connections'].toString();
+    download_Directory.text = settings.downloadLocation;
+    torrent_file_Directory.text = settings.torrentfilesLocation;
+    move_after_completion_path.text = settings.moveCompletedPath;
+    max_connection_global.text = settings.maxConnectionsGlobal.toString();
+    max_upload_slots.text = settings.maxUploadSlotsGlobal.toString();
+    max_half_open_connection.text = settings.maxHalfOpenConnections.toString();
     max_connection_per_second.text =
-        settings['max_connections_per_second'].toString();
+        settings.maxConnectionsPerSecond.toString();
     max_connection_per_torrent.text =
-        settings['max_connections_per_torrent'].toString();
+        settings.maxConnectionsPerTorrent.toString();
     max_uploads_slots_per_torrent.text =
-        settings['max_upload_slots_per_torrent'].toString();
+        settings.maxUploadSlotsPerTorrent.toString();
     max_download_speed_per_torrent.text =
-        settings['max_download_speed_per_torrent'].toString();
-    max_download_speed.text = settings['max_download_speed'].toString();
-    max_upload_speed.text = settings['max_upload_speed'].toString();
+        settings.maxDownloadSpeedPerTorrent.toString();
+    max_download_speed.text = settings.maxDownloadSpeed.toString();
+    max_upload_speed.text = settings.maxUploadSpeed.toString();
     //-----------------------
     //advance section
-    daemon_port.text = settings['daemon_port'].toString();
-    listen_ports.text = settings['listen_ports']
+    daemon_port.text = settings.daemonPort.toString();
+    listen_ports.text = settings.listenPorts
         .toString()
         .replaceFirst('[', "")
         .replaceFirst("]", "");
-    listen_interface.text = settings['listen_interface'].toString();
-    listen_random_port.text = settings['listen_random_port'].toString();
-    outgoing_ports.text = settings['outgoing_ports']
+    listen_interface.text = settings.listenInterface;
+    listen_random_port.text = settings.listenRandomPort.toString();
+    outgoing_ports.text = settings.outgoingPorts
         .toString()
         .replaceFirst('[', "")
         .replaceFirst("]", "");
-    port.text = settings['proxy']['port'].toString();
-    hostname.text = settings['proxy']['hostname'].toString();
-    password.text = settings['proxy']['password'].toString();
-    user_name.text = settings['proxy']['username'].toString();
-    cache_size.text = settings['cache_size'].toString();
-    cache_expiry.text = settings['cache_expiry'].toString();
+    port.text = settings.proxy.port;
+    hostname.text = settings.proxy.hostname;
+    password.text = settings.proxy.password;
+    user_name.text = settings.proxy.username;
+    cache_size.text = settings.cacheSize.toString();
+    cache_expiry.text = settings.cacheExpiry.toString();
     //--------------------------------------------
   }
 }

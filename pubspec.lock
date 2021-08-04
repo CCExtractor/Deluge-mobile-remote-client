@@ -176,7 +176,7 @@ packages:
       name: fluttertoast
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "8.0.7"
+    version: "8.0.8"
   html:
     dependency: transitive
     description:
