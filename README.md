@@ -10,7 +10,11 @@
 <a href="https://www.producthunt.com/posts/deluge-mobile-client?utm_source=badge-featured&utm_medium=badge&utm_souce=badge-deluge-mobile-client" target="_blank"><img src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=304533&theme=dark" alt="Deluge mobile client - Manage deluge with ease | Product Hunt" style="width: 250px; height: 54px;" width="250" height="54" /></a>
 
 
-https://user-images.githubusercontent.com/57806993/123542889-936f1280-d769-11eb-859c-431d7281313f.mov
+
+
+
+
+https://user-images.githubusercontent.com/57806993/128589382-5abeeef0-7c1d-43c3-9c6b-4ea95afdbea6.mp4
 
 
 
