@@ -16,7 +16,11 @@
 
 
 
-![demo](https://user-images.githubusercontent.com/57806993/128589885-cde8fd53-cd8e-4293-a888-cd6c54961f2f.gif)
+
+
+https://user-images.githubusercontent.com/57806993/128637426-71d45add-9458-4175-a20f-89885f2cf1fd.mp4
+
+
 
 
 
@@ -114,7 +118,7 @@ The project is released under the [MIT License](http://www.opensource.org/licens
 
 
 
-note: some of the images are taken from internet, Iam not claiming that those images belongs to me. All the credit and copyrights belongs to their respective owner
+note: some of the images are taken from internet, Iam not claiming that those images belongs to me. All the credit and copyrights belongs to their respective owner.
 ## Contact
 <a href="https://www.linkedin.com/in/arshadverified/" target="_blank">Mohammad Arshad</a>
 
