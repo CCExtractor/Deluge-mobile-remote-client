@@ -59,6 +59,7 @@ Deluge is a lightweight, Free Software, cross-platform BitTorrent Monitoring ser
 | Add new torrent by Q.R code on the go          | ✅ (tested)      |
 | file exploration                               |✅ (tested)  
 | streaming torrent content                      | ✅ (tested)  |
+| Ability to download torrent content to mobile device | ✅ (tested)  |
 
 ## Usage
 
