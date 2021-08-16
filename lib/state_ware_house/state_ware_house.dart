@@ -6,6 +6,11 @@ class states {
     pref.setBool("is_auth", true);
   }
 
+  static void reset_auth() async {
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    pref.setBool("is_auth", false);
+  }
+
   static Future<bool> isFirstTime() async {
     SharedPreferences pf = await SharedPreferences.getInstance();
     var isFirstTime = pf.getBool('first_time');
@@ -23,19 +28,24 @@ class states {
 
     isFirstTime().then((isFirstTime) {
       if (isFirstTime) {
-        pref.setInt("selected_account", 1);
+       pref.setInt("selected_account", 1);
         pref.setInt("selected_theme", 1);
         pref.setBool("notification_settings", true);
-        pref.setBool("sftp_reset",false);
-        pref.setString("sftp_host","");
-        pref.setString("sftp_port","");
-        pref.setString("sftp_username","");
+        pref.setBool("sftp_reset", false);
+        pref.setString("sftp_host", "");
+        pref.setString("sftp_port", "");
+        pref.setString("sftp_username", "");
         pref.setString("sftp_pass", "");
-        pref.setString("sftp_dir_route","");
+        pref.setString("sftp_dir_route", "");
       } else {
         print("it is not first");
       }
     });
+  }
+
+  static void make_it_first_time() async {
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    pref.setBool("first_time", true);
   }
 
   //--
@@ -74,8 +84,6 @@ class states {
     return t;
   }
 
-
-
   //----------------------------------------------------------------------
   static void set_notification_settings(bool val) async {
     SharedPreferences pf = await SharedPreferences.getInstance();
@@ -86,8 +94,6 @@ class states {
     SharedPreferences pf = await SharedPreferences.getInstance();
     return pf.get("notification_settings");
   }
-
- 
 
   //-------------------------------------------------sftp area
   static Future<void> set_sftp_host(String host) async {
@@ -120,47 +126,45 @@ class states {
     SharedPreferences pf = await SharedPreferences.getInstance();
     return pf.getString("sftp_dir_route");
   }
+
   static Future<String> get_sftp_host() async {
     SharedPreferences pf = await SharedPreferences.getInstance();
     return pf.getString("sftp_host");
   }
-   static Future<String> get_sftp_port() async {
+
+  static Future<String> get_sftp_port() async {
     SharedPreferences pf = await SharedPreferences.getInstance();
     return pf.getString("sftp_port");
   }
+
   static Future<String> get_sftp_username() async {
     SharedPreferences pf = await SharedPreferences.getInstance();
     return pf.getString("sftp_username");
   }
-    static Future<String> get_sftp_password() async {
+
+  static Future<String> get_sftp_password() async {
     SharedPreferences pf = await SharedPreferences.getInstance();
     return pf.getString("sftp_pass");
   }
+
   //-------------------------------------------------------------------------
   // it should return sftp true false
-    static Future<bool>get_sftP_reset_bool() async {
+  static Future<bool> get_sftP_reset_bool() async {
     SharedPreferences pf = await SharedPreferences.getInstance();
     return pf.get("sftp_reset");
   }
-   static Future<void> set_sftP_reset_bool(bool val) async {
+
+  static Future<void> set_sftP_reset_bool(bool val) async {
     SharedPreferences pf = await SharedPreferences.getInstance();
     pf.setBool("sftp_reset", val);
   }
 
-  static Future<void> reset_sftp_config() async{
-     SharedPreferences pf = await SharedPreferences.getInstance();
-     pf.setString("sftp_host","");
-      pf.setString("sftp_port","");
-       pf.setString("sftp_username", "");
-         pf.setString("sftp_pass", "");
-          pf.setString("sftp_dir_route","");
-
-
+  static Future<void> reset_sftp_config() async {
+    SharedPreferences pf = await SharedPreferences.getInstance();
+    pf.setString("sftp_host", "");
+    pf.setString("sftp_port", "");
+    pf.setString("sftp_username", "");
+    pf.setString("sftp_pass", "");
+    pf.setString("sftp_dir_route", "");
   }
-  
-
-
-
-
-
 }

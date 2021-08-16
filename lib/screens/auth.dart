@@ -111,7 +111,7 @@ class _auth_viewState extends State<auth_view> {
     } else if (validity.valid == -11) {
       toastMessage("Deluge is not reachable");
     } else if (validity.valid == -2) {
-      toastMessage("Seedbox doesnot get authenticated");
+      toastMessage("Seedbox authentification failed");
     } else {
       toastMessage("Something goes wrong");
     }

@@ -37,6 +37,8 @@ class _splashState extends State<splash> {
     bool ctxt_state = await states.state_is_auth_fetch();
     if (ctxt_state == null) {
       is_auth = false;
+    } else if (ctxt_state == false) {
+      is_auth = false;
     } else {
       is_auth = true;
     }
@@ -61,8 +63,7 @@ class _splashState extends State<splash> {
         children: [
           Image.asset(
             "assets/animation.gif",
-             height: 350.0,
-             
+            height: 350.0,
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
