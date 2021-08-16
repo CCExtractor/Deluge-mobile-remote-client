@@ -57,6 +57,7 @@ class _dashboardState extends State<dashboard> {
   List<multtorrent> multi_selected_torrents = new List();
   void dashboard_state() async {
     int t = await states.state_selected_account();
+ 
 
     if (t > 0) {
       selx_acc = await account_manager.get_acc_by_id(t);
@@ -757,20 +758,21 @@ class _dashboardState extends State<dashboard> {
                           //------------
                           return Center(child: loader());
                         } else if (snapshot.data.isEmpty) {
-                          return error(retry: () {
-                            non_delayed_torrent_fetch(
-                                selx_acc.deluge_url,
-                                selx_acc.deluge_pwrd,
-                                cookie,
-                                selx_acc.has_deluge_pwrd,
-                                selx_acc.is_reverse_proxied,
-                                selx_acc.username,
-                                selx_acc.password,
-                                selx_acc.via_qr);
-                          });
+                          return error(
+                            retry: () {
+                              non_delayed_torrent_fetch(
+                                  selx_acc.deluge_url,
+                                  selx_acc.deluge_pwrd,
+                                  cookie,
+                                  selx_acc.has_deluge_pwrd,
+                                  selx_acc.is_reverse_proxied,
+                                  selx_acc.username,
+                                  selx_acc.password,
+                                  selx_acc.via_qr);
+                            },
+                            account_name: selx_acc.deluge_url,
+                          );
                         } else {
-                          
-
                           return Expanded(
                               child: RefreshIndicator(
                                   onRefresh: () async {

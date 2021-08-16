@@ -216,6 +216,7 @@ class sidebarState extends State<sidebar> {
           children: [
             accounts(
               key: accounts_state,
+              
               // @todo
               dashboard_state: () => dashboard_state(),
               update_account_selection: () => fetch_selectx_account(),

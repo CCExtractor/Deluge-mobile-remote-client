@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:deluge_client/components/loader.dart';
 import 'package:deluge_client/components/storage_indicator.dart';
 import 'package:deluge_client/database/dbmanager.dart';
+import 'package:deluge_client/screens/auth.dart';
 import 'package:flutter/material.dart';
 import 'package:deluge_client/control_center/theme.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -53,7 +54,8 @@ class accountsState extends State<accounts> {
     super.initState();
   }
 
-  prompt_to_delete(BuildContext context, int id, String account) {
+  prompt_to_delete(
+      BuildContext context, int id, String account, int length_acc) {
     // set up the buttons
     Widget cancelButton = FlatButton(
       child: Text(
@@ -66,11 +68,31 @@ class accountsState extends State<accounts> {
       ),
       onPressed: () {
         //some code
-        dbmanager.deletebucket(id);
-        Navigator.of(context, rootNavigator: true)
-            .pop(); // for shutting the alertbox
-        Navigator.of(context).pop(); //for closing sidebar
-        toastMessage(account + " deleted successfully");
+        if (length_acc > 1) {
+          dbmanager.deletebucket(id);
+          Navigator.of(context, rootNavigator: true)
+              .pop(); // for shutting the alertbox
+          Navigator.of(context).pop(); //for closing sidebar
+          toastMessage(account + " deleted successfully");
+        } else if (length_acc == 1) {
+          states.reset_auth(); // it will reset the auth state
+          dbmanager.deletebucket(id);
+          states.make_it_first_time();
+
+          Navigator.of(context, rootNavigator: true)
+              .pop(); // for shutting the alertbox
+          //------------it should also reset config
+          dbmanager.delete_table();// it will delete whole table
+
+          //--------------------------
+
+          Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => auth_view(
+                        tow_attachment: false,
+                      )));
+        }
       },
     );
     Widget continueButton = FlatButton(
@@ -155,21 +177,18 @@ class accountsState extends State<accounts> {
                         leading: Icon(selected_account == accounts[index].id
                             ? Icons.radio_button_checked
                             : Icons.radio_button_unchecked),
-                        trailing: (accounts.length > 1 &&
-                                selected_account != accounts[index].id)
-                            ? IconButton(
-                                // if there is more than 1 account then it will visible
-                                icon: Icon(
-                                  Icons.delete,
-                                  color: Colors.red,
-                                  size: 18.0,
-                                ),
-                                onPressed: () {
-                                  prompt_to_delete(context, accounts[index].id,
-                                      accounts[index].deluge_url);
-                                },
-                              )
-                            : new Container(height: 0.0, width: 0.0),
+                        trailing: IconButton(
+                          // if there is more than 1 account then it will visible
+                          icon: Icon(
+                            Icons.delete,
+                            color: Colors.red,
+                            size: 18.0,
+                          ),
+                          onPressed: () {
+                            prompt_to_delete(context, accounts[index].id,
+                                accounts[index].deluge_url, accounts.length);
+                          },
+                        ),
                         onTap: () async {
                           if (this.mounted) {
                             setState(() {
