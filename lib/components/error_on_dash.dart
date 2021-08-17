@@ -103,7 +103,7 @@ class _errorState extends State<error> {
                 child: Padding(
                     padding: EdgeInsets.only(left: 20.0),
                     child: Text(
-                        "It may also possible that Deluge is working but it is taking time to respond, As solution you can retry.",
+                        "It may also possible that Deluge is working but it is taking time to respond.",
                         style: TextStyle(fontFamily: theme.font_family))))
           ],
         ),
