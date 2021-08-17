@@ -48,15 +48,19 @@ class _ssh_configState extends State<ssh_config> {
 
   @override
   Widget build(BuildContext context) {
-    return Material(
+    return SingleChildScrollView(child: 
+     Material(
         shape: RoundedRectangleBorder(
           borderRadius: new BorderRadius.only(
               topRight: Radius.circular(15.0), topLeft: Radius.circular(15.0)),
         ),
-        child: SafeArea(
-            top: false,
-            child: Container(
-                child: SingleChildScrollView(
+        child:
+      Container(
+         padding: EdgeInsets.only(
+                                    bottom: MediaQuery.of(context)
+                                        .viewInsets
+                                        .bottom),
+                
                     child: Column(
               children: [
                 Padding(
@@ -121,6 +125,6 @@ class _ssh_configState extends State<ssh_config> {
                             fontFamily: theme.font_family,
                             fontSize: theme.minimal_font_size)))
               ],
-            )))));
+            ))));
   }
 }
