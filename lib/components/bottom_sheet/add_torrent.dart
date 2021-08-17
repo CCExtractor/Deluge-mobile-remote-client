@@ -142,8 +142,10 @@ class _add_newState extends State<add_new> {
                         Navigator.of(context).pop();
                         showModalBottomSheet(
                             isScrollControlled: true,
+                            
                             context: context,
                             backgroundColor: Colors.transparent,
+                          
                             builder: (context) => add_magnet(
                                   cookie: cookie,
                                   url: url,
