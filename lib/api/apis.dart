@@ -339,6 +339,8 @@ class apis {
       //--------------------
     } on SocketException catch (_) {
       return auth_valid(valid: -11, cookie: null);
+    }catch(e){
+      return  auth_valid(valid: -11, cookie: null);
     }
   }
   //---------------------------------
