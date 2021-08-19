@@ -109,8 +109,8 @@ class apis {
       Map<String, dynamic> client_output = json.decode(responseBody);
 
       Map<String, Properties> list_torrent =
-          propertiesFromJson(json.encode(client_output['result']));
-     
+    client_output['result']!=null?propertiesFromJson(json.encode(client_output['result'])):null;
+
       return list_torrent;
     } on SocketException catch (_) {
       if (has_prompt_fired_for_repetative == false) {
@@ -119,7 +119,8 @@ class apis {
         has_prompt_fired_for_repetative = true;
       }
     } catch (e) {
-      return new Map();
+      Map<String, Properties> list_torrent = null;
+      return list_torrent;
     }
   }
 
@@ -339,8 +340,8 @@ class apis {
       //--------------------
     } on SocketException catch (_) {
       return auth_valid(valid: -11, cookie: null);
-    }catch(e){
-      return  auth_valid(valid: -11, cookie: null);
+    } catch (e) {
+      return auth_valid(valid: -11, cookie: null);
     }
   }
   //---------------------------------
@@ -719,7 +720,7 @@ class apis {
       // cookie = response.cookies;
       final responseBody = await response.transform(utf8.decoder).join();
       Map<String, dynamic> res = json.decode(responseBody);
-       DelugeSettings settings_output = delugeSettingsFromJson(json.encode(res));  
+      DelugeSettings settings_output = delugeSettingsFromJson(json.encode(res));
       return settings_output;
     } on SocketException catch (_) {
       dialogue_prompt.show_prompt(context);

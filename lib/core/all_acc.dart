@@ -35,6 +35,8 @@ class all_account_core {
     return all_account_cookie;
   }
 
+  static String error_account = "";
+
   static Map<multtorrent, Properties> output = Map<multtorrent, Properties>();
   static Future<Map<multtorrent, Properties>> config_torrent_list(
       Map<String, dynamic> cookies, BuildContext context) async {
@@ -58,6 +60,9 @@ class all_account_core {
           context);
 
       print(t);
+      if (t == null) {
+        error_account = acc[i].deluge_url.toString();
+      }
       // todo i will add url with the hash of map
       for (int j = 0; j < t.length; j++) {
         String hash = t.keys.elementAt(j);

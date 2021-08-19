@@ -57,7 +57,6 @@ class _dashboardState extends State<dashboard> {
   List<multtorrent> multi_selected_torrents = new List();
   void dashboard_state() async {
     int t = await states.state_selected_account();
- 
 
     if (t > 0) {
       selx_acc = await account_manager.get_acc_by_id(t);
@@ -757,7 +756,10 @@ class _dashboardState extends State<dashboard> {
                         if (snapshot.connectionState != ConnectionState.done) {
                           //------------
                           return Center(child: loader());
-                        } else if (snapshot.data.isEmpty) {
+                        } else if (snapshot.data==null) {
+                          //@todo i have to fix error here it shows the error page
+                          
+
                           return error(
                             retry: () {
                               non_delayed_torrent_fetch(
