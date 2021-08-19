@@ -32,7 +32,7 @@ https://user-images.githubusercontent.com/57806993/128637426-71d45add-9458-4175-
 ## About The Project
 Deluge is a lightweight, Free Software, cross-platform BitTorrent Monitoring service.
     Deluge mobile client app interact with the deluge via WEB-JSONRPC and gives all the  administrative abilites. The web app and Desktop app and other relevant documentation can be found at
-    <a href="https://deluge-torrent.org" target="_blank">Deluge</a>.
+    <a href="https://deluge-torrent.org" target="_blank">Deluge</a>, and its repository can be found <a href="https://github.com/deluge-torrent/deluge" target="_blank">here</a>
   
   ![issues](https://img.shields.io/github/issues/CCExtractor/Deluge-mobile-remote-client)
 
