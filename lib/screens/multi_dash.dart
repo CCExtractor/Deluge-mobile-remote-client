@@ -376,11 +376,12 @@ class multi_accountState extends State<multi_account> {
             if (snapshot.connectionState != ConnectionState.done) {
               //------------
               return Center(child: loader());
-            } else if (snapshot.data.isEmpty) {
+            } else if (snapshot.data==null) {
               return error(
                 retry: () {
                   config();
                 },
+                account_name: all_account_core.error_account,
               );
             } else {
               return Expanded(
