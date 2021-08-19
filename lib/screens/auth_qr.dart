@@ -92,11 +92,11 @@ class _auth_qrState extends State<auth_qr> {
     }
   }
 
-  @override
-  void initState() {
-    states.first_time_setup_selection();
-    super.initState();
-  }
+  // @override
+  // void initState() {
+  //   states.first_time_setup_selection();
+  //   super.initState();
+  // } //it will be fired from the auth screen on have qr button click
 
   Barcode result;
   QRViewController controller;

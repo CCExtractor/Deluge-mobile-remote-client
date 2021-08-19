@@ -54,6 +54,8 @@ class accountsState extends State<accounts> {
     super.initState();
   }
 
+  List<int> avail_acc = new List<int>();
+
   prompt_to_delete(
       BuildContext context, int id, String account, int length_acc) {
     // set up the buttons
@@ -66,9 +68,33 @@ class accountsState extends State<accounts> {
             fontWeight: FontWeight.bold,
             fontFamily: theme.font_family),
       ),
-      onPressed: () {
+      onPressed: () async{
         //some code
         if (length_acc > 1) {
+          //if it is selected account and you wanted to delete it then
+          avail_acc.remove(id);
+          if (id == selected_account) {
+            //-----------------
+             if (this.mounted) {
+                            setState(() {
+                              selected_account = avail_acc[0];
+
+                              update_account_state(selected_account);
+                            });
+                          }
+                          update_account_selection();
+                          dashboard_state();
+                          //here i will add logic to reset sftp
+                          if (await states.get_sftP_reset_bool()) {
+                            states.reset_sftp_config();
+                          }
+
+
+
+            //--------------------
+
+          }
+          //--------------
           dbmanager.deletebucket(id);
           Navigator.of(context, rootNavigator: true)
               .pop(); // for shutting the alertbox
@@ -77,12 +103,13 @@ class accountsState extends State<accounts> {
         } else if (length_acc == 1) {
           states.reset_auth(); // it will reset the auth state
           dbmanager.deletebucket(id);
+          avail_acc.remove(id);
           states.make_it_first_time();
 
           Navigator.of(context, rootNavigator: true)
               .pop(); // for shutting the alertbox
           //------------it should also reset config
-          dbmanager.delete_table();// it will delete whole table
+          dbmanager.delete_table(); // it will delete whole table
 
           //--------------------------
 
@@ -162,6 +189,7 @@ class accountsState extends State<accounts> {
                 return ListView.builder(
                     itemCount: accounts == null ? 0 : accounts.length,
                     itemBuilder: (BuildContext context, int index) {
+                      avail_acc.add(accounts[index].id);
                       return ListTile(
                         visualDensity:
                             VisualDensity(horizontal: 0, vertical: -4),
@@ -178,7 +206,6 @@ class accountsState extends State<accounts> {
                             ? Icons.radio_button_checked
                             : Icons.radio_button_unchecked),
                         trailing: IconButton(
-                          // if there is more than 1 account then it will visible
                           icon: Icon(
                             Icons.delete,
                             color: Colors.red,

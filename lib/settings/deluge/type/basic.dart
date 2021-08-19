@@ -86,10 +86,10 @@ class _basicState extends State<basic> {
           ListTile(
             title: Text("Allow remote"),
             trailing: Switch(
-              value: core_settings.send_info,
+              value: core_settings.allow_remote,
               onChanged: (val) {
                 setState(() {
-                  core_settings.send_info = val;
+                  core_settings.allow_remote = val;
                 });
                 print(val);
               },
