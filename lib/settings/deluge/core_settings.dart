@@ -1,12 +1,13 @@
 import 'dart:io';
 
-import 'package:deluge_client/api/models/deluge_settings.dart';
+
 import 'package:flutter/material.dart';
 import 'package:deluge_client/api/apis.dart';
+import 'package:deluge_client/api/models/settings.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
 class core_settings {
-  static Result settings;
+  static Settings settings;
 
   static var download_Directory = TextEditingController();
   static var torrent_file_Directory = TextEditingController();
@@ -77,10 +78,11 @@ class core_settings {
       String seed_pass,
       String qr_auth,
       BuildContext context) async {
-    DelugeSettings temp = await apis.fetch_settings(cookie, url,
+    Map<String, dynamic> json = await apis.fetch_settings(cookie, url,
         is_reverse_proxied, seed_username, seed_pass, qr_auth, context);
 
-    settings = temp.result;
+    settings = new Settings(json);
+
     Future.delayed(Duration(seconds: 1), () {
       initiate_workspace();
     });
@@ -116,10 +118,10 @@ class core_settings {
         .toString()
         .replaceFirst('[', "")
         .replaceFirst("]", "");
-    port.text = settings.proxy.port;
-    hostname.text = settings.proxy.hostname;
-    password.text = settings.proxy.password;
-    user_name.text = settings.proxy.username;
+    port.text = settings.proxy["port"].toString();
+    hostname.text = settings.proxy["hostname"].toString();
+    password.text = settings.proxy["password"].toString();
+    user_name.text = settings.proxy["username"].toString();
     cache_size.text = settings.cacheSize.toString();
     cache_expiry.text = settings.cacheExpiry.toString();
     //--------------------------------------------

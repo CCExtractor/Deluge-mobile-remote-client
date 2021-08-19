@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
+import 'package:deluge_client/api/models/settings.dart';
 import 'package:deluge_client/settings/deluge/core_settings.dart';
 import 'package:flutter/material.dart';
 import 'package:deluge_client/control_center/theme.dart';
@@ -8,7 +9,7 @@ import 'package:flutter_phoenix/flutter_phoenix.dart';
 import 'package:deluge_client/core/auth_valid.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:deluge_client/api/models/torrent_prop.dart';
-import 'package:deluge_client/api/models/deluge_settings.dart';
+
 
 class apis {
   static int network_request = 0;
@@ -108,8 +109,9 @@ class apis {
 
       Map<String, dynamic> client_output = json.decode(responseBody);
 
-      Map<String, Properties> list_torrent =
-    client_output['result']!=null?propertiesFromJson(json.encode(client_output['result'])):null;
+      Map<String, Properties> list_torrent = client_output['result'] != null
+          ? propertiesFromJson(json.encode(client_output['result']))
+          : null;
 
       return list_torrent;
     } on SocketException catch (_) {
@@ -680,7 +682,7 @@ class apis {
   }
 
   //----------------------------------------
-  static Future<DelugeSettings> fetch_settings(
+  static Future<Map<String,dynamic>> fetch_settings(
       List<Cookie> cookie,
       String url,
       String is_reverse_proxied,
@@ -720,8 +722,9 @@ class apis {
       // cookie = response.cookies;
       final responseBody = await response.transform(utf8.decoder).join();
       Map<String, dynamic> res = json.decode(responseBody);
-      DelugeSettings settings_output = delugeSettingsFromJson(json.encode(res));
-      return settings_output;
+      //  DelugeSettings settings_output = delugeSettingsFromJson(json.encode(res));
+      //Settings settings_output = new Settings(res['result']);
+      return res["result"];
     } on SocketException catch (_) {
       dialogue_prompt.show_prompt(context);
     } catch (e) {
