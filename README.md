@@ -10,7 +10,20 @@
 <a href="https://www.producthunt.com/posts/deluge-mobile-client?utm_source=badge-featured&utm_medium=badge&utm_souce=badge-deluge-mobile-client" target="_blank"><img src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=304533&theme=dark" alt="Deluge mobile client - Manage deluge with ease | Product Hunt" style="width: 250px; height: 54px;" width="250" height="54" /></a>
 
 
-https://user-images.githubusercontent.com/57806993/123542889-936f1280-d769-11eb-859c-431d7281313f.mov
+
+
+
+
+
+
+
+
+https://user-images.githubusercontent.com/57806993/128637426-71d45add-9458-4175-a20f-89885f2cf1fd.mp4
+
+
+
+
+
 
 
 
@@ -19,7 +32,7 @@ https://user-images.githubusercontent.com/57806993/123542889-936f1280-d769-11eb-
 ## About The Project
 Deluge is a lightweight, Free Software, cross-platform BitTorrent Monitoring service.
     Deluge mobile client app interact with the deluge via WEB-JSONRPC and gives all the  administrative abilites. The web app and Desktop app and other relevant documentation can be found at
-    <a href="https://deluge-torrent.org" target="_blank">Deluge</a>.
+    <a href="https://deluge-torrent.org" target="_blank">Deluge</a>, and its repository can be found <a href="https://github.com/deluge-torrent/deluge" target="_blank">here</a>
   
   ![issues](https://img.shields.io/github/issues/CCExtractor/Deluge-mobile-remote-client)
 
@@ -46,6 +59,7 @@ Deluge is a lightweight, Free Software, cross-platform BitTorrent Monitoring ser
 | Add new torrent by Q.R code on the go          | ✅ (tested)      |
 | file exploration                               |✅ (tested)  
 | streaming torrent content                      | ✅ (tested)  |
+| Ability to download torrent content to mobile device | ✅ (tested)  |
 
 ## Usage
 
@@ -105,7 +119,7 @@ The project is released under the [MIT License](http://www.opensource.org/licens
 
 
 
-note: some of the images are taken from internet, Iam not claiming that those images belongs to me. All the credit and copyrights belongs to their respective owner
+note: some of the images are taken from internet, Iam not claiming that those images belongs to me. All the credit and copyrights belongs to their respective owner.
 ## Contact
 <a href="https://www.linkedin.com/in/arshadverified/" target="_blank">Mohammad Arshad</a>
 
