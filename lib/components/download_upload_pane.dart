@@ -35,7 +35,7 @@ class network_speed extends StatefulWidget {
       : super(key: key);
 
   @override
-  _network_speedState createState() => _network_speedState(
+  network_speedState createState() => network_speedState(
       tor_id: torrent_id,
       tor_name: tor_name,
       cookie: cookie,
@@ -48,7 +48,7 @@ class network_speed extends StatefulWidget {
       completed: completed);
 }
 
-class _network_speedState extends State<network_speed> {
+class network_speedState extends State<network_speed> {
   String tor_id;
   String tor_name;
   List<Cookie> cookie;
@@ -57,9 +57,9 @@ class _network_speedState extends State<network_speed> {
   final String seed_username;
   final String seed_pass;
   final String qr_auth;
-  final bool paused;
+   bool paused;
   bool completed;
-  _network_speedState(
+  network_speedState(
       {this.tor_id,
       this.cookie,
       this.tor_name,
@@ -75,6 +75,8 @@ class _network_speedState extends State<network_speed> {
   String download_speed = "0.0 KB";
   String upload_speed = "0.0 KB";
   bool stop_listening_speeds = false;
+  bool have_to_stop = false;
+
   Future<void> fetch_speed() async {
     try {
       Map<String, Properties> api_output = await apis.get_torrent_list(cookie,
@@ -98,15 +100,9 @@ class _network_speedState extends State<network_speed> {
           });
         }
 
-       
-
-        
-         if (download_speed_in_byte == 0) {
-         
+        if (completed || have_to_stop) {
           stop_listening_speeds = true;
         }
-
-
       }
     }
     // print(progress_percent);
@@ -118,9 +114,17 @@ class _network_speedState extends State<network_speed> {
   @override
   void initState() {
     // TODO: implement initState
-    setState(() {
-      paused;
-    });
+    if (this.mounted) {
+      setState(() {
+        paused;
+      });
+    }
+    trace_down_up_speed();
+
+    super.initState();
+  }
+
+  void trace_down_up_speed() {
     if (!completed) {
       if (!paused) {
         Timer.periodic(Duration(seconds: 1), (timer) {
@@ -135,8 +139,23 @@ class _network_speedState extends State<network_speed> {
         });
       }
     }
+  }
 
-    super.initState();
+  void stop_listening_network_speed() {
+    have_to_stop = true;
+  }
+
+  void start_listening_network_speed() {
+    have_to_stop = false;
+    stop_listening_speeds = false;
+  }
+
+   void make_pause() {
+    paused = true;
+  }
+
+  void make_resume() {
+    paused = false;
   }
 
   @override
