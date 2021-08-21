@@ -23,6 +23,7 @@ class download_progress extends StatefulWidget {
   final bool paused;
   final bool completed;
   final Function(bool) update_completion_state;
+  final Function(bool) update_seeding_state;
   //-------------asking refresh function so we can refresh if  it get download
   final VoidCallback refresh_list;
   const download_progress(
@@ -39,11 +40,12 @@ class download_progress extends StatefulWidget {
       @required this.initial_progress,
       @required this.update_completion_state,
       @required this.completed,
-      @required this.refresh_list})
+      @required this.refresh_list,
+      @required this.update_seeding_state})
       : super(key: key);
 
   @override
-  _download_progressState createState() => _download_progressState(
+  download_progressState createState() => download_progressState(
       tor_id: torrent_id,
       tor_name: tor_name,
       cookie: cookie,
@@ -56,15 +58,17 @@ class download_progress extends StatefulWidget {
       initial_progress: initial_progress,
       update_completion_state: update_completion_state,
       completed: completed,
-      refresh: refresh_list);
+      refresh: refresh_list,
+      update_seeding_state: update_seeding_state);
 }
 
-class _download_progressState extends State<download_progress> {
+class download_progressState extends State<download_progress> {
   String tor_id;
   String tor_name;
   List<Cookie> cookie;
   final double initial_progress;
   final Function(bool) update_completion_state;
+  final Function(bool) update_seeding_state;
   //--
   bool completed;
 
@@ -73,9 +77,10 @@ class _download_progressState extends State<download_progress> {
   final String seed_username;
   final String seed_pass;
   final String qr_auth;
-  final bool paused;
+  bool paused;
   final VoidCallback refresh;
-  _download_progressState(
+  bool seeding = false;
+  download_progressState(
       {this.tor_id,
       this.cookie,
       this.tor_name,
@@ -88,10 +93,12 @@ class _download_progressState extends State<download_progress> {
       this.initial_progress,
       this.update_completion_state,
       this.completed,
-      this.refresh});
+      this.refresh,
+      this.update_seeding_state});
   double progress_percent = 0;
   //-----------------
   bool stop_listening_progress = false;
+  bool needs_to_stop_listening = false;
   void get_status() async {
     try {
       Map<String, Properties> api_output = await apis.get_torrent_list(cookie,
@@ -103,15 +110,18 @@ class _download_progressState extends State<download_progress> {
 
         double temp = (middletemp / 100.0);
         print(temp);
+        seeding = content.isSeed;
 
         if (this.mounted) {
           setState(() {
             progress_percent = temp;
             completed = content.isFinished;
+            
           });
         }
 
         update_completion_state(completed);
+        update_seeding_state(seeding);
 
         //--------------------------notification
         if (notification_status == true) {
@@ -126,7 +136,7 @@ class _download_progressState extends State<download_progress> {
               progress_percent.toInt() * 100);
         }
 
-        if (temp == 1.0) {
+        if (temp == 1.0 || needs_to_stop_listening) {
           stop_listening_progress = true;
         }
       }
@@ -140,26 +150,14 @@ class _download_progressState extends State<download_progress> {
   @override
   void initState() {
     // TODO: implement initState
-    setState(() {
-      paused;
-    });
-    handle_first_progress();
-
-    if (!completed) {
-      if (!paused) {
-        Timer.periodic(Duration(seconds: 1), (timer) {
-          if (stop_listening_progress) {
-            timer.cancel();
-          }
-
-          if (this.mounted) {
-            setState(() {
-              get_status();
-            });
-          }
-        });
-      }
+    if (this.mounted) {
+      setState(() {
+        paused;
+      });
     }
+    handle_first_progress();
+    trace_download_progress_bar();
+
     //----------------------
     fetch_notification_settings();
 
@@ -181,6 +179,41 @@ class _download_progressState extends State<download_progress> {
         progress_percent = temp;
       });
     }
+  }
+
+  void trace_download_progress_bar() {
+    if (!completed) {
+      if (!paused) {
+        Timer.periodic(Duration(seconds: 1), (timer) {
+          if (stop_listening_progress) {
+            timer.cancel();
+          }
+
+          if (this.mounted) {
+            setState(() {
+              get_status();
+            });
+          }
+        });
+      }
+    }
+  }
+
+  void stop_listening_progress_bar() {
+    needs_to_stop_listening = true;
+  }
+
+  void start_listening_progress_bar() {
+    needs_to_stop_listening = false;
+    stop_listening_progress = false;
+  }
+
+  void make_pause() {
+    paused = true;
+  }
+
+  void make_resume() {
+    paused = false;
   }
 
 //Text(tor_id == null ? "" : tor_id);
