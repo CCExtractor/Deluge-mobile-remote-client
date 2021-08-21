@@ -39,7 +39,9 @@ class _auth_qrState extends State<auth_qr> {
     );
     dbmanager
         .insertbucket(item)
-        .then((id) => {print('item Added to Db ${id}')});
+        .then((id) => {print('item Added to Db ${id}'),
+      
+        });
   }
 
   void set_auth_state() async {
@@ -63,23 +65,20 @@ class _auth_qrState extends State<auth_qr> {
     auth_valid validity = await apis.auth_validity("https://" + url, "",
         false.toString(), true.toString(), "", "", auth_qr);
 
-  
     if (validity.valid == 1) {
-      
-        controller.stopCamera();
-        add_in_db(url, auth_qr);
-        set_auth_state();
+      controller.stopCamera();
+      add_in_db(url, auth_qr);
+      set_auth_state();
 
-        !tow_attachment
-            ? toastMessage("Successfully Authorized")
-            : toastMessage("Successfully added");
-        !tow_attachment
-            ? Navigator.pushReplacement(
-                context, MaterialPageRoute(builder: (context) => dashboard()))
-            : Navigator.popUntil(context, (route) {
-                return count++ == 1;
-              });
-      
+      !tow_attachment
+          ? toastMessage("Successfully Authorized")
+          : toastMessage("Successfully added");
+      !tow_attachment
+          ? Navigator.pushReplacement(
+              context, MaterialPageRoute(builder: (context) => dashboard()))
+          : Navigator.popUntil(context, (route) {
+              return count++ == 1;
+            });
     } else if (validity.valid == 0) {
       toastMessage("Credentials are wrong");
     } else if (validity.valid == -1) {
@@ -87,13 +86,17 @@ class _auth_qrState extends State<auth_qr> {
     } else if (validity.valid == -11) {
       toastMessage("Deluge is not reachable");
     } else if (validity.valid == -2) {
-      toastMessage("Seedbox doesnot get authenticated");
+      toastMessage("Seedbox authentification failed.");
     } else {
       toastMessage("Something goes wrong");
     }
   }
 
- 
+  // @override
+  // void initState() {
+  //   states.first_time_setup_selection();
+  //   super.initState();
+  // } //it will be fired from the auth screen on have qr button click
 
   Barcode result;
   QRViewController controller;

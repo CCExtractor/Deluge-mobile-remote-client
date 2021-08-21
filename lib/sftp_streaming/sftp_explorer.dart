@@ -1,7 +1,9 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:deluge_client/components/bottom_sheet/ssh_config.dart';
 import 'package:deluge_client/database/dbmanager.dart';
+import 'package:deluge_client/settings/deluge/type/sftp_streaming_settings.dart';
 import 'package:filesize/filesize.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -13,6 +15,7 @@ import 'package:deluge_client/sftp_streaming/video_dir.dart';
 import 'package:deluge_client/sftp_streaming/web_spacer.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:deluge_client/control_center/theme.dart';
+import 'package:deluge_client/state_ware_house/state_ware_house.dart';
 
 class files extends StatefulWidget {
   final String direx;
@@ -86,6 +89,13 @@ class _filesState extends State<files> {
       }
     } on PlatformException catch (e) {
       print('Error: ${e.code}\nError Message: ${e.message}');
+      toastMessage("Error Message: ${e.message} Error: ${e.code}");
+      if (e.message == "Auth fail") {
+        states.reset_sftp_config();
+        //  it is push replacement cause it will pop the page from where it is getting redirected
+        Navigator.pushReplacement(
+          context, MaterialPageRoute(builder: (context) => ssh(selected_account: choosen_account,)));
+      }
     }
   }
 
@@ -95,7 +105,8 @@ class _filesState extends State<files> {
     super.initState();
     fetch_file();
   }
-     void toastMessage(String message) {
+
+  void toastMessage(String message) {
     Fluttertoast.showToast(
       msg: message,
       toastLength: Toast.LENGTH_SHORT,
@@ -157,11 +168,9 @@ class _filesState extends State<files> {
           context,
           MaterialPageRoute(
               builder: (context) => media_stream(
-                    selected_file: path,
-                    file_name: file_name,
-                    headers:handle_headers()
-
-                  )));
+                  selected_file: path,
+                  file_name: file_name,
+                  headers: handle_headers())));
     } else if (file_name.toLowerCase().contains(".jpg") ||
         file_name.toLowerCase().contains(".jpeg") ||
         file_name.toLowerCase().contains(".png")) {
@@ -171,7 +180,6 @@ class _filesState extends State<files> {
               builder: (context) => img(
                     path: path,
                     headers: handle_headers(),
-
                   )));
     } else if (file_name.toLowerCase().contains(".pdf") ||
         file_name.toLowerCase().contains(".doc") ||
@@ -182,8 +190,8 @@ class _filesState extends State<files> {
         file_name.toLowerCase().contains(".pptx")) {
       launchInBrowser(path);
     } else {
-      toastMessage("File doesnot supported to open, You can download file");
-      
+      toastMessage(
+          "File doesnot supported to open/stream, You can download file");
     }
   }
 
@@ -202,12 +210,8 @@ class _filesState extends State<files> {
 
   Future<void> launchInBrowser(String url) async {
     if (await canLaunch(url)) {
-      await launch(
-        url,
-        forceSafariVC: false,
-        forceWebView: false,
-        headers: handle_headers()
-      );
+      await launch(url,
+          forceSafariVC: false, forceWebView: false, headers: handle_headers());
     } else {
       throw 'Could not launch $url';
     }
@@ -341,8 +345,8 @@ class _filesState extends State<files> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text(direx,style: theme.app_bar_style),
-            backgroundColor: theme.base_color,
+          title: Text(direx, style: theme.app_bar_style),
+          backgroundColor: theme.base_color,
           actions: [
             IconButton(
                 icon: Icon(Icons.create_new_folder),
@@ -393,18 +397,19 @@ class _filesState extends State<files> {
                                 : handle_file_icon(
                                     snapshot.data[index]['filename']),
                             title: Text(snapshot.data[index]['filename'],
-                            style: TextStyle(fontFamily: theme.font_family)
-                            ),
-                            subtitle: Text("Last Access: " +
-                                snapshot.data[index]['lastAccess'] +
-                                " " +
-                                "\nPermissions: " +
-                                snapshot.data[index]['permissions'] +
-                                "\nSize: " +
-                                filesize(snapshot.data[index]['fileSize'])
-                                    .toString(),
-                                     style: TextStyle(fontFamily: theme.font_family)
-                                    ),
+                                style:
+                                    TextStyle(fontFamily: theme.font_family)),
+                            subtitle: Text(
+                                "Last Access: " +
+                                    snapshot.data[index]['lastAccess'] +
+                                    " " +
+                                    "\nPermissions: " +
+                                    snapshot.data[index]['permissions'] +
+                                    "\nSize: " +
+                                    filesize(snapshot.data[index]['fileSize'])
+                                        .toString(),
+                                style:
+                                    TextStyle(fontFamily: theme.font_family)),
                             onTap: () {
                               //--------------------------------------
                               if (snapshot.data[index]['isDirectory'] == true) {

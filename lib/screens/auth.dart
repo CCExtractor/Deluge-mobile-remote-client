@@ -66,12 +66,12 @@ class _auth_viewState extends State<auth_view> {
     states.set_auth();
   }
 
-  @override
-  void initState() {
-    states.first_time_setup_selection();
+  // @override
+  // void initState() {
+  //   states.first_time_setup_selection();
 
-    super.initState();
-  }
+  //   super.initState();
+  // } //  we will now fire this on button click of get started
 
 //---------
 //-
@@ -100,7 +100,7 @@ class _auth_viewState extends State<auth_view> {
             ? toastMessage("Successfully Authorized")
             : toastMessage("Successfully added");
         !tow_attachment
-            ? Navigator.push(
+            ? Navigator.pushReplacement(
                 context, MaterialPageRoute(builder: (context) => dashboard()))
             : Navigator.pop(context);
       
@@ -111,7 +111,7 @@ class _auth_viewState extends State<auth_view> {
     } else if (validity.valid == -11) {
       toastMessage("Deluge is not reachable");
     } else if (validity.valid == -2) {
-      toastMessage("Seedbox doesnot get authenticated");
+      toastMessage("Seedbox authentification failed");
     } else {
       toastMessage("Something goes wrong");
     }
@@ -387,6 +387,7 @@ class _auth_viewState extends State<auth_view> {
                       child: RaisedButton(
                         color: theme.base_color,
                         onPressed: () {
+                          states.first_time_setup_selection();
                           Navigator.pushReplacement(
                               context,
                               MaterialPageRoute(
@@ -408,6 +409,7 @@ class _auth_viewState extends State<auth_view> {
                 child: Container(
                   width: double.infinity,
                   child: ElevatedButton(
+                    
                     style: ElevatedButton.styleFrom(
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(5.0),
@@ -415,6 +417,7 @@ class _auth_viewState extends State<auth_view> {
                             BorderSide(color: Color.fromRGBO(241, 94, 90, 1.0)),
                       ),
                       primary: Colors.white,
+                      
                     ),
                     child: Padding(
                       padding: const EdgeInsets.symmetric(
@@ -428,6 +431,7 @@ class _auth_viewState extends State<auth_view> {
                       ),
                     ),
                     onPressed: () {
+                      states.first_time_setup_selection();
                       if (url.text.length > 0) {
                         check_validity(
                             url.text,

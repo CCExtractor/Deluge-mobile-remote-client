@@ -97,17 +97,26 @@ class _add_magnetState extends State<add_magnet> {
 
   @override
   Widget build(BuildContext context) {
-    return Material(
+    return SingleChildScrollView(child: 
+         Material(
         shape: RoundedRectangleBorder(
           borderRadius: new BorderRadius.only(
               topRight: Radius.circular(15.0), topLeft: Radius.circular(15.0)),
         ),
-        child: SafeArea(
-            top: false,
-            child: Container(
-              height: 200.0,
-              child: Column(
+        child:
+
+   
+        
+             Container(
+               padding: EdgeInsets.only(
+                                    bottom: MediaQuery.of(context)
+                                        .viewInsets
+                                        .bottom),
+               child: 
+              Column(
+                
                 mainAxisSize: MainAxisSize.min,
+
                 children: <Widget>[
                   Divider(
                     color: Color.fromRGBO(255, 79, 90, 1),
@@ -115,13 +124,11 @@ class _add_magnetState extends State<add_magnet> {
                     indent: 70.0,
                     endIndent: 70.0,
                   ),
+                  
                   Padding(
                       padding: EdgeInsets.all(10.0),
-                      child: Row(
-                        children: [
-                          Flexible(
-                              fit: FlexFit.tight,
-                              child: TextField(
+                      child: 
+                          TextField(
                                 onChanged: (String val) {
                                   setState(() {
                                     myController.text;
@@ -150,9 +157,10 @@ class _add_magnetState extends State<add_magnet> {
                                   fillColor: Colors.white70,
                                 ),
                                 controller: myController,
-                              ))
-                        ],
-                      )),
+                                autofocus: true,
+                              )),
+                        
+                      
                   RaisedButton(
                     onPressed: () {
                       if (myController.text.length > 0) {
@@ -171,7 +179,7 @@ class _add_magnetState extends State<add_magnet> {
                     ),
                   )
                 ],
-              ),
-            )));
+              )),
+            ));
   }
 }

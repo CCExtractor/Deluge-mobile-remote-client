@@ -756,21 +756,25 @@ class _dashboardState extends State<dashboard> {
                         if (snapshot.connectionState != ConnectionState.done) {
                           //------------
                           return Center(child: loader());
-                        } else if (snapshot.data.isEmpty) {
-                          return error(retry: () {
-                            non_delayed_torrent_fetch(
-                                selx_acc.deluge_url,
-                                selx_acc.deluge_pwrd,
-                                cookie,
-                                selx_acc.has_deluge_pwrd,
-                                selx_acc.is_reverse_proxied,
-                                selx_acc.username,
-                                selx_acc.password,
-                                selx_acc.via_qr);
-                          });
-                        } else {
+                        } else if (snapshot.data==null) {
+                          
                           
 
+                          return error(
+                            retry: () {
+                              non_delayed_torrent_fetch(
+                                  selx_acc.deluge_url,
+                                  selx_acc.deluge_pwrd,
+                                  cookie,
+                                  selx_acc.has_deluge_pwrd,
+                                  selx_acc.is_reverse_proxied,
+                                  selx_acc.username,
+                                  selx_acc.password,
+                                  selx_acc.via_qr);
+                            },
+                            account_name: selx_acc.deluge_url,
+                          );
+                        } else {
                           return Expanded(
                               child: RefreshIndicator(
                                   onRefresh: () async {

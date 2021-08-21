@@ -46,6 +46,9 @@
         <!--
           for notification
         -->
+         <meta-data
+           android:name="com.dexterous.flutterlocalnotifications.ScheduledNotificationBootReceiver"
+           android:resource="@drawable/ic_launcher" />
           <receiver android:name="com.dexterous.flutterlocalnotifications.ScheduledNotificationBootReceiver">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED"></action>

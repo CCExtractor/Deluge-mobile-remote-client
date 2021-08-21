@@ -3,26 +3,25 @@ import 'package:deluge_client/control_center/theme.dart';
 
 class error extends StatefulWidget {
   final VoidCallback retry;
-  error({Key key, @required this.retry}) : super(key: key);
+  final String account_name;
+  error({Key key, @required this.retry, this.account_name})
+      : super(key: key);
   @override
-  _errorState createState() => _errorState(retry: retry);
+  _errorState createState() =>
+      _errorState(retry: retry, account_name: account_name);
 }
 
 class _errorState extends State<error> {
   final VoidCallback retry;
-  _errorState({Key key, @required this.retry});
+  final String account_name;
+  _errorState({Key key, @required this.retry,this.account_name});
 
   @override
   Widget build(BuildContext context) {
-    return 
-   Expanded(child:
-     SingleChildScrollView(
-      
-       
-       child:
-    Column(
+    return Expanded(
+        child: SingleChildScrollView(
+            child: Column(
       children: [
-        
         Row(
           children: [
             Flexible(
@@ -46,6 +45,13 @@ class _errorState extends State<error> {
                       fontFamily: theme.font_family,
                       fontWeight: FontWeight.bold),
                 ),
+                account_name!=null?
+                  Text(
+                  account_name,
+                  style: TextStyle(
+                      fontFamily: theme.font_family,
+                    ),
+                ):new Container(height: 0.0,width: 0.0,),
                 Divider(
                   color: theme.base_color,
                   thickness: 4.0,
@@ -97,7 +103,7 @@ class _errorState extends State<error> {
                 child: Padding(
                     padding: EdgeInsets.only(left: 20.0),
                     child: Text(
-                        "It may also possible that Deluge is working but it is taking time to respond, As solution you can retry.",
+                        "It may also possible that Deluge is working but it is taking time to respond.",
                         style: TextStyle(fontFamily: theme.font_family))))
           ],
         ),
@@ -107,7 +113,9 @@ class _errorState extends State<error> {
             retry();
           },
           color: Colors.red,
-          child: Text("Retry", style: TextStyle(fontFamily: theme.font_family,color: Colors.white)),
+          child: Text("Retry",
+              style: TextStyle(
+                  fontFamily: theme.font_family, color: Colors.white)),
         )
       ],
     )));

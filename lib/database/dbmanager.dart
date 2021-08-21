@@ -26,20 +26,16 @@ class DbbucketManager {
     await openDb();
     final List<Map<String, dynamic>> maps = await _database.query('bucket');
     return List.generate(maps.length, (i) {
-  
       return Bucket(
-          id: maps[i]['id'],
-          deluge_url: maps[i]['deluge_url'],
-          has_deluge_pwrd: maps[i]['has_deluge_pwrd'],
-          deluge_pwrd:maps[i]['deluge_pwrd'],
-          is_reverse_proxied: maps[i]['is_reverse_proxied'],
-          username:maps[i]['username'],
-          password: maps[i]['password'],
-           via_qr: maps[i]['via_qr'],
-
-
-          
-          );
+        id: maps[i]['id'],
+        deluge_url: maps[i]['deluge_url'],
+        has_deluge_pwrd: maps[i]['has_deluge_pwrd'],
+        deluge_pwrd: maps[i]['deluge_pwrd'],
+        is_reverse_proxied: maps[i]['is_reverse_proxied'],
+        username: maps[i]['username'],
+        password: maps[i]['password'],
+        via_qr: maps[i]['via_qr'],
+      );
     });
   }
 
@@ -56,30 +52,31 @@ class DbbucketManager {
         whereArgs: [id]);
   }
 
-
-
   //--
   Future<Bucket> get_acc_by_id(int id) async {
     await openDb();
-    final List<Map<dynamic,dynamic>> maps = await _database.query('bucket', where: "id=?", whereArgs: [id]);
-    
-      return Bucket(
-          id: maps[0]['id'],
-          deluge_url: maps[0]['deluge_url'],
-          has_deluge_pwrd: maps[0]['has_deluge_pwrd'],
-          deluge_pwrd:maps[0]['deluge_pwrd'],
-          is_reverse_proxied: maps[0]['is_reverse_proxied'],
-          username:maps[0]['username'],
-          password: maps[0]['password'],
-          via_qr: maps[0]['via_qr'],
+    final List<Map<dynamic, dynamic>> maps =
+        await _database.query('bucket', where: "id=?", whereArgs: [id]);
 
-          
-          );
-    
+    return Bucket(
+      id: maps[0]['id'],
+      deluge_url: maps[0]['deluge_url'],
+      has_deluge_pwrd: maps[0]['has_deluge_pwrd'],
+      deluge_pwrd: maps[0]['deluge_pwrd'],
+      is_reverse_proxied: maps[0]['is_reverse_proxied'],
+      username: maps[0]['username'],
+      password: maps[0]['password'],
+      via_qr: maps[0]['via_qr'],
+    );
   }
 
-}//root class
-
+  Future<void> delete_table() async {
+    await openDb();
+    await _database.execute("DROP TABLE bucket");
+    await _database.execute(
+        "CREATE TABLE bucket(id INTEGER PRIMARY KEY autoincrement, deluge_url TEXT ,has_deluge_pwrd TEXT,deluge_pwrd TEXT,is_reverse_proxied TEXT,via_qr Text, username TEXT,password TEXT)");
+  }
+} //root class
 
 class Bucket {
   int id;
@@ -99,12 +96,19 @@ class Bucket {
       @required this.is_reverse_proxied,
       @required this.username,
       @required this.password,
-      @required this.via_qr
-
-      });
+      @required this.via_qr});
   Map<String, dynamic> toMap() {
     //return {'name': name, 'course': course};
-    return {'id': id, 'deluge_url': deluge_url, 'has_deluge_pwrd': has_deluge_pwrd,'deluge_pwrd':deluge_pwrd ,'is_reverse_proxied':is_reverse_proxied,'via_qr':via_qr,'username':username,'password':password};
+    return {
+      'id': id,
+      'deluge_url': deluge_url,
+      'has_deluge_pwrd': has_deluge_pwrd,
+      'deluge_pwrd': deluge_pwrd,
+      'is_reverse_proxied': is_reverse_proxied,
+      'via_qr': via_qr,
+      'username': username,
+      'password': password
+    };
   }
 }
 //-------------

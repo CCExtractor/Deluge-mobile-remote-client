@@ -64,7 +64,7 @@ class _tileState extends State<tile> {
   final List<multtorrent> multi_selected_torrent;
   final String hash;
   bool paused;
-  final bool seeding;
+   bool seeding;
   final bool for_multi;
   final Bucket selx_acc;
   final List<Cookie> cookie;
@@ -113,6 +113,10 @@ class _tileState extends State<tile> {
           paused = result[hash].paused;
         });
       }
+      networkspeed_state.currentState.stop_listening_network_speed();
+      networkspeed_state.currentState.make_pause();
+      progressbar_state.currentState.make_pause();
+      progressbar_state.currentState.stop_listening_progress_bar();
     });
   }
 
@@ -141,6 +145,13 @@ class _tileState extends State<tile> {
           paused = result[hash].paused;
         });
       }
+
+      networkspeed_state.currentState.start_listening_network_speed();
+      networkspeed_state.currentState.make_resume();
+      networkspeed_state.currentState.trace_down_up_speed();
+      progressbar_state.currentState.make_resume();
+      progressbar_state.currentState.start_listening_progress_bar();
+      progressbar_state.currentState.trace_download_progress_bar();
     });
   }
 
@@ -308,6 +319,9 @@ class _tileState extends State<tile> {
     }
   }
 
+  GlobalKey<network_speedState> networkspeed_state = GlobalKey();
+  GlobalKey<download_progressState> progressbar_state = GlobalKey();
+
   @override
   Widget build(BuildContext context) {
     return Slidable(
@@ -349,9 +363,8 @@ class _tileState extends State<tile> {
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       Text(
-                       
                         "Total Size: " +
-                             (filesize(inside_res.totalSize)).toString(),
+                            (filesize(inside_res.totalSize)).toString(),
                         style: TextStyle(
                             color: (!theme_controller.is_it_dark()
                                 ? Colors.black
@@ -375,6 +388,7 @@ class _tileState extends State<tile> {
                       Container(
                         padding: EdgeInsets.only(left: 15.0),
                         child: network_speed(
+                          key: networkspeed_state,
                           torrent_id: hash,
                           cookie: cookie,
                           tor_name: inside_res.name,
@@ -400,6 +414,7 @@ class _tileState extends State<tile> {
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       download_progress(
+                        key: progressbar_state,
                         torrent_id: hash,
                         initial_progress: inside_res.progress,
                         cookie: cookie,
@@ -412,6 +427,13 @@ class _tileState extends State<tile> {
                         paused: paused,
                         update_completion_state: (bool val) {
                           update_completion_state(val);
+                        },
+                        update_seeding_state: (bool val) {
+                          if (this.mounted) {
+                            setState(() {
+                              seeding = val;
+                            });
+                          }
                         },
                         completed: completed,
                         refresh_list: () {
