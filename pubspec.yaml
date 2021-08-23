@@ -16,7 +16,7 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 # In iOS, build-name is used as CFBundleShortVersionString while build-number used as CFBundleVersion.
 # Read more about iOS versioning at
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
-version: 0.1.4+14
+version: 0.1.4+15
 #versioning example
 #You can update both the version name and the version code number in the same place in pubspec.yaml. Just separate them with a + sign. For example:
 
@@ -39,7 +39,6 @@ dependencies:
   cupertino_icons: ^1.0.2
   http: ^0.12.1
   percent_indicator: ^3.0.1
-  flutter_document_picker: ^4.0.1
   qr_code_scanner: ^0.4.0
   modal_bottom_sheet: ^2.0.0
   sqflite: ^2.0.0+3
@@ -56,6 +55,7 @@ dependencies:
   photo_view: ^0.11.1
   url_launcher: ^6.0.6
   keyboard_dismisser: ^2.0.0
+  file_picker: ^4.0.0
   
 
 

@@ -10,10 +10,10 @@
 @import better_player;
 #endif
 
-#if __has_include(<flutter_document_picker/FlutterDocumentPickerPlugin.h>)
-#import <flutter_document_picker/FlutterDocumentPickerPlugin.h>
+#if __has_include(<file_picker/FilePickerPlugin.h>)
+#import <file_picker/FilePickerPlugin.h>
 #else
-@import flutter_document_picker;
+@import file_picker;
 #endif
 
 #if __has_include(<flutter_local_notifications/FlutterLocalNotificationsPlugin.h>)
@@ -74,7 +74,7 @@
 
 + (void)registerWithRegistry:(NSObject<FlutterPluginRegistry>*)registry {
   [FLTBetterPlayerPlugin registerWithRegistrar:[registry registrarForPlugin:@"FLTBetterPlayerPlugin"]];
-  [FlutterDocumentPickerPlugin registerWithRegistrar:[registry registrarForPlugin:@"FlutterDocumentPickerPlugin"]];
+  [FilePickerPlugin registerWithRegistrar:[registry registrarForPlugin:@"FilePickerPlugin"]];
   [FlutterLocalNotificationsPlugin registerWithRegistrar:[registry registrarForPlugin:@"FlutterLocalNotificationsPlugin"]];
   [FluttertoastPlugin registerWithRegistrar:[registry registrarForPlugin:@"FluttertoastPlugin"]];
   [FLTPathProviderPlugin registerWithRegistrar:[registry registrarForPlugin:@"FLTPathProviderPlugin"]];

@@ -2,13 +2,15 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_document_picker/flutter_document_picker.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:deluge_client/components/bottom_sheet/add_magnet_uri.dart';
 import 'package:deluge_client/components/bottom_sheet/qr_magnet_reader.dart';
 import 'package:deluge_client/control_center/theme.dart';
 import 'package:deluge_client/api/apis.dart';
 import 'package:deluge_client/control_center/theme_controller.dart';
+import 'package:file_picker/file_picker.dart';
+import 'package:flutter/services.dart';
 
 class add_new extends StatefulWidget {
   final VoidCallback refresh;
@@ -59,30 +61,51 @@ class _add_newState extends State<add_new> {
       this.seed_username,
       this.seed_pass,
       this.qr_auth});
+  void toastMessage(String message) {
+    Fluttertoast.showToast(
+      msg: message,
+      toastLength: Toast.LENGTH_SHORT,
+      gravity: ToastGravity.BOTTOM,
+      fontSize: 16.0,
+      backgroundColor: Colors.black,
+    );
+  }
 
   void add_new_torrent_file() async {
-    try {
-      FlutterDocumentPickerParams params = FlutterDocumentPickerParams(
-        allowedFileExtensions: ['torrent'],
-        allowedUtiTypes: ['com.deluge.example.torrent'],
-        allowedMimeTypes: ['application/x-bittorrent'],
-        // allowedMimeTypes: ['application/x-bittorrent'],
-        invalidFileNameSymbols: ['/'],
-      );
+    String _fileName;
+    List<PlatformFile> _paths;
 
-      List<int> torrent_byte =
-          new File(await FlutterDocumentPicker.openDocument(params: params))
-              .readAsBytesSync();
-      if (torrent_byte.isNotEmpty) {
-        String base_64_encoded_file = base64Encode(torrent_byte);
-        apis.add_torrent_file(base_64_encoded_file, cookie, url,
-            is_reverse_proxied, seed_username, seed_pass, qr_auth,context);
-        Future.delayed(Duration(seconds: 1), () {
-          refresh();
-        });
-      }
-    } catch (e) {
-      print(e);
+    try {
+      _paths = (await FilePicker.platform.pickFiles(
+              type: FileType.custom,
+              allowMultiple: false,
+              onFileLoading: (FilePickerStatus status) => print(status),
+              allowedExtensions: ["torrent"]))
+          .files;
+    } on PlatformException catch (e) {
+      print("Unsupported operation" + e.toString());
+    } catch (ex) {
+      print(ex);
+    }
+    String file_path = "";
+
+    file_path = _paths != null ? _paths.map((e) => e.path).toString() : '...';
+    if (!mounted) {
+      toastMessage("Please retry to add");
+    }
+    print(file_path.substring(1, file_path.length - 1));
+
+    List<int> torrent_byte =
+        new File(file_path.substring(1, file_path.length - 1))
+            .readAsBytesSync();
+
+    if (torrent_byte.isNotEmpty) {
+      String base_64_encoded_file = base64Encode(torrent_byte);
+      apis.add_torrent_file(base_64_encoded_file, cookie, url,
+          is_reverse_proxied, seed_username, seed_pass, qr_auth, context);
+      Future.delayed(Duration(seconds: 1), () {
+        refresh();
+      });
     }
   }
 
@@ -115,8 +138,8 @@ class _add_newState extends State<add_new> {
                       'Add torrent file',
                       style: TextStyle(
                           color: (!theme_controller.is_it_dark()
-                                  ? Colors.black
-                                  : Colors.white),
+                              ? Colors.black
+                              : Colors.white),
                           fontSize: theme.alert_box_font_size,
                           fontFamily: theme.font_family),
                     ),
@@ -132,8 +155,8 @@ class _add_newState extends State<add_new> {
                         'Add magnet link',
                         style: TextStyle(
                             color: (!theme_controller.is_it_dark()
-                                  ? Colors.black
-                                  : Colors.white),
+                                ? Colors.black
+                                : Colors.white),
                             fontSize: theme.alert_box_font_size,
                             fontFamily: theme.font_family),
                       ),
@@ -142,10 +165,8 @@ class _add_newState extends State<add_new> {
                         Navigator.of(context).pop();
                         showModalBottomSheet(
                             isScrollControlled: true,
-                            
                             context: context,
                             backgroundColor: Colors.transparent,
-                          
                             builder: (context) => add_magnet(
                                   cookie: cookie,
                                   url: url,
@@ -161,8 +182,8 @@ class _add_newState extends State<add_new> {
                         'Scan magnet QR',
                         style: TextStyle(
                             color: (!theme_controller.is_it_dark()
-                                  ? Colors.black
-                                  : Colors.white),
+                                ? Colors.black
+                                : Colors.white),
                             fontSize: theme.alert_box_font_size,
                             fontFamily: theme.font_family),
                       ),
