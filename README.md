@@ -1,13 +1,23 @@
 ![](https://i.imgur.com/emdyzUf.png)
-![Catalogue 1](https://i.imgur.com/AcsglH8.png)
-![Catalogue 2](https://i.imgur.com/b3d5lCs.png)
-![catalogue 3](https://i.imgur.com/X2AG1mA.png)
-![Catalogue 4](https://i.imgur.com/qhCSXlH.png)
-![readmeasset](https://user-images.githubusercontent.com/57806993/123543677-5efd5580-d76d-11eb-8213-e6f54188cdae.png)
-[![button](https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png)](https://play.google.com/store/apps/details?id=com.cc_extractor.deluge_client)
-[![button](https://www.gyaantapari.com/wp-content/uploads/2020/02/download-here.png)](https://github.com/CCExtractor/Deluge-mobile-remote-client/releases)
 
-<a href="https://www.producthunt.com/posts/deluge-mobile-client?utm_source=badge-featured&utm_medium=badge&utm_souce=badge-deluge-mobile-client" target="_blank"><img src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=304533&theme=dark" alt="Deluge mobile client - Manage deluge with ease | Product Hunt" style="width: 250px; height: 54px;" width="250" height="54" /></a>
+<p align="center">    
+<img src="https://i.imgur.com/AcsglH8.png" width="800"/>
+    <br/>
+<img src="https://i.imgur.com/b3d5lCs.png" width="800"/>
+    <br/>
+<img src="https://i.imgur.com/X2AG1mA.png" width="800"/>
+    <br/>
+<img src="https://i.imgur.com/qhCSXlH.png" width="800"/>
+</p>
+
+    
+
+<p align="center">  
+<img src="https://user-images.githubusercontent.com/57806993/123543677-5efd5580-d76d-11eb-8213-e6f54188cdae.png" height="150"/> <a href="https://play.google.com/store/apps/details?id=com.cc_extractor.deluge_client" target="_blank"><img src="https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png" alt="Deluge Google Play Store" width="250" /></a> <a href="https://github.com/CCExtractor/Deluge-mobile-remote-client/releases" target="_blank"><img src="https://pngpress.com/wp-content/uploads/2020/06/Download-Now-Button-PNG-File-1.png" alt="Deluge Download Link" width="250" /></a>
+</p>
+<br/>
+
+<a href="https://www.producthunt.com/posts/deluge-mobile-client?utm_source=badge-featured&utm_medium=badge&utm_souce=badge-deluge-mobile-client" target="_blank"><img src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=304533&theme=dark" alt="Deluge mobile client - Manage deluge with ease | Product Hunt" style="width: 250px; height: 54px;" width="100" height="54" /></a>
 
 
 
@@ -16,7 +26,7 @@
 
 
 
-
+## Demo Run
 
 https://user-images.githubusercontent.com/57806993/128637426-71d45add-9458-4175-a20f-89885f2cf1fd.mp4
 
@@ -86,7 +96,7 @@ You can learn more about seedbox [here](https://en.wikipedia.org/wiki/Seedbox).
 
 1. For making changes to the project, fork this repository using the green button on this page.
 
-2. Clone your fork or this repository, as applicable.
+2. Clone your fork or this repository, as applicable-
 
 ```bash
 git clone https://github.com/CCExtractor/Deluge-mobile-remote-client.git
