@@ -30,16 +30,16 @@ https://user-images.githubusercontent.com/57806993/128637426-71d45add-9458-4175-
 
 
 ## About The Project
-Deluge is a lightweight, Free Software, cross-platform BitTorrent Monitoring service.
-    Deluge mobile client app interact with the deluge via WEB-JSONRPC and gives all the  administrative abilites. The web app and Desktop app and other relevant documentation can be found at
-    <a href="https://deluge-torrent.org" target="_blank">Deluge</a>, and its repository can be found <a href="https://github.com/deluge-torrent/deluge" target="_blank">here</a>
+Deluge is a lightweight, free, cross-platform BitTorrent Monitoring service.
+    Deluge mobile client app interacts with deluge via WEB-JSONRPC and gives all the  administrative abilites. The Web app, Desktop app and all other relevant documentation can be found at
+    <a href="https://deluge-torrent.org" target="_blank">Deluge</a>, and its repository can be found <a href="https://github.com/deluge-torrent/deluge" target="_blank">here</a>.
   
   ![issues](https://img.shields.io/github/issues/CCExtractor/Deluge-mobile-remote-client)
 
 ### Features in Client Application
-| Features                                       | Support         |
-|------------------------------------------------|-----------------|
-| Single Account                                 |  ✅ (tested)     |
+| Features                                       | Support          |
+|------------------------------------------------|------------------|
+| Single Account                                 | ✅ (tested)      |
 | Multiple Account                               | ✅ (tested)      |
 | operation with single account                  | ✅ (tested)      |
 | operate with multiple account at the same time | ✅ (tested)      |
@@ -57,21 +57,21 @@ Deluge is a lightweight, Free Software, cross-platform BitTorrent Monitoring ser
 | Add new torrent as file                        | ✅ (tested)      |
 | Add new torrent by magnet link                 | ✅ (tested)      |
 | Add new torrent by Q.R code on the go          | ✅ (tested)      |
-| file exploration                               |✅ (tested)  
-| streaming torrent content                      | ✅ (tested)  |
-| Ability to download torrent content to mobile device | ✅ (tested)  |
+| file exploration                               | ✅ (tested)      |
+| streaming torrent content                      | ✅ (tested)      |
+| Ability to download torrent content to mobile device | ✅ (tested)|
 
 ## Usage
 
 In order to use this flutter application you should have Deluge configured on your system, after which you can connect your mobile on the same network as your system and use the app by entering the configuration (IP address).
 
-If you find any difficulty to run Deluge on your system, you can use this [docker image](https://hub.docker.com/r/linuxserver/deluge).
+If you find any difficulty in running Deluge on your system, you can use this [docker image](https://hub.docker.com/r/linuxserver/deluge).
 
-Though the primary usage of this application is to control Deluge hosted on your seedbox account.
+***Note: The primary usage of this application is to control Deluge hosted on your seedbox account.***
 
 ## Seedbox
 
-A seedbox is a dedicated BitTorrent server. Oftentimes they are rented out by companies called seedbox providers.
+A seedbox is a dedicated BitTorrent server. Often they are rented out by companies called seedbox providers.
 
 Seedboxes usually have a high speed Internet connection. This allows users to download torrents quickly and seed the torrents for a long time.
 
@@ -82,7 +82,7 @@ You can learn more about seedbox [here](https://en.wikipedia.org/wiki/Seedbox).
 
 ## Getting Started
 
-For setting up the development environment, follow the steps given below.
+#### For setting up the development environment, follow the steps given below:
 
 1. For making changes to the project, fork this repository using the green button on this page.
 
@@ -93,7 +93,7 @@ git clone https://github.com/CCExtractor/Deluge-mobile-remote-client.git
 cd Deluge-mobile-remote-client
 ```
 
-3. Check for flutter setup and connected devices
+3. Check for flutter setup and connected devices.
 
 ```bash
 flutter doctor
@@ -110,7 +110,7 @@ samples, guidance on mobile development, and a full API reference.
 
 ## Community
 
-* CCExtractor Development on [Slack](https://rhccgsoc15.slack.com/)
+* CCExtractor Development on [Slack](https://rhccgsoc15.slack.com/).
 
 ## License
 
@@ -119,7 +119,8 @@ The project is released under the [MIT License](http://www.opensource.org/licens
 
 
 
-note: some of the images are taken from internet, Iam not claiming that those images belongs to me. All the credit and copyrights belongs to their respective owner.
+***Note: some of the images are taken from internet, I am not claiming that those images belongs to me. All the credits and copyrights belong to their respective owners.***
+
 ## Contact
 <a href="https://www.linkedin.com/in/arshadverified/" target="_blank">Mohammad Arshad</a>
 
