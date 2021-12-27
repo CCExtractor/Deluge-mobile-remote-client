@@ -1,0 +1,4 @@
+io/flutter/plugins/GeneratedPluginRegistrant.java
+ io.flutter.plugins.GeneratedPluginRegistrant
+com/cc_extractor/deluge_client/BuildConfig.java
+ com.cc_extractor.deluge_client.BuildConfig
