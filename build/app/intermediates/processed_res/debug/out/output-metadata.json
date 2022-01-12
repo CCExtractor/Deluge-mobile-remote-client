@@ -1,0 +1,18 @@
+{
+  "version": 2,
+  "artifactType": {
+    "type": "PROCESSED_RES",
+    "kind": "Directory"
+  },
+  "applicationId": "com.cc_extractor.deluge_client",
+  "variantName": "processDebugResources",
+  "elements": [
+    {
+      "type": "SINGLE",
+      "filters": [],
+      "versionCode": 15,
+      "versionName": "0.1.4",
+      "outputFile": "resources-debug.ap_"
+    }
+  ]
+}
