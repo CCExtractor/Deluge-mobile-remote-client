@@ -384,8 +384,10 @@ class _auth_viewState extends State<auth_view> {
                           fontFamily: theme.font_family, fontSize: 15.0)),
                   Padding(
                       padding: EdgeInsets.only(left: 35.0),
-                      child: RaisedButton(
-                        color: theme.base_color,
+                      child: ElevatedButton(
+                        style: ButtonStyle(
+                          backgroundColor: MaterialStateProperty.all(theme.base_color,)  
+                        ),
                         onPressed: () {
                           states.first_time_setup_selection();
                           Navigator.pushReplacement(

@@ -788,7 +788,7 @@ class apis {
 
 class dialogue_prompt {
   static void show_prompt(BuildContext context) {
-    Widget cancelButton = FlatButton(
+    Widget cancelButton = TextButton(
       child: Text(
         "Exit",
         style: TextStyle(
@@ -801,7 +801,7 @@ class dialogue_prompt {
         SystemNavigator.pop();
       },
     );
-    Widget continueButton = FlatButton(
+    Widget continueButton = TextButton(
       child: Text(
         "Re-Check",
         style: TextStyle(

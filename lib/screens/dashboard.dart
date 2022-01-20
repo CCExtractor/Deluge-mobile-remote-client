@@ -404,7 +404,7 @@ class _dashboardState extends State<dashboard> {
 
   showAlertDialog_prompt1(BuildContext context) {
     // set up the buttons
-    Widget cancelButton = FlatButton(
+    Widget cancelButton = TextButton(
       child: Text(
         "No",
         style: TextStyle(
@@ -417,7 +417,7 @@ class _dashboardState extends State<dashboard> {
         Navigator.of(context, rootNavigator: true).pop();
       },
     );
-    Widget continueButton = FlatButton(
+    Widget continueButton = TextButton(
       child: Text(
         "Yes",
         style: TextStyle(
@@ -463,7 +463,7 @@ class _dashboardState extends State<dashboard> {
   //------------
   showAlertDialog_prompt2(BuildContext context) {
     // set up the buttons
-    Widget cancelButton = FlatButton(
+    Widget cancelButton = TextButton(
       child: Text(
         "Yes",
         style: TextStyle(
@@ -503,7 +503,7 @@ class _dashboardState extends State<dashboard> {
         Navigator.of(context, rootNavigator: true).pop();
       },
     );
-    Widget continueButton = FlatButton(
+    Widget continueButton = TextButton(
       child: Text(
         "No",
         style: TextStyle(
