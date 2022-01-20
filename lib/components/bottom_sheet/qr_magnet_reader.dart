@@ -138,8 +138,10 @@ class _magnet_qr_readerState extends State<magnet_qr_reader> {
           ),
                 Flexible(
                  
-                    child: RaisedButton(
-                        color: theme.base_color,
+                    child: ElevatedButton(
+                        style: ButtonStyle(
+                          backgroundColor: MaterialStateProperty.all(theme.base_color)
+                        ) ,
                         onPressed: () {
                           if (result != null) {
                             // print(result.code);

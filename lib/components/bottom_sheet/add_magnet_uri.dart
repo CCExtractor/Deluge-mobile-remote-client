@@ -161,15 +161,17 @@ class _add_magnetState extends State<add_magnet> {
                               )),
                         
                       
-                  RaisedButton(
+                  ElevatedButton(
                     onPressed: () {
                       if (myController.text.length > 0) {
                         add_torrent_by_magnet_uri(myController.text);
                       }
                     },
-                    color: myController.text.length > 0
+                    style: ButtonStyle(
+                      backgroundColor: MaterialStateProperty.all(myController.text.length > 0
                         ? theme.base_color
-                        : Colors.grey,
+                        : Colors.grey,)
+                    ),
                     child: Text(
                       "Add",
                       style: TextStyle(
