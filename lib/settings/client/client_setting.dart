@@ -29,12 +29,11 @@ class _clt_stState extends State<clt_st> {
     }
 
     bool mid2 = await states.get_sftP_reset_bool();
-        if (this.mounted) {
+    if (this.mounted) {
       setState(() {
         sftp_reset = mid2;
       });
     }
-
   }
 
   @override

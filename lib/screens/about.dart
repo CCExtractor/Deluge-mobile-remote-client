@@ -45,7 +45,11 @@ class _aboutState extends State<about> {
             ),
             RichText(
               text: TextSpan(
-                style: TextStyle(color: theme_controller.is_it_dark()?Colors.white:Colors.black, fontSize: 36),
+                style: TextStyle(
+                    color: theme_controller.is_it_dark()
+                        ? Colors.white
+                        : Colors.black,
+                    fontSize: 36),
                 children: <TextSpan>[
                   TextSpan(
                       text: 'Deluge mobile client is open-source project.',
@@ -194,7 +198,8 @@ class _aboutState extends State<about> {
                             color: Colors.white,
                           ),
                           onTap: () {
-                            launchInBrowser("https://github.com/CCExtractor/Deluge-mobile-remote-client");
+                            launchInBrowser(
+                                "https://github.com/CCExtractor/Deluge-mobile-remote-client");
                           },
                         )),
                   ],

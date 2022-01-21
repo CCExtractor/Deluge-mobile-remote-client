@@ -28,7 +28,7 @@ class states {
 
     isFirstTime().then((isFirstTime) {
       if (isFirstTime) {
-       pref.setInt("selected_account", 1);
+        pref.setInt("selected_account", 1);
         pref.setInt("selected_theme", 1);
         pref.setBool("notification_settings", true);
         pref.setBool("sftp_reset", false);

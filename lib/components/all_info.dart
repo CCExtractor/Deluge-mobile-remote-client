@@ -10,7 +10,8 @@ import 'package:deluge_client/api/models/torrent_prop.dart';
 class more_info extends StatelessWidget {
   final Properties inside_res;
   final bool paused;
-  more_info({Key key, @required this.inside_res,this.paused}) : super(key: key);
+  more_info({Key key, @required this.inside_res, this.paused})
+      : super(key: key);
 
   final format = new DateFormat('dd-MM-yyyy hh:mm a');
   final eta = new DateFormat('hh:mm');
@@ -35,9 +36,11 @@ class more_info extends StatelessWidget {
               style: TextStyle(fontSize: 12.0, fontFamily: theme.font_family),
             ),
             subtitle: Text(
-              !paused?
-                (inside_res.eta~/60)
-                  .toString()+":"+(inside_res.eta%60).toString():"_:_",
+              !paused
+                  ? (inside_res.eta ~/ 60).toString() +
+                      ":" +
+                      (inside_res.eta % 60).toString()
+                  : "_:_",
               style: TextStyle(fontSize: 14.0, fontFamily: theme.font_family),
             ),
           ),

@@ -79,6 +79,8 @@ class _sshState extends State<ssh> {
             )
           ],
         ),
-        body: sftp_settings_fields(selected_account: selected_account,));
+        body: sftp_settings_fields(
+          selected_account: selected_account,
+        ));
   }
 }

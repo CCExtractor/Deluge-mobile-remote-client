@@ -1,172 +1,174 @@
-
 //     final properties = propertiesFromJson(jsonString);
 
 import 'dart:convert';
 
-Map<String, Properties> propertiesFromJson(String str) => Map.from(json.decode(str)).map((k, v) => MapEntry<String, Properties>(k, Properties.fromJson(v)));
+Map<String, Properties> propertiesFromJson(String str) =>
+    Map.from(json.decode(str))
+        .map((k, v) => MapEntry<String, Properties>(k, Properties.fromJson(v)));
 
-String propertiesToJson(Map<String, Properties> data) => json.encode(Map.from(data).map((k, v) => MapEntry<String, dynamic>(k, v.toJson())));
+String propertiesToJson(Map<String, Properties> data) => json.encode(
+    Map.from(data).map((k, v) => MapEntry<String, dynamic>(k, v.toJson())));
 
 class Properties {
-    Properties({
-        this.activeTime,
-        this.seedingTime,
-        this.finishedTime,
-        this.allTimeDownload,
-        this.storageMode,
-        this.distributedCopies,
-        this.downloadPayloadRate,
-        this.filePriorities,
-        this.hash,
-        this.autoManaged,
-        this.isAutoManaged,
-        this.isFinished,
-        this.maxConnections,
-        this.maxDownloadSpeed,
-        this.maxUploadSlots,
-        this.maxUploadSpeed,
-        this.message,
-        this.moveOnCompletedPath,
-        this.moveOnCompleted,
-        this.moveCompletedPath,
-        this.moveCompleted,
-        this.nextAnnounce,
-        this.numPeers,
-        this.numSeeds,
-        this.owner,
-        this.paused,
-        this.prioritizeFirstLast,
-        this.prioritizeFirstLastPieces,
-        this.sequentialDownload,
-        this.progress,
-        this.shared,
-        this.removeAtRatio,
-        this.savePath,
-        this.downloadLocation,
-        this.seedsPeersRatio,
-        this.seedRank,
-        this.state,
-        this.stopAtRatio,
-        this.stopRatio,
-        this.timeAdded,
-        this.totalDone,
-        this.totalPayloadDownload,
-        this.totalPayloadUpload,
-        this.totalPeers,
-        this.totalSeeds,
-        this.totalUploaded,
-        this.totalWanted,
-        this.totalRemaining,
-        this.tracker,
-        this.trackerHost,
-        this.trackers,
-        this.trackerStatus,
-        this.uploadPayloadRate,
-        this.comment,
-        this.creator,
-        this.numFiles,
-        this.numPieces,
-        this.pieceLength,
-        this.private,
-        this.totalSize,
-        this.eta,
-        this.fileProgress,
-        this.files,
-        this.origFiles,
-        this.isSeed,
-        this.peers,
-        this.queue,
-        this.ratio,
-        this.completedTime,
-        this.lastSeenComplete,
-        this.name,
-        this.pieces,
-        this.seedMode,
-        this.superSeeding,
-        this.timeSinceDownload,
-        this.timeSinceUpload,
-        this.timeSinceTransfer,
-    });
+  Properties({
+    this.activeTime,
+    this.seedingTime,
+    this.finishedTime,
+    this.allTimeDownload,
+    this.storageMode,
+    this.distributedCopies,
+    this.downloadPayloadRate,
+    this.filePriorities,
+    this.hash,
+    this.autoManaged,
+    this.isAutoManaged,
+    this.isFinished,
+    this.maxConnections,
+    this.maxDownloadSpeed,
+    this.maxUploadSlots,
+    this.maxUploadSpeed,
+    this.message,
+    this.moveOnCompletedPath,
+    this.moveOnCompleted,
+    this.moveCompletedPath,
+    this.moveCompleted,
+    this.nextAnnounce,
+    this.numPeers,
+    this.numSeeds,
+    this.owner,
+    this.paused,
+    this.prioritizeFirstLast,
+    this.prioritizeFirstLastPieces,
+    this.sequentialDownload,
+    this.progress,
+    this.shared,
+    this.removeAtRatio,
+    this.savePath,
+    this.downloadLocation,
+    this.seedsPeersRatio,
+    this.seedRank,
+    this.state,
+    this.stopAtRatio,
+    this.stopRatio,
+    this.timeAdded,
+    this.totalDone,
+    this.totalPayloadDownload,
+    this.totalPayloadUpload,
+    this.totalPeers,
+    this.totalSeeds,
+    this.totalUploaded,
+    this.totalWanted,
+    this.totalRemaining,
+    this.tracker,
+    this.trackerHost,
+    this.trackers,
+    this.trackerStatus,
+    this.uploadPayloadRate,
+    this.comment,
+    this.creator,
+    this.numFiles,
+    this.numPieces,
+    this.pieceLength,
+    this.private,
+    this.totalSize,
+    this.eta,
+    this.fileProgress,
+    this.files,
+    this.origFiles,
+    this.isSeed,
+    this.peers,
+    this.queue,
+    this.ratio,
+    this.completedTime,
+    this.lastSeenComplete,
+    this.name,
+    this.pieces,
+    this.seedMode,
+    this.superSeeding,
+    this.timeSinceDownload,
+    this.timeSinceUpload,
+    this.timeSinceTransfer,
+  });
 
-    int activeTime;
-    int seedingTime;
-    int finishedTime;
-    int allTimeDownload;
-    String storageMode;
-    double distributedCopies;
-    int downloadPayloadRate;
-    List<int> filePriorities;
-    String hash;
-    bool autoManaged;
-    bool isAutoManaged;
-    bool isFinished;
-    int maxConnections;
-    int maxDownloadSpeed;
-    int maxUploadSlots;
-    int maxUploadSpeed;
-    String message;
-    String moveOnCompletedPath;
-    bool moveOnCompleted;
-    String moveCompletedPath;
-    bool moveCompleted;
-    int nextAnnounce;
-    int numPeers;
-    int numSeeds;
-    String owner;
-    bool paused;
-    bool prioritizeFirstLast;
-    bool prioritizeFirstLastPieces;
-    bool sequentialDownload;
-    double progress;
-    bool shared;
-    bool removeAtRatio;
-    String savePath;
-    String downloadLocation;
-    double seedsPeersRatio;
-    int seedRank;
-    String state;
-    bool stopAtRatio;
-    int stopRatio;
-    int timeAdded;
-    int totalDone;
-    int totalPayloadDownload;
-    int totalPayloadUpload;
-    int totalPeers;
-    int totalSeeds;
-    int totalUploaded;
-    int totalWanted;
-    int totalRemaining;
-    String tracker;
-    String trackerHost;
-    List<Tracker> trackers;
-    String trackerStatus;
-    int uploadPayloadRate;
-    String comment;
-    String creator;
-    int numFiles;
-    int numPieces;
-    int pieceLength;
-    bool private;
-    int totalSize;
-    int eta;
-    List<double> fileProgress;
-    List<FileElement> files;
-    List<FileElement> origFiles;
-    bool isSeed;
-    List<dynamic> peers;
-    int queue;
-    double ratio;
-    int completedTime;
-    int lastSeenComplete;
-    String name;
-    dynamic pieces;
-    bool seedMode;
-    bool superSeeding;
-    int timeSinceDownload;
-    int timeSinceUpload;
-    int timeSinceTransfer;
+  int activeTime;
+  int seedingTime;
+  int finishedTime;
+  int allTimeDownload;
+  String storageMode;
+  double distributedCopies;
+  int downloadPayloadRate;
+  List<int> filePriorities;
+  String hash;
+  bool autoManaged;
+  bool isAutoManaged;
+  bool isFinished;
+  int maxConnections;
+  int maxDownloadSpeed;
+  int maxUploadSlots;
+  int maxUploadSpeed;
+  String message;
+  String moveOnCompletedPath;
+  bool moveOnCompleted;
+  String moveCompletedPath;
+  bool moveCompleted;
+  int nextAnnounce;
+  int numPeers;
+  int numSeeds;
+  String owner;
+  bool paused;
+  bool prioritizeFirstLast;
+  bool prioritizeFirstLastPieces;
+  bool sequentialDownload;
+  double progress;
+  bool shared;
+  bool removeAtRatio;
+  String savePath;
+  String downloadLocation;
+  double seedsPeersRatio;
+  int seedRank;
+  String state;
+  bool stopAtRatio;
+  int stopRatio;
+  int timeAdded;
+  int totalDone;
+  int totalPayloadDownload;
+  int totalPayloadUpload;
+  int totalPeers;
+  int totalSeeds;
+  int totalUploaded;
+  int totalWanted;
+  int totalRemaining;
+  String tracker;
+  String trackerHost;
+  List<Tracker> trackers;
+  String trackerStatus;
+  int uploadPayloadRate;
+  String comment;
+  String creator;
+  int numFiles;
+  int numPieces;
+  int pieceLength;
+  bool private;
+  int totalSize;
+  int eta;
+  List<double> fileProgress;
+  List<FileElement> files;
+  List<FileElement> origFiles;
+  bool isSeed;
+  List<dynamic> peers;
+  int queue;
+  double ratio;
+  int completedTime;
+  int lastSeenComplete;
+  String name;
+  dynamic pieces;
+  bool seedMode;
+  bool superSeeding;
+  int timeSinceDownload;
+  int timeSinceUpload;
+  int timeSinceTransfer;
 
-    factory Properties.fromJson(Map<String, dynamic> json) => Properties(
+  factory Properties.fromJson(Map<String, dynamic> json) => Properties(
         activeTime: json["active_time"],
         seedingTime: json["seeding_time"],
         finishedTime: json["finished_time"],
@@ -217,7 +219,8 @@ class Properties {
         totalRemaining: json["total_remaining"],
         tracker: json["tracker"],
         trackerHost: json["tracker_host"],
-        trackers: List<Tracker>.from(json["trackers"].map((x) => Tracker.fromJson(x))),
+        trackers: List<Tracker>.from(
+            json["trackers"].map((x) => Tracker.fromJson(x))),
         trackerStatus: json["tracker_status"],
         uploadPayloadRate: json["upload_payload_rate"],
         comment: json["comment"],
@@ -229,8 +232,10 @@ class Properties {
         totalSize: json["total_size"],
         eta: json["eta"],
         fileProgress: List<double>.from(json["file_progress"].map((x) => x)),
-        files: List<FileElement>.from(json["files"].map((x) => FileElement.fromJson(x))),
-        origFiles: List<FileElement>.from(json["orig_files"].map((x) => FileElement.fromJson(x))),
+        files: List<FileElement>.from(
+            json["files"].map((x) => FileElement.fromJson(x))),
+        origFiles: List<FileElement>.from(
+            json["orig_files"].map((x) => FileElement.fromJson(x))),
         isSeed: json["is_seed"],
         peers: List<dynamic>.from(json["peers"].map((x) => x)),
         queue: json["queue"],
@@ -244,9 +249,9 @@ class Properties {
         timeSinceDownload: json["time_since_download"],
         timeSinceUpload: json["time_since_upload"],
         timeSinceTransfer: json["time_since_transfer"],
-    );
+      );
 
-    Map<String, dynamic> toJson() => {
+  Map<String, dynamic> toJson() => {
         "active_time": activeTime,
         "seeding_time": seedingTime,
         "finished_time": finishedTime,
@@ -324,79 +329,79 @@ class Properties {
         "time_since_download": timeSinceDownload,
         "time_since_upload": timeSinceUpload,
         "time_since_transfer": timeSinceTransfer,
-    };
+      };
 }
 
 class FileElement {
-    FileElement({
-        this.index,
-        this.path,
-        this.size,
-        this.offset,
-    });
+  FileElement({
+    this.index,
+    this.path,
+    this.size,
+    this.offset,
+  });
 
-    int index;
-    String path;
-    int size;
-    int offset;
+  int index;
+  String path;
+  int size;
+  int offset;
 
-    factory FileElement.fromJson(Map<String, dynamic> json) => FileElement(
+  factory FileElement.fromJson(Map<String, dynamic> json) => FileElement(
         index: json["index"],
         path: json["path"],
         size: json["size"],
         offset: json["offset"],
-    );
+      );
 
-    Map<String, dynamic> toJson() => {
+  Map<String, dynamic> toJson() => {
         "index": index,
         "path": path,
         "size": size,
         "offset": offset,
-    };
+      };
 }
 
 class Tracker {
-    Tracker({
-        this.url,
-        this.trackerid,
-        this.message,
-        this.lastError,
-        this.nextAnnounce,
-        this.minAnnounce,
-        this.scrapeIncomplete,
-        this.scrapeComplete,
-        this.scrapeDownloaded,
-        this.tier,
-        this.failLimit,
-        this.fails,
-        this.source,
-        this.verified,
-        this.updating,
-        this.startSent,
-        this.completeSent,
-        this.sendStats,
-    });
+  Tracker({
+    this.url,
+    this.trackerid,
+    this.message,
+    this.lastError,
+    this.nextAnnounce,
+    this.minAnnounce,
+    this.scrapeIncomplete,
+    this.scrapeComplete,
+    this.scrapeDownloaded,
+    this.tier,
+    this.failLimit,
+    this.fails,
+    this.source,
+    this.verified,
+    this.updating,
+    this.startSent,
+    this.completeSent,
+    this.sendStats,
+  });
 
-    String url;
-    String trackerid;
-    String message;
-    LastError lastError;
-    dynamic nextAnnounce;
-    dynamic minAnnounce;
-    int scrapeIncomplete;
-    int scrapeComplete;
-    int scrapeDownloaded;
-    int tier;
-    int failLimit;
-    int fails;
-    int source;
-    bool verified;
-    bool updating;
-    bool startSent;
-    bool completeSent;
-    bool sendStats;
+  String url;
+  String trackerid;
+  String message;
+  LastError lastError;
+  dynamic nextAnnounce;
+  dynamic minAnnounce;
+  int scrapeIncomplete;
+  int scrapeComplete;
+  int scrapeDownloaded;
+  int tier;
+  int failLimit;
+  int fails;
+  int source;
+  bool verified;
+  bool updating;
+  bool startSent;
+  bool completeSent;
+  bool sendStats;
 
-    factory Tracker.fromJson(Map<String, dynamic> json) => Tracker(
+  factory Tracker.fromJson(Map<String, dynamic> json) => Tracker(
         url: json["url"],
         trackerid: json["trackerid"],
         message: json["message"],
@@ -415,9 +420,9 @@ class Tracker {
         startSent: json["start_sent"],
         completeSent: json["complete_sent"],
         sendStats: json["send_stats"],
-    );
+      );
 
-    Map<String, dynamic> toJson() => {
+  Map<String, dynamic> toJson() => {
         "url": url,
         "trackerid": trackerid,
         "message": message,
@@ -436,25 +441,25 @@ class Tracker {
         "start_sent": startSent,
         "complete_sent": completeSent,
         "send_stats": sendStats,
-    };
+      };
 }
 
 class LastError {
-    LastError({
-        this.value,
-        this.category,
-    });
+  LastError({
+    this.value,
+    this.category,
+  });
 
-    int value;
-    String category;
+  int value;
+  String category;
 
-    factory LastError.fromJson(Map<String, dynamic> json) => LastError(
+  factory LastError.fromJson(Map<String, dynamic> json) => LastError(
         value: json["value"],
         category: json["category"],
-    );
+      );
 
-    Map<String, dynamic> toJson() => {
+  Map<String, dynamic> toJson() => {
         "value": value,
         "category": category,
-    };
+      };
 }

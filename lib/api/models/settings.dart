@@ -1,4 +1,3 @@
-
 class Settings {
   bool sendInfo;
   int infoSent;

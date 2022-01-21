@@ -143,7 +143,7 @@ class sidebarState extends State<sidebar> {
     sftp_username = await states.get_sftp_username();
     sftp_password = await states.get_sftp_password();
     sftp_route_dir = await states.get_sftp_route();
-    
+
     if (sftp_host.isNotEmpty &&
         sftp_port.isNotEmpty &&
         sftp_username.isNotEmpty &&
@@ -216,7 +216,7 @@ class sidebarState extends State<sidebar> {
           children: [
             accounts(
               key: accounts_state,
-              
+
               // @todo
               dashboard_state: () => dashboard_state(),
               update_account_selection: () => fetch_selectx_account(),
@@ -586,7 +586,6 @@ class sidebarState extends State<sidebar> {
                             context: context,
                             backgroundColor: Colors.transparent,
                             builder: (context) => ssh_config(
-                          
                                   direx: "/",
                                   selected_account: selecx,
                                 ));
@@ -606,8 +605,11 @@ class sidebarState extends State<sidebar> {
                     ),
                     leading: Icon(Icons.settings_applications_sharp),
                     onTap: () {
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (context) => ssh(selected_account: selecx)));
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) =>
+                                  ssh(selected_account: selecx)));
                     },
                   ),
                 ],
@@ -616,24 +618,23 @@ class sidebarState extends State<sidebar> {
                 height: 0.0,
                 width: 0.0,
               ),
-                // for abount
-              ListTile(
-                    title: Text(
-                      "About",
-                      style: TextStyle(
-                          fontSize: 15.0,
-                          fontFamily: theme.font_family,
-                          color: theme_controller.is_it_dark()
-                              ? Colors.white
-                              : Colors.black),
-                    ),
-                    leading: Icon(Icons.info_outline),
-                    onTap: () {
-                      
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (context) => about()));
-                    },
-                  ),
+        // for abount
+        ListTile(
+          title: Text(
+            "About",
+            style: TextStyle(
+                fontSize: 15.0,
+                fontFamily: theme.font_family,
+                color: theme_controller.is_it_dark()
+                    ? Colors.white
+                    : Colors.black),
+          ),
+          leading: Icon(Icons.info_outline),
+          onTap: () {
+            Navigator.push(
+                context, MaterialPageRoute(builder: (context) => about()));
+          },
+        ),
       ],
     )));
   }
