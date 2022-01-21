@@ -134,7 +134,7 @@ class multi_accountState extends State<multi_account> {
 
   showAlertDialog_prompt1(BuildContext context) {
     // set up the buttons
-    Widget cancelButton = FlatButton(
+    Widget cancelButton = TextButton(
       child: Text(
         "No",
         style: TextStyle(
@@ -147,7 +147,7 @@ class multi_accountState extends State<multi_account> {
         Navigator.of(context, rootNavigator: true).pop();
       },
     );
-    Widget continueButton = FlatButton(
+    Widget continueButton = TextButton(
       child: Text(
         "Yes",
         style: TextStyle(
@@ -193,7 +193,7 @@ class multi_accountState extends State<multi_account> {
   //------------
   showAlertDialog_prompt2(BuildContext context) {
     // set up the buttons
-    Widget cancelButton = FlatButton(
+    Widget cancelButton = TextButton(
       child: Text(
         "Yes",
         style: TextStyle(
@@ -226,7 +226,7 @@ class multi_accountState extends State<multi_account> {
         Navigator.of(context, rootNavigator: true).pop();
       },
     );
-    Widget continueButton = FlatButton(
+    Widget continueButton = TextButton(
       child: Text(
         "No",
         style: TextStyle(

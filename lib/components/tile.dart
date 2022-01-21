@@ -171,7 +171,7 @@ class _tileState extends State<tile> {
 
   showAlertDialog_prompt1(BuildContext context) {
     // set up the buttons
-    Widget cancelButton = FlatButton(
+    Widget cancelButton = TextButton(
       child: Text(
         "No",
         style: TextStyle(
@@ -184,7 +184,7 @@ class _tileState extends State<tile> {
         Navigator.of(context, rootNavigator: true).pop();
       },
     );
-    Widget continueButton = FlatButton(
+    Widget continueButton = TextButton(
       child: Text(
         "Yes",
         style: TextStyle(
@@ -230,7 +230,7 @@ class _tileState extends State<tile> {
   //------------
   showAlertDialog_prompt2(BuildContext context) {
     // set up the buttons
-    Widget cancelButton = FlatButton(
+    Widget cancelButton = TextButton(
       child: Text(
         "Yes",
         style: TextStyle(
@@ -256,7 +256,7 @@ class _tileState extends State<tile> {
         Navigator.of(context, rootNavigator: true).pop();
       },
     );
-    Widget continueButton = FlatButton(
+    Widget continueButton = TextButton(
       child: Text(
         "No",
         style: TextStyle(

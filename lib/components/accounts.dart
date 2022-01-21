@@ -59,7 +59,7 @@ class accountsState extends State<accounts> {
   prompt_to_delete(
       BuildContext context, int id, String account, int length_acc) {
     // set up the buttons
-    Widget cancelButton = FlatButton(
+    Widget cancelButton = TextButton(
       child: Text(
         "Yes",
         style: TextStyle(
@@ -122,7 +122,7 @@ class accountsState extends State<accounts> {
         }
       },
     );
-    Widget continueButton = FlatButton(
+    Widget continueButton = TextButton(
       child: Text(
         "No",
         style: TextStyle(

@@ -96,8 +96,10 @@ class _ssh_configState extends State<ssh_config> {
                     )
                   ],
                 ),
-                RaisedButton(
-                    color: theme.base_color,
+                ElevatedButton(
+                    style: ButtonStyle(
+                      backgroundColor: MaterialStateProperty.all(theme.base_color)
+                     ),
                     onPressed: () {
                       update_sftp_settings();
                       toastMessage("Added Config");

@@ -297,7 +297,7 @@ class _filesState extends State<files> {
             title: title_handler_alert_box(widget_id),
             content: content_handler_alert_box(widget_id),
             actions: [
-              FlatButton(
+              TextButton(
                   onPressed: () {
                     if (widget_id == 1) {
                       if (text_controller.text.length > 0) {
@@ -330,7 +330,7 @@ class _filesState extends State<files> {
                     }
                   },
                   child: handle_confirmation_button(widget_id)),
-              FlatButton(
+              TextButton(
                   onPressed: () {
                     Navigator.of(context).pop();
                   },

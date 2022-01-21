@@ -107,12 +107,16 @@ class _errorState extends State<error> {
                         style: TextStyle(fontFamily: theme.font_family))))
           ],
         ),
-        RaisedButton(
-          elevation: 5.0,
+        ElevatedButton(
+          style: ButtonStyle(
+            elevation: MaterialStateProperty.all(5.0),
+            backgroundColor: MaterialStateProperty.all(Colors.red)
+          ),
+          
           onPressed: () {
             retry();
           },
-          color: Colors.red,
+          
           child: Text("Retry",
               style: TextStyle(
                   fontFamily: theme.font_family, color: Colors.white)),
