@@ -1,7 +1,3 @@
-# Deluge Mobile Remote Client
-[![Flutter CI](https://github.com/CCExtractor/Deluge-mobile-remote-client/actions/workflows/flutter-ci.yml/badge.svg)](https://github.com/CCExtractor/Deluge-mobile-remote-client/actions/workflows/flutter-ci.yml)
-
-## About the Project
 ![](https://i.imgur.com/emdyzUf.png)
 
 <p align="center">    
