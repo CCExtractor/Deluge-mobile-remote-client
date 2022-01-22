@@ -1,11 +1,9 @@
-import 'dart:io';
 
 import 'package:deluge_client/database/dbmanager.dart';
 import 'package:deluge_client/state_ware_house/state_ware_house.dart';
 import 'package:flutter/material.dart';
 import 'package:deluge_client/control_center/theme.dart';
 import 'package:deluge_client/settings/deluge/core_settings.dart';
-import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:deluge_client/settings/deluge/type/sftp_setting_field.dart';
 

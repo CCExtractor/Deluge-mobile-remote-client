@@ -1,14 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:deluge_client/database/dbmanager.dart';
-import 'package:deluge_client/settings/deluge/type/sftp_streaming_settings.dart';
-import 'package:deluge_client/sftp_streaming/sftp_explorer.dart';
-import 'package:flutter/material.dart';
 import 'package:deluge_client/control_center/theme.dart';
 import 'package:deluge_client/state_ware_house/state_ware_house.dart';
 import 'package:deluge_client/settings/deluge/core_settings.dart';
 import 'package:flutter/services.dart';
-import 'package:fluttertoast/fluttertoast.dart';
-import 'package:deluge_client/control_center/theme_controller.dart';
+
 
 class sftp_settings_fields extends StatefulWidget {
   final Bucket selected_account;

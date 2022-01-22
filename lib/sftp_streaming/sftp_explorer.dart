@@ -1,7 +1,4 @@
 import 'dart:convert';
-import 'dart:io';
-
-import 'package:deluge_client/components/bottom_sheet/ssh_config.dart';
 import 'package:deluge_client/database/dbmanager.dart';
 import 'package:deluge_client/settings/deluge/type/sftp_streaming_settings.dart';
 import 'package:filesize/filesize.dart';

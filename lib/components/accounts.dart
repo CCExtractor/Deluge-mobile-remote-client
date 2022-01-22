@@ -1,14 +1,10 @@
-import 'dart:async';
 
 import 'package:deluge_client/components/loader.dart';
-import 'package:deluge_client/components/storage_indicator.dart';
 import 'package:deluge_client/database/dbmanager.dart';
 import 'package:deluge_client/screens/auth.dart';
 import 'package:flutter/material.dart';
 import 'package:deluge_client/control_center/theme.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:qr_code_scanner/qr_code_scanner.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:deluge_client/state_ware_house/state_ware_house.dart';
 import 'package:deluge_client/control_center/theme_controller.dart';
 

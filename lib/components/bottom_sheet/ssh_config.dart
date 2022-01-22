@@ -1,5 +1,4 @@
 import 'package:deluge_client/database/dbmanager.dart';
-import 'package:deluge_client/settings/deluge/type/sftp_streaming_settings.dart';
 import 'package:deluge_client/sftp_streaming/sftp_explorer.dart';
 import 'package:flutter/material.dart';
 import 'package:deluge_client/control_center/theme.dart';

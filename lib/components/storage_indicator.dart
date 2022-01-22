@@ -1,18 +1,14 @@
 import 'dart:async';
-import 'dart:convert';
 import 'dart:io';
 import 'package:deluge_client/database/dbmanager.dart';
 import 'package:filesize/filesize.dart';
 import "package:flutter/material.dart";
-import 'package:http/http.dart' as http;
-import 'package:percent_indicator/linear_percent_indicator.dart';
 import 'package:deluge_client/control_center/theme.dart';
 import 'package:deluge_client/api/apis.dart';
 import 'package:deluge_client/state_ware_house/state_ware_house.dart';
 
 import '../string/controller.dart';
 import 'package:deluge_client/control_center/theme_controller.dart';
-import 'package:deluge_client/api/apis.dart';
 
 class storage_indicator extends StatefulWidget {
   List<Cookie> cookie;

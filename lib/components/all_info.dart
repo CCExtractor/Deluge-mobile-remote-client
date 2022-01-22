@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:expandable/expandable.dart';
-import 'dart:math';
 import 'package:deluge_client/control_center/theme.dart';
 import 'package:intl/intl.dart';
-import 'package:charcode/charcode.dart';
-import 'package:deluge_client/control_center/theme_controller.dart';
+
 import 'package:deluge_client/api/models/torrent_prop.dart';
 
 class more_info extends StatelessWidget {

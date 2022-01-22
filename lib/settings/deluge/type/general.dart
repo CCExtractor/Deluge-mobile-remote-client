@@ -1,10 +1,7 @@
-import 'dart:io';
 
-import 'package:deluge_client/database/dbmanager.dart';
 import 'package:flutter/material.dart';
 import 'package:deluge_client/control_center/theme.dart';
 import 'package:deluge_client/settings/deluge/core_settings.dart';
-import 'package:deluge_client/api/apis.dart';
 
 class general extends StatefulWidget {
  

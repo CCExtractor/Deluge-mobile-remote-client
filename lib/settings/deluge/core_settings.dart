@@ -4,7 +4,6 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:deluge_client/api/apis.dart';
 import 'package:deluge_client/api/models/settings.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 
 class core_settings {
   static Settings settings;

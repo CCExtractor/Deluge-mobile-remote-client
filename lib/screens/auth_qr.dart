@@ -1,13 +1,11 @@
-import 'dart:io';
 
 import 'package:deluge_client/database/dbmanager.dart';
 import 'package:deluge_client/screens/dashboard.dart';
 import 'package:flutter/material.dart';
 import 'package:deluge_client/control_center/theme.dart';
-import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+
 import 'package:deluge_client/api/apis.dart';
 import 'package:deluge_client/state_ware_house/state_ware_house.dart';
 import 'package:deluge_client/core/auth_valid.dart';
