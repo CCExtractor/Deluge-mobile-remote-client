@@ -80,14 +80,13 @@ class _add_magnetState extends State<add_magnet> {
   void add_torrent_by_magnet_uri(String link) async {
     if (magnet_detect.parse(link)) {
       apis.add_magnet(link, cookie, url, is_reverse_proxied, seed_username,
-          seed_pass, qr_auth,context);
+          seed_pass, qr_auth, context);
 
       // after adding file then it should refresh it self;
-       Navigator.of(context).pop();//bottom sheet should get closed
+      Navigator.of(context).pop(); //bottom sheet should get closed
       Future.delayed(Duration(seconds: 1), () {
         refresh();
       });
-     
     } else {
       toastMessage("Please enter correct link");
     }
@@ -95,91 +94,76 @@ class _add_magnetState extends State<add_magnet> {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(child: 
-         Material(
-        shape: RoundedRectangleBorder(
-          borderRadius: new BorderRadius.only(
-              topRight: Radius.circular(15.0), topLeft: Radius.circular(15.0)),
-        ),
-        child:
-
-   
-        
-             Container(
-               padding: EdgeInsets.only(
-                                    bottom: MediaQuery.of(context)
-                                        .viewInsets
-                                        .bottom),
-               child: 
-              Column(
-                
-                mainAxisSize: MainAxisSize.min,
-
-                children: <Widget>[
-                  Divider(
-                    color: Color.fromRGBO(255, 79, 90, 1),
-                    thickness: 4.0,
-                    indent: 70.0,
-                    endIndent: 70.0,
-                  ),
-                  
-                  Padding(
-                      padding: EdgeInsets.all(10.0),
-                      child: 
-                          TextField(
-                                onChanged: (String val) {
-                                  setState(() {
-                                    myController.text;
-                                  });
-                                },
-                                style: TextStyle(
-                                    color: Colors.black,
-                                    fontSize: theme.alert_box_font_size,
-                                    fontFamily: theme.font_family),
-                                decoration: new InputDecoration(
-                                  border: new OutlineInputBorder(
-                                    borderRadius: const BorderRadius.all(
-                                      const Radius.circular(10.0),
-                                    ),
-                                  ),
-                                  filled: true,
-                                  hintStyle:
-                                      new TextStyle(color: Colors.grey[800]),
-                                  hintText: "Enter Magnet URL",
-                                  suffixIcon: InkWell(
-                                    child: Icon(Icons.paste),
-                                    onTap: () {
-                                      fetch_clipboard();
-                                    },
-                                  ),
-                                  fillColor: Colors.white70,
-                                ),
-                                controller: myController,
-                                autofocus: true,
-                              )),
-                        
-                      
-                  ElevatedButton(
-                    onPressed: () {
-                      if (myController.text.length > 0) {
-                        add_torrent_by_magnet_uri(myController.text);
-                      }
+    return SingleChildScrollView(
+        child: Material(
+      shape: RoundedRectangleBorder(
+        borderRadius: new BorderRadius.only(
+            topRight: Radius.circular(15.0), topLeft: Radius.circular(15.0)),
+      ),
+      child: Container(
+          padding:
+              EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              Divider(
+                color: Color.fromRGBO(255, 79, 90, 1),
+                thickness: 4.0,
+                indent: 70.0,
+                endIndent: 70.0,
+              ),
+              Padding(
+                  padding: EdgeInsets.all(10.0),
+                  child: TextField(
+                    onChanged: (String val) {
+                      setState(() {
+                        myController.text;
+                      });
                     },
-                    style: ButtonStyle(
-                      backgroundColor: MaterialStateProperty.all(myController.text.length > 0
-                        ? theme.base_color
-                        : Colors.grey,)
+                    style: TextStyle(
+                        color: Colors.black,
+                        fontSize: theme.alert_box_font_size,
+                        fontFamily: theme.font_family),
+                    decoration: new InputDecoration(
+                      border: new OutlineInputBorder(
+                        borderRadius: const BorderRadius.all(
+                          const Radius.circular(10.0),
+                        ),
+                      ),
+                      filled: true,
+                      hintStyle: new TextStyle(color: Colors.grey[800]),
+                      hintText: "Enter Magnet URL",
+                      suffixIcon: InkWell(
+                        child: Icon(Icons.paste),
+                        onTap: () {
+                          fetch_clipboard();
+                        },
+                      ),
+                      fillColor: Colors.white70,
                     ),
-                    child: Text(
-                      "Add",
-                      style: TextStyle(
-                          color: Colors.black,
-                          fontSize: theme.alert_box_font_size,
-                          fontFamily: theme.font_family),
-                    ),
-                  )
-                ],
-              )),
-            ));
+                    controller: myController,
+                    autofocus: true,
+                  )),
+              ElevatedButton(
+                onPressed: () {
+                  if (myController.text.length > 0) {
+                    add_torrent_by_magnet_uri(myController.text);
+                  }
+                },
+                style: ButtonStyle(
+                    backgroundColor: MaterialStateProperty.all(
+                  myController.text.length > 0 ? theme.base_color : Colors.grey,
+                )),
+                child: Text(
+                  "Add",
+                  style: TextStyle(
+                      color: Colors.black,
+                      fontSize: theme.alert_box_font_size,
+                      fontFamily: theme.font_family),
+                ),
+              )
+            ],
+          )),
+    ));
   }
 }

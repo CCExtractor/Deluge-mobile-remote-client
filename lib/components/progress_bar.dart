@@ -115,7 +115,6 @@ class download_progressState extends State<download_progress> {
           setState(() {
             progress_percent = temp;
             completed = content.isFinished;
-            
           });
         }
 

@@ -87,26 +87,20 @@ class _magnet_qr_readerState extends State<magnet_qr_reader> {
   }
 
   void add_torrent_by_magnet_uri(String link) async {
-    
     if (magnet_detect.parse(link)) {
       apis.add_magnet(link, cookie, url, is_reverse_proxied, seed_username,
-          seed_pass, qr_auth,context);
+          seed_pass, qr_auth, context);
 
       // after adding file then it should refresh it self;
-       
 
-    
       Future.delayed(Duration(seconds: 1), () {
         refresh();
         Navigator.of(context).pop();
       });
-      
-
     } else {
       toastMessage("Magnet Q.R is invalid");
-      
     }
-     //  // bottom sheet should get closed
+    //  // bottom sheet should get closed
   }
 
   @override
@@ -121,26 +115,25 @@ class _magnet_qr_readerState extends State<magnet_qr_reader> {
             child: Container(
               child: Column(mainAxisSize: MainAxisSize.min, children: <Widget>[
                 Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Flexible(
-                  fit: FlexFit.tight,
-                  child: Container(
-                    color: Colors.transparent,
-                    height: MediaQuery.of(context).orientation ==
-                            Orientation.portrait
-                        ? 300.0
-                        : 150.0,
-                    child: _build_qr(context),
-                  )),
-            ],
-          ),
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Flexible(
+                        fit: FlexFit.tight,
+                        child: Container(
+                          color: Colors.transparent,
+                          height: MediaQuery.of(context).orientation ==
+                                  Orientation.portrait
+                              ? 300.0
+                              : 150.0,
+                          child: _build_qr(context),
+                        )),
+                  ],
+                ),
                 Flexible(
-                 
                     child: ElevatedButton(
                         style: ButtonStyle(
-                          backgroundColor: MaterialStateProperty.all(theme.base_color)
-                        ) ,
+                            backgroundColor:
+                                MaterialStateProperty.all(theme.base_color)),
                         onPressed: () {
                           if (result != null) {
                             // print(result.code);

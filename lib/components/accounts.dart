@@ -64,28 +64,26 @@ class accountsState extends State<accounts> {
             fontWeight: FontWeight.bold,
             fontFamily: theme.font_family),
       ),
-      onPressed: () async{
+      onPressed: () async {
         //some code
         if (length_acc > 1) {
           //if it is selected account and you wanted to delete it then
           avail_acc.remove(id);
           if (id == selected_account) {
             //-----------------
-             if (this.mounted) {
-                            setState(() {
-                              selected_account = avail_acc[0];
+            if (this.mounted) {
+              setState(() {
+                selected_account = avail_acc[0];
 
-                              update_account_state(selected_account);
-                            });
-                          }
-                          update_account_selection();
-                          dashboard_state();
-                          //here i will add logic to reset sftp
-                          if (await states.get_sftP_reset_bool()) {
-                            states.reset_sftp_config();
-                          }
-
-
+                update_account_state(selected_account);
+              });
+            }
+            update_account_selection();
+            dashboard_state();
+            //here i will add logic to reset sftp
+            if (await states.get_sftP_reset_bool()) {
+              states.reset_sftp_config();
+            }
 
             //--------------------
 

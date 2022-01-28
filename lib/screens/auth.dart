@@ -88,20 +88,17 @@ class _auth_viewState extends State<auth_view> {
     auth_valid validity = await apis.auth_validity(url, password,
         has_deluge_pass, is_reverse_proxied, seed_username, seed_pass, "");
 
-
     if (validity.valid == 1) {
-     
-        add_in_db(url, has_deluge_pass, password, is_reverse_proxied,
-            seed_username, seed_pass);
-        set_auth_state();
-        !tow_attachment
-            ? toastMessage("Successfully Authorized")
-            : toastMessage("Successfully added");
-        !tow_attachment
-            ? Navigator.pushReplacement(
-                context, MaterialPageRoute(builder: (context) => dashboard()))
-            : Navigator.pop(context);
-      
+      add_in_db(url, has_deluge_pass, password, is_reverse_proxied,
+          seed_username, seed_pass);
+      set_auth_state();
+      !tow_attachment
+          ? toastMessage("Successfully Authorized")
+          : toastMessage("Successfully added");
+      !tow_attachment
+          ? Navigator.pushReplacement(
+              context, MaterialPageRoute(builder: (context) => dashboard()))
+          : Navigator.pop(context);
     } else if (validity.valid == 0) {
       toastMessage("Credentials are wrong");
     } else if (validity.valid == -1) {
@@ -115,8 +112,6 @@ class _auth_viewState extends State<auth_view> {
     }
   }
 
- 
-
   @override
   Widget build(BuildContext context) {
     return KeyboardDismisser(
@@ -124,112 +119,45 @@ class _auth_viewState extends State<auth_view> {
           GestureType.onTap,
           GestureType.onPanUpdateDownDirection,
         ],
-        child:
-    Scaffold(
-        appBar: AppBar(
-          title: Text(
-            "Authorization",
-            style: theme.app_bar_style,
-          ),
-          elevation: 0.0,
-          backgroundColor: Color.fromRGBO(241, 94, 90, 1.0),
-        ),
-        body: SingleChildScrollView(
-          child: Column(
-            children: [
-              Container(
-                  color: Color.fromRGBO(241, 94, 90, 1.0),
-                  padding: EdgeInsets.only(top: 3.0),
-                  child: Column(children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Flexible(
-                            fit: FlexFit.tight,
-                            child: Image.asset(
-                              "assets/logo.png",
-                              height: 180.0,
-                            ))
-                      ],
-                    ),
-
-                    Container(
-                        decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(25.0))),
-                        child: Text(
-                          "\tDeluge mobile client\t",
-                          style: theme.logo_text_style,
-                        )),
-                    //--
-                    Padding(
-                        padding: EdgeInsets.all(10.0),
-                        child: Row(
+        child: Scaffold(
+            appBar: AppBar(
+              title: Text(
+                "Authorization",
+                style: theme.app_bar_style,
+              ),
+              elevation: 0.0,
+              backgroundColor: Color.fromRGBO(241, 94, 90, 1.0),
+            ),
+            body: SingleChildScrollView(
+              child: Column(
+                children: [
+                  Container(
+                      color: Color.fromRGBO(241, 94, 90, 1.0),
+                      padding: EdgeInsets.only(top: 3.0),
+                      child: Column(children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Flexible(
                                 fit: FlexFit.tight,
-                                child: TextField(
-                                  style: TextStyle(
-                                      color: Colors.black,
-                                      fontSize: theme.alert_box_font_size,
-                                      fontFamily: theme.font_family),
-                                  decoration: new InputDecoration(
-                                    border: new OutlineInputBorder(
-                                      borderRadius: const BorderRadius.all(
-                                        const Radius.circular(10.0),
-                                      ),
-                                    ),
-                                    filled: true,
-                                    hintStyle:
-                                        new TextStyle(color: Colors.grey[800]),
-                                    hintText: "Location of Deluge host",
-                                    suffixIcon: InkWell(
-                                      child: Icon(Icons.paste),
-                                      onTap: () {
-                                        fetch_clipboard();
-                                      },
-                                    ),
-                                    fillColor: Colors.white70,
-                                  ),
-                                  controller: url,
-                                  autofocus: false,
+                                child: Image.asset(
+                                  "assets/logo.png",
+                                  height: 180.0,
                                 ))
                           ],
-                        )),
-                    //----
-                    Row(
-                      children: [
-                        Padding(
-                            padding: EdgeInsets.only(left: 5.0),
-                            child: Icon(
-                              Icons.error_outline,
-                              color: Colors.white,
+                        ),
+
+                        Container(
+                            decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(25.0))),
+                            child: Text(
+                              "\tDeluge mobile client\t",
+                              style: theme.logo_text_style,
                             )),
+                        //--
                         Padding(
-                            padding: EdgeInsets.only(left: 3.0),
-                            child: Text("check your browser address-bar",
-                                style: theme.warning_style)),
-                      ],
-                    ),
-                    //--
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Switch(
-                            value: has_deluge_pass,
-                            onChanged: (val) {
-                              setState(() {
-                                has_deluge_pass = !has_deluge_pass;
-                              });
-                            }),
-                        Text("is Deluge has password?",
-                            style: theme.warning_style),
-                      ],
-                    ),
-                    //--
-                    has_deluge_pass
-                        ? Padding(
                             padding: EdgeInsets.all(10.0),
                             child: Row(
                               children: [
@@ -249,207 +177,278 @@ class _auth_viewState extends State<auth_view> {
                                         filled: true,
                                         hintStyle: new TextStyle(
                                             color: Colors.grey[800]),
-                                        hintText: "Deluge's Password",
+                                        hintText: "Location of Deluge host",
                                         suffixIcon: InkWell(
-                                          child: Icon(vis_deluge_pass
-                                              ? Icons.visibility_off
-                                              : Icons.visibility),
+                                          child: Icon(Icons.paste),
                                           onTap: () {
-                                            if (this.mounted) {
-                                              setState(() {
-                                                vis_deluge_pass =
-                                                    !vis_deluge_pass;
-                                              });
-                                            }
+                                            fetch_clipboard();
                                           },
                                         ),
                                         fillColor: Colors.white70,
                                       ),
-                                      obscureText:
-                                          vis_deluge_pass ? false : true,
-                                      controller: pass,
+                                      controller: url,
                                       autofocus: false,
                                     ))
                               ],
-                            ))
-                        : new Container(
-                            height: 0.0,
-                            width: 0.0,
-                          ),
-                    //-
-                    SizedBox(height: 5.0),
-
-                    //-----
-                  ])),
-              //---
-              Padding(
-                  padding: EdgeInsets.all(10.0),
-                  child: Row(
-                    children: [
-                      Flexible(
-                          fit: FlexFit.tight,
-                          child: TextField(
-                            onChanged: (String val) {
-                              setState(() {
-                                if (username.text.length > 0) {
-                                  isreverse_proxied = true;
-                                } else {
-                                  isreverse_proxied = false;
-                                }
-                              });
-                            },
-                            style: TextStyle(
-                                color: Colors.black,
-                                fontSize: theme.alert_box_font_size,
-                                fontFamily: theme.font_family),
-                            decoration: new InputDecoration(
-                              border: new OutlineInputBorder(
-                                borderRadius: const BorderRadius.all(
-                                  const Radius.circular(10.0),
-                                ),
-                              ),
-                              filled: true,
-                              hintStyle: new TextStyle(color: Colors.grey[800]),
-                              hintText: "Username",
-                              fillColor: Colors.white70,
-                            ),
-                            controller: username,
-                            autofocus: false,
-                          ))
-                    ],
-                  )),
-              Padding(
-                  padding: EdgeInsets.all(10.0),
-                  child: Row(
-                    children: [
-                      Flexible(
-                          fit: FlexFit.tight,
-                          child: TextField(
-                            onChanged: (String val) {
-                              setState(() {
-                                if (username.text.length > 0 &&
-                                    seed_pass.text.length > 0) {
-                                  isreverse_proxied = true;
-                                } else {
-                                  isreverse_proxied = false;
-                                }
-                              });
-                            },
-                            style: TextStyle(
-                                color: Colors.black,
-                                fontSize: theme.alert_box_font_size,
-                                fontFamily: theme.font_family),
-                            decoration: new InputDecoration(
-                              border: new OutlineInputBorder(
-                                borderRadius: const BorderRadius.all(
-                                  const Radius.circular(10.0),
-                                ),
-                              ),
-                              filled: true,
-                              hintStyle: new TextStyle(color: Colors.grey[800]),
-                              hintText: "Password",
-                              fillColor: Colors.white70,
-                              suffixIcon: InkWell(
-                                child: Icon(vis_seed_pass
-                                    ? Icons.visibility_off
-                                    : Icons.visibility),
-                                onTap: () {
+                            )),
+                        //----
+                        Row(
+                          children: [
+                            Padding(
+                                padding: EdgeInsets.only(left: 5.0),
+                                child: Icon(
+                                  Icons.error_outline,
+                                  color: Colors.white,
+                                )),
+                            Padding(
+                                padding: EdgeInsets.only(left: 3.0),
+                                child: Text("check your browser address-bar",
+                                    style: theme.warning_style)),
+                          ],
+                        ),
+                        //--
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Switch(
+                                value: has_deluge_pass,
+                                onChanged: (val) {
                                   setState(() {
-                                    vis_seed_pass = !vis_seed_pass;
+                                    has_deluge_pass = !has_deluge_pass;
+                                  });
+                                }),
+                            Text("is Deluge has password?",
+                                style: theme.warning_style),
+                          ],
+                        ),
+                        //--
+                        has_deluge_pass
+                            ? Padding(
+                                padding: EdgeInsets.all(10.0),
+                                child: Row(
+                                  children: [
+                                    Flexible(
+                                        fit: FlexFit.tight,
+                                        child: TextField(
+                                          style: TextStyle(
+                                              color: Colors.black,
+                                              fontSize:
+                                                  theme.alert_box_font_size,
+                                              fontFamily: theme.font_family),
+                                          decoration: new InputDecoration(
+                                            border: new OutlineInputBorder(
+                                              borderRadius:
+                                                  const BorderRadius.all(
+                                                const Radius.circular(10.0),
+                                              ),
+                                            ),
+                                            filled: true,
+                                            hintStyle: new TextStyle(
+                                                color: Colors.grey[800]),
+                                            hintText: "Deluge's Password",
+                                            suffixIcon: InkWell(
+                                              child: Icon(vis_deluge_pass
+                                                  ? Icons.visibility_off
+                                                  : Icons.visibility),
+                                              onTap: () {
+                                                if (this.mounted) {
+                                                  setState(() {
+                                                    vis_deluge_pass =
+                                                        !vis_deluge_pass;
+                                                  });
+                                                }
+                                              },
+                                            ),
+                                            fillColor: Colors.white70,
+                                          ),
+                                          obscureText:
+                                              vis_deluge_pass ? false : true,
+                                          controller: pass,
+                                          autofocus: false,
+                                        ))
+                                  ],
+                                ))
+                            : new Container(
+                                height: 0.0,
+                                width: 0.0,
+                              ),
+                        //-
+                        SizedBox(height: 5.0),
+
+                        //-----
+                      ])),
+                  //---
+                  Padding(
+                      padding: EdgeInsets.all(10.0),
+                      child: Row(
+                        children: [
+                          Flexible(
+                              fit: FlexFit.tight,
+                              child: TextField(
+                                onChanged: (String val) {
+                                  setState(() {
+                                    if (username.text.length > 0) {
+                                      isreverse_proxied = true;
+                                    } else {
+                                      isreverse_proxied = false;
+                                    }
                                   });
                                 },
-                              ),
+                                style: TextStyle(
+                                    color: Colors.black,
+                                    fontSize: theme.alert_box_font_size,
+                                    fontFamily: theme.font_family),
+                                decoration: new InputDecoration(
+                                  border: new OutlineInputBorder(
+                                    borderRadius: const BorderRadius.all(
+                                      const Radius.circular(10.0),
+                                    ),
+                                  ),
+                                  filled: true,
+                                  hintStyle:
+                                      new TextStyle(color: Colors.grey[800]),
+                                  hintText: "Username",
+                                  fillColor: Colors.white70,
+                                ),
+                                controller: username,
+                                autofocus: false,
+                              ))
+                        ],
+                      )),
+                  Padding(
+                      padding: EdgeInsets.all(10.0),
+                      child: Row(
+                        children: [
+                          Flexible(
+                              fit: FlexFit.tight,
+                              child: TextField(
+                                onChanged: (String val) {
+                                  setState(() {
+                                    if (username.text.length > 0 &&
+                                        seed_pass.text.length > 0) {
+                                      isreverse_proxied = true;
+                                    } else {
+                                      isreverse_proxied = false;
+                                    }
+                                  });
+                                },
+                                style: TextStyle(
+                                    color: Colors.black,
+                                    fontSize: theme.alert_box_font_size,
+                                    fontFamily: theme.font_family),
+                                decoration: new InputDecoration(
+                                  border: new OutlineInputBorder(
+                                    borderRadius: const BorderRadius.all(
+                                      const Radius.circular(10.0),
+                                    ),
+                                  ),
+                                  filled: true,
+                                  hintStyle:
+                                      new TextStyle(color: Colors.grey[800]),
+                                  hintText: "Password",
+                                  fillColor: Colors.white70,
+                                  suffixIcon: InkWell(
+                                    child: Icon(vis_seed_pass
+                                        ? Icons.visibility_off
+                                        : Icons.visibility),
+                                    onTap: () {
+                                      setState(() {
+                                        vis_seed_pass = !vis_seed_pass;
+                                      });
+                                    },
+                                  ),
+                                ),
+                                controller: seed_pass,
+                                obscureText: vis_seed_pass ? false : true,
+                                autofocus: false,
+                              ))
+                        ],
+                      )),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Switch(
+                          value: isreverse_proxied,
+                          onChanged: (val) {
+                            print("ok" + val.toString());
+                            setState(() {
+                              isreverse_proxied = !isreverse_proxied;
+                            });
+                          }),
+                      Text("is reverse proxied?",
+                          style: TextStyle(
+                              fontFamily: theme.font_family, fontSize: 15.0)),
+                      Padding(
+                          padding: EdgeInsets.only(left: 35.0),
+                          child: ElevatedButton(
+                            style: ButtonStyle(
+                                backgroundColor: MaterialStateProperty.all(
+                              theme.base_color,
+                            )),
+                            onPressed: () {
+                              states.first_time_setup_selection();
+                              Navigator.pushReplacement(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => auth_qr(
+                                            tow_attachment: tow_attachment,
+                                          )));
+                            },
+                            child: Text(
+                              "Have QR",
+                              style: theme.warning_style,
                             ),
-                            controller: seed_pass,
-                            obscureText: vis_seed_pass ? false : true,
-                            autofocus: false,
                           ))
                     ],
-                  )),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Switch(
-                      value: isreverse_proxied,
-                      onChanged: (val) {
-                        print("ok" + val.toString());
-                        setState(() {
-                          isreverse_proxied = !isreverse_proxied;
-                        });
-                      }),
-                  Text("is reverse proxied?",
-                      style: TextStyle(
-                          fontFamily: theme.font_family, fontSize: 15.0)),
+                  ),
+                  //---
                   Padding(
-                      padding: EdgeInsets.only(left: 35.0),
+                    padding: const EdgeInsets.symmetric(
+                        vertical: 16, horizontal: 32),
+                    child: Container(
+                      width: double.infinity,
                       child: ElevatedButton(
-                        style: ButtonStyle(
-                          backgroundColor: MaterialStateProperty.all(theme.base_color,)  
+                        style: ElevatedButton.styleFrom(
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(5.0),
+                            side: BorderSide(
+                                color: Color.fromRGBO(241, 94, 90, 1.0)),
+                          ),
+                          primary: Colors.white,
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 28, vertical: 16),
+                          child: Text(
+                            !tow_attachment
+                                ? 'Let\'s get started'
+                                : 'Add account',
+                            style: TextStyle(
+                                color: theme.base_color,
+                                fontSize: 18,
+                                fontFamily: theme.font_family),
+                          ),
                         ),
                         onPressed: () {
                           states.first_time_setup_selection();
-                          Navigator.pushReplacement(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => auth_qr(
-                                        tow_attachment: tow_attachment,
-                                      )));
+                          if (url.text.length > 0) {
+                            check_validity(
+                                url.text,
+                                pass.text,
+                                has_deluge_pass.toString(),
+                                isreverse_proxied.toString(),
+                                username.text,
+                                seed_pass.text);
+                          } else {
+                            toastMessage("Please enter location");
+                          }
                         },
-                        child: Text(
-                          "Have QR",
-                          style: theme.warning_style,
-                        ),
-                      ))
+                      ),
+                    ),
+                  )
+                  //---
                 ],
               ),
-              //---
-              Padding(
-                padding:
-                    const EdgeInsets.symmetric(vertical: 16, horizontal: 32),
-                child: Container(
-                  width: double.infinity,
-                  child: ElevatedButton(
-                    
-                    style: ElevatedButton.styleFrom(
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(5.0),
-                        side:
-                            BorderSide(color: Color.fromRGBO(241, 94, 90, 1.0)),
-                      ),
-                      primary: Colors.white,
-                      
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 28, vertical: 16),
-                      child: Text(
-                        !tow_attachment ? 'Let\'s get started' : 'Add account',
-                        style: TextStyle(
-                            color: theme.base_color,
-                            fontSize: 18,
-                            fontFamily: theme.font_family),
-                      ),
-                    ),
-                    onPressed: () {
-                      states.first_time_setup_selection();
-                      if (url.text.length > 0) {
-                        check_validity(
-                            url.text,
-                            pass.text,
-                            has_deluge_pass.toString(),
-                            isreverse_proxied.toString(),
-                            username.text,
-                            seed_pass.text);
-                      } else {
-                        toastMessage("Please enter location");
-                      }
-                    },
-                  ),
-                ),
-              )
-              //---
-            ],
-          ),
-        )));
+            )));
   }
 }

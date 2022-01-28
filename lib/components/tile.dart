@@ -64,7 +64,7 @@ class _tileState extends State<tile> {
   final List<multtorrent> multi_selected_torrent;
   final String hash;
   bool paused;
-   bool seeding;
+  bool seeding;
   final bool for_multi;
   final Bucket selx_acc;
   final List<Cookie> cookie;

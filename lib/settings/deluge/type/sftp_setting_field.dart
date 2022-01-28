@@ -32,11 +32,12 @@ class _sftp_settings_fieldsState extends State<sftp_settings_fields> {
         sftp_password.isEmpty &&
         sftp_route_dir.isEmpty) {
       //-----------------
-      core_settings.sftp_host.text = selected_account.deluge_url.replaceFirst("https://", "");
+      core_settings.sftp_host.text =
+          selected_account.deluge_url.replaceFirst("https://", "");
       core_settings.sftpport.text = "54022";
 
       core_settings.sftp_route_url.text =
-        selected_account.deluge_url + "/downloads/";
+          selected_account.deluge_url + "/downloads/";
     }
   }
 
@@ -177,7 +178,6 @@ class _sftp_settings_fieldsState extends State<sftp_settings_fields> {
                     hintStyle: new TextStyle(color: Colors.grey[800]),
                     hintText: "sftp Password",
                     fillColor: Colors.white70,
-                    
                     suffixIcon: InkWell(
                       child: Icon(Icons.paste),
                       onTap: () async {
@@ -187,7 +187,7 @@ class _sftp_settings_fieldsState extends State<sftp_settings_fields> {
                       },
                     ),
                   ),
-                   obscureText:true,
+                  obscureText: true,
                   controller: core_settings.sftp_pass,
                   autofocus: false,
                 ))),

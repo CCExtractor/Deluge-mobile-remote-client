@@ -64,7 +64,6 @@ class _multi_account_menuState extends State<multi_account_menu> {
                         padding: EdgeInsets.only(top: 3.0),
                         child: Text("Please Choose Account",
                             style: TextStyle(
-                               
                                 fontSize: theme.bottom_sheet_heading_font_size,
                                 fontFamily: theme.font_family))),
                     Divider(
@@ -118,7 +117,8 @@ class _multi_account_menuState extends State<multi_account_menu> {
                                                   accounts[index].via_qr);
                                             }
                                           } else if (widget_id == -1) {
-                                            Navigator.of(context).pop();//closing the bottom sheet
+                                            Navigator.of(context)
+                                                .pop(); //closing the bottom sheet
                                             Navigator.push(
                                                 context,
                                                 MaterialPageRoute(

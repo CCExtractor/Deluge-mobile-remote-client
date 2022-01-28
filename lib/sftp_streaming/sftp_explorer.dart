@@ -91,7 +91,11 @@ class _filesState extends State<files> {
         states.reset_sftp_config();
         //  it is push replacement cause it will pop the page from where it is getting redirected
         Navigator.pushReplacement(
-          context, MaterialPageRoute(builder: (context) => ssh(selected_account: choosen_account,)));
+            context,
+            MaterialPageRoute(
+                builder: (context) => ssh(
+                      selected_account: choosen_account,
+                    )));
       }
     }
   }
