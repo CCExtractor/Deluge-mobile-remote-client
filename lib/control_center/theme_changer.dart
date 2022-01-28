@@ -3,7 +3,7 @@ import 'package:deluge_client/control_center/theme_controller.dart';
 
 class ThemeBuilder extends StatefulWidget {
   final Widget Function(BuildContext context, Brightness brightness) builder;
-  
+
   ThemeBuilder({this.builder});
 
   @override
@@ -20,16 +20,12 @@ class _ThemeBuilderState extends State<ThemeBuilder> {
   void initState() {
     super.initState();
     fetch_current_theme();
-
-    
   }
 
   void fetch_current_theme() async {
     extracted_current_theme = await theme_controller.get_set_theme();
     if (mounted) {
       setState(() {
-        
-       
         theme_controller.brightness = extracted_current_theme;
       });
     }

@@ -35,10 +35,8 @@ class _auth_qrState extends State<auth_qr> {
       password: "",
       via_qr: qr_auth,
     );
-    dbmanager
-        .insertbucket(item)
-        .then((id) => {print('item Added to Db ${id}'),
-      
+    dbmanager.insertbucket(item).then((id) => {
+          print('item Added to Db ${id}'),
         });
   }
 

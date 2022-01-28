@@ -56,7 +56,7 @@ class network_speedState extends State<network_speed> {
   final String seed_username;
   final String seed_pass;
   final String qr_auth;
-   bool paused;
+  bool paused;
   bool completed;
   network_speedState(
       {this.tor_id,
@@ -149,7 +149,7 @@ class network_speedState extends State<network_speed> {
     stop_listening_speeds = false;
   }
 
-   void make_pause() {
+  void make_pause() {
     paused = true;
   }
 

@@ -9,7 +9,6 @@ import 'package:deluge_client/core/auth_valid.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:deluge_client/api/models/torrent_prop.dart';
 
-
 class apis {
   static int network_request = 0;
   static Future<List<Cookie>> authentication_to_deluge(
@@ -681,7 +680,7 @@ class apis {
   }
 
   //----------------------------------------
-  static Future<Map<String,dynamic>> fetch_settings(
+  static Future<Map<String, dynamic>> fetch_settings(
       List<Cookie> cookie,
       String url,
       String is_reverse_proxied,

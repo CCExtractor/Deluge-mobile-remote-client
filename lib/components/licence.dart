@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-class license extends StatefulWidget {
- 
 
+class license extends StatefulWidget {
   @override
   _licenseState createState() => _licenseState();
 }
@@ -9,8 +8,7 @@ class license extends StatefulWidget {
 class _licenseState extends State<license> {
   @override
   Widget build(BuildContext context) {
-    return Text(
-      """MIT License
+    return Text("""MIT License
 
 Copyright (c) 2021 CCExtractor Development
 
@@ -33,9 +31,6 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
 
-      """
-
-      
-    );
+      """);
   }
 }

@@ -8,10 +8,9 @@ import 'package:flutter_phoenix/flutter_phoenix.dart';
 
 
 void main() {
-  
-  runApp(Phoenix(
-      child: root()
-    ),);
+  runApp(
+    Phoenix(child: root()),
+  );
 }
 
 class MyHttpOverrides extends HttpOverrides {
@@ -31,18 +30,13 @@ class root extends StatefulWidget {
 class _rootState extends State<root> {
   @override
   Widget build(BuildContext context) {
-    return ThemeBuilder (
-      
-        builder: (context, _brightness) {
-          return MaterialApp(
-            title: theme.thread_title,
-            theme: ThemeData(
-                primarySwatch:
-                     theme.material_color,
-                   
-                 brightness: _brightness),
-            home: splash(),
-          );
-        });
+    return ThemeBuilder(builder: (context, _brightness) {
+      return MaterialApp(
+        title: theme.thread_title,
+        theme: ThemeData(
+            primarySwatch: theme.material_color, brightness: _brightness),
+        home: splash(),
+      );
+    });
   }
 }
