@@ -7,20 +7,11 @@ import 'package:deluge_client/settings/deluge/core_settings.dart';
 import 'package:deluge_client/api/apis.dart';
 
 class general extends StatefulWidget {
- 
-
   @override
-  _generalState createState() =>
-      _generalState();
+  _generalState createState() => _generalState();
 }
 
 class _generalState extends State<general> {
- 
-
-
-
-  
-
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -77,7 +68,7 @@ class _generalState extends State<general> {
                           hintText: " Torrent files directory ",
                           fillColor: Colors.white70,
                         ),
-                          controller: core_settings.torrent_file_Directory,
+                        controller: core_settings.torrent_file_Directory,
                         autofocus: false,
                       ))),
 
@@ -104,7 +95,7 @@ class _generalState extends State<general> {
                           hintText: " Move after completion path",
                           fillColor: Colors.white70,
                         ),
-                          controller: core_settings.move_after_completion_path,
+                        controller: core_settings.move_after_completion_path,
                         autofocus: false,
                       ))),
               //---------------------------------------------------
@@ -131,7 +122,7 @@ class _generalState extends State<general> {
                           hintText: " Max connections global",
                           fillColor: Colors.white70,
                         ),
-                          controller: core_settings.max_connection_global,
+                        controller: core_settings.max_connection_global,
                         autofocus: false,
                       ))),
               //-------------------------------------------------------------
@@ -158,7 +149,7 @@ class _generalState extends State<general> {
                           hintText: " Max Upload speed",
                           fillColor: Colors.white70,
                         ),
-                          controller: core_settings.max_upload_speed,
+                        controller: core_settings.max_upload_speed,
                         autofocus: false,
                       ))),
               ListTile(
@@ -184,7 +175,7 @@ class _generalState extends State<general> {
                           hintText: " Max Download Speed",
                           fillColor: Colors.white70,
                         ),
-                          controller: core_settings.max_download_speed,
+                        controller: core_settings.max_download_speed,
                         autofocus: false,
                       ))),
               ListTile(
@@ -210,7 +201,7 @@ class _generalState extends State<general> {
                           hintText: " Max Upload Slots Global",
                           fillColor: Colors.white70,
                         ),
-                         controller: core_settings.max_upload_slots,
+                        controller: core_settings.max_upload_slots,
                         autofocus: false,
                       ))),
               ListTile(
@@ -236,7 +227,7 @@ class _generalState extends State<general> {
                           hintText: " Max half open connection",
                           fillColor: Colors.white70,
                         ),
-                          controller: core_settings.max_half_open_connection,
+                        controller: core_settings.max_half_open_connection,
                         autofocus: false,
                       ))),
               ListTile(
@@ -262,7 +253,7 @@ class _generalState extends State<general> {
                           hintText: " Max connection per second",
                           fillColor: Colors.white70,
                         ),
-                          controller:core_settings.max_connection_per_second,
+                        controller: core_settings.max_connection_per_second,
                         autofocus: false,
                       ))),
               ListTile(
@@ -288,7 +279,7 @@ class _generalState extends State<general> {
                           hintText: " Max connection per torrent",
                           fillColor: Colors.white70,
                         ),
-                         controller: core_settings.max_connection_per_torrent,
+                        controller: core_settings.max_connection_per_torrent,
                         autofocus: false,
                       ))),
               ListTile(
@@ -338,7 +329,8 @@ class _generalState extends State<general> {
                           hintText: " Max Download slots per torrent",
                           fillColor: Colors.white70,
                         ),
-                          controller: core_settings.max_download_speed_per_torrent,
+                        controller:
+                            core_settings.max_download_speed_per_torrent,
                         autofocus: false,
                       ))),
             ],

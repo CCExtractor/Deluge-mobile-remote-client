@@ -369,14 +369,14 @@ class multi_accountState extends State<multi_account> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: FutureBuilder<Map<multtorrent,Properties>>(
+      child: FutureBuilder<Map<multtorrent, Properties>>(
           future: torrents_all_account,
           builder: (BuildContext context,
               AsyncSnapshot<Map<multtorrent, Properties>> snapshot) {
             if (snapshot.connectionState != ConnectionState.done) {
               //------------
               return Center(child: loader());
-            } else if (snapshot.data==null) {
+            } else if (snapshot.data == null) {
               return error(
                 retry: () {
                   config();
@@ -510,7 +510,7 @@ class multi_accountState extends State<multi_account> {
                                               seeding: seeding,
                                               selx_acc: buc,
                                               hash_m: key,
-                                              non_delayed_fetch: (){
+                                              non_delayed_fetch: () {
                                                 config();
                                               },
                                             ),

@@ -17,11 +17,10 @@ class theme {
       color: Colors.black);
   static TextStyle sidebar_tile_style =
       TextStyle(fontFamily: font_family, fontSize: 15.0, color: base_color);
-  
+
   static double children_expension_tile_font_size = 12.0;
   static TextStyle app_bar_style = TextStyle(
       fontSize: 20.0, fontFamily: theme.font_family, color: Colors.white);
   static TextStyle warning_style = TextStyle(
       fontFamily: theme.font_family, fontSize: 15.0, color: Colors.white);
-  
 }

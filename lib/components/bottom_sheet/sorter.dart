@@ -61,9 +61,9 @@ class _sorterState extends State<sorter> {
                     leading: Icon(Icons.arrow_upward,
                         color: sort_helper.non_reverse_order
                             ? theme.base_color
-                            :  (!theme_controller.is_it_dark()
-                                  ? Colors.black
-                                  : Colors.white)),
+                            : (!theme_controller.is_it_dark()
+                                ? Colors.black
+                                : Colors.white)),
                     onTap: () {
                       if (this.mounted) {
                         setState(() {
@@ -93,9 +93,9 @@ class _sorterState extends State<sorter> {
                         Icons.arrow_downward_rounded,
                         color: sort_helper.reverse_order
                             ? theme.base_color
-                            :  (!theme_controller.is_it_dark()
-                                  ? Colors.black
-                                  : Colors.white),
+                            : (!theme_controller.is_it_dark()
+                                ? Colors.black
+                                : Colors.white),
                       ),
                       onTap: () {
                         if (this.mounted) {
@@ -127,8 +127,8 @@ class _sorterState extends State<sorter> {
                         color: sort_helper.by_size_order
                             ? theme.base_color
                             : (!theme_controller.is_it_dark()
-                                  ? Colors.black
-                                  : Colors.white),
+                                ? Colors.black
+                                : Colors.white),
                       ),
                       onTap: () {
                         if (this.mounted) {
@@ -143,7 +143,7 @@ class _sorterState extends State<sorter> {
 
                         Navigator.of(context).pop();
                       }),
-                       ListTile(
+                  ListTile(
                       title: Text(
                         'Sort by date and time added',
                         style: TextStyle(
@@ -160,8 +160,8 @@ class _sorterState extends State<sorter> {
                         color: sort_helper.by_date_time
                             ? theme.base_color
                             : (!theme_controller.is_it_dark()
-                                  ? Colors.black
-                                  : Colors.white),
+                                ? Colors.black
+                                : Colors.white),
                       ),
                       onTap: () {
                         if (this.mounted) {

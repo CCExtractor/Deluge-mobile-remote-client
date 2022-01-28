@@ -756,10 +756,7 @@ class _dashboardState extends State<dashboard> {
                         if (snapshot.connectionState != ConnectionState.done) {
                           //------------
                           return Center(child: loader());
-                        } else if (snapshot.data==null) {
-                          
-                          
-
+                        } else if (snapshot.data == null) {
                           return error(
                             retry: () {
                               non_delayed_torrent_fetch(
