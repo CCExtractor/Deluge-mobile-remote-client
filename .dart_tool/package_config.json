@@ -110,6 +110,12 @@
       "languageVersion": "2.12"
     },
     {
+      "name": "flutter_lints",
+      "rootUri": "file:///C:/Users/DELL/Documents/flutter/.pub-cache/hosted/pub.dartlang.org/flutter_lints-1.0.4",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
       "name": "flutter_local_notifications",
       "rootUri": "file:///C:/Users/DELL/Documents/flutter/.pub-cache/hosted/pub.dartlang.org/flutter_local_notifications-5.0.0+4",
       "packageUri": "lib/",
@@ -196,6 +202,12 @@
     {
       "name": "keyboard_dismisser",
       "rootUri": "file:///C:/Users/DELL/Documents/flutter/.pub-cache/hosted/pub.dartlang.org/keyboard_dismisser-2.0.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
+      "name": "lints",
+      "rootUri": "file:///C:/Users/DELL/Documents/flutter/.pub-cache/hosted/pub.dartlang.org/lints-1.0.1",
       "packageUri": "lib/",
       "languageVersion": "2.12"
     },
@@ -560,7 +572,7 @@
       "languageVersion": "2.7"
     }
   ],
-  "generated": "2022-01-22T11:25:30.486904Z",
+  "generated": "2022-01-28T18:03:58.112347Z",
   "generator": "pub",
   "generatorVersion": "2.15.1"
 }

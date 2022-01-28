@@ -56,8 +56,7 @@ dependencies:
   url_launcher: ^6.0.6
   keyboard_dismisser: ^2.0.0
   file_picker: ^4.0.0
-  
-
+  flutter_lints: ^1.0.4
 
  
 
