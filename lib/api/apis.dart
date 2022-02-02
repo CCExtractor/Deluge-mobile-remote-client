@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'dart:io';
-import 'package:deluge_client/api/models/settings.dart';
 import 'package:deluge_client/settings/deluge/core_settings.dart';
 import 'package:flutter/material.dart';
 import 'package:deluge_client/control_center/theme.dart';

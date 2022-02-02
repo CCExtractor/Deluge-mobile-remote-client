@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:deluge_client/control_center/theme_controller.dart';
 
 class theme {
   static String thread_title = "Deluge Mobile client";

@@ -1,16 +1,12 @@
-import 'package:deluge_client/components/download_upload_pane.dart';
 import 'package:deluge_client/components/error_on_dash.dart';
 import 'package:deluge_client/components/loader.dart';
 import 'package:deluge_client/components/no_data.dart';
-import 'package:deluge_client/components/progress_bar.dart';
 import 'package:deluge_client/components/tile.dart';
 import 'package:deluge_client/database/dbmanager.dart';
 import 'package:flutter/material.dart';
 import 'package:deluge_client/core/all_acc.dart';
-import 'package:flutter/scheduler.dart';
 import 'package:deluge_client/control_center/theme.dart';
 import 'package:deluge_client/api/apis.dart';
-import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:deluge_client/string/controller.dart';
 import 'package:deluge_client/string/sorter.dart';
 import 'package:deluge_client/api/models/torrent_prop.dart';

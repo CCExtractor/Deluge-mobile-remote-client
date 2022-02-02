@@ -1,9 +1,8 @@
 import 'dart:async';
-import 'dart:convert';
+
 import 'dart:io';
 import 'package:filesize/filesize.dart';
 import "package:flutter/material.dart";
-import 'package:http/http.dart' as http;
 import 'package:deluge_client/control_center/theme.dart';
 import 'package:deluge_client/api/apis.dart';
 import 'package:deluge_client/control_center/theme_controller.dart';

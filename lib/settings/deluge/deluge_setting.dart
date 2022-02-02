@@ -4,13 +4,11 @@ import 'package:deluge_client/database/dbmanager.dart';
 import 'package:deluge_client/settings/deluge/type/advance.dart';
 import 'package:deluge_client/settings/deluge/type/basic.dart';
 import 'package:deluge_client/settings/deluge/type/general.dart';
-import 'package:deluge_client/settings/deluge/type/sftp_streaming_settings.dart';
 import 'package:flutter/material.dart';
 import 'package:deluge_client/control_center/theme.dart';
 import 'package:deluge_client/api/apis.dart';
 import 'package:deluge_client/settings/deluge/core_settings.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:deluge_client/state_ware_house/state_ware_house.dart';
 import 'package:keyboard_dismisser/keyboard_dismisser.dart';
 
 class deluge_settings extends StatefulWidget {

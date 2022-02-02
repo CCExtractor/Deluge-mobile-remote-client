@@ -1,5 +1,4 @@
 import 'package:deluge_client/core/all_acc.dart';
-import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:deluge_client/api/models/torrent_prop.dart';
 

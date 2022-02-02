@@ -4,7 +4,6 @@ import 'package:deluge_client/screens/auth.dart';
 import 'package:deluge_client/screens/dashboard.dart';
 import 'package:flutter/material.dart';
 import 'package:deluge_client/control_center/theme.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:deluge_client/state_ware_house/state_ware_house.dart';
 
 class splash extends StatefulWidget {
