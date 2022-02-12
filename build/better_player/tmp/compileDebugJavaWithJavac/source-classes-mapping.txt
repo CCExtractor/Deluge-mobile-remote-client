@@ -1,2 +1,0 @@
-com/jhomlala/better_player/BuildConfig.java
- com.jhomlala.better_player.BuildConfig
