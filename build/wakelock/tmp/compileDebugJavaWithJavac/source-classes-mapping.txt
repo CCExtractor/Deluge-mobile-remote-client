@@ -1,8 +1,0 @@
-creativemaybeno/wakelock/Messages.java
- creativemaybeno.wakelock.Messages
- creativemaybeno.wakelock.Messages$IsEnabledMessage
- creativemaybeno.wakelock.Messages$ToggleMessage
- creativemaybeno.wakelock.Messages$WakelockApi
- creativemaybeno.wakelock.Messages$WakelockApiCodec
-creativemaybeno/wakelock/BuildConfig.java
- creativemaybeno.wakelock.BuildConfig

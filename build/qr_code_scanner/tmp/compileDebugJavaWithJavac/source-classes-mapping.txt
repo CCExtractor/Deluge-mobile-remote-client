@@ -1,2 +1,0 @@
-net/touchcapture/qr/flutterqr/BuildConfig.java
- net.touchcapture.qr.flutterqr.BuildConfig
