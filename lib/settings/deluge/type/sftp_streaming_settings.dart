@@ -1,4 +1,3 @@
-
 import 'package:deluge_client/database/dbmanager.dart';
 import 'package:deluge_client/state_ware_house/state_ware_house.dart';
 import 'package:flutter/material.dart';
@@ -16,7 +15,7 @@ class ssh extends StatefulWidget {
 
 class _sshState extends State<ssh> {
   final Bucket selected_account;
-  _sshState({Key key, @required this.selected_account});
+  _sshState({@required this.selected_account});
   void initiate_setup() async {
     core_settings.sftp_host.text = await states.get_sftp_host();
     core_settings.sftp_pass.text = await states.get_sftp_password();

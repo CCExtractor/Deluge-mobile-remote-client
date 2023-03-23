@@ -1,22 +1,25 @@
 import 'dart:convert';
-import 'package:deluge_client/database/dbmanager.dart';
-import 'package:deluge_client/settings/deluge/type/sftp_streaming_settings.dart';
-import 'package:filesize/filesize.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+
+import 'package:filesize/filesize.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
-import 'package:deluge_client/sftp_streaming/image_streamer.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:ssh/ssh.dart';
+import 'package:url_launcher/url_launcher.dart';
+
+import 'package:deluge_client/control_center/theme.dart';
+import 'package:deluge_client/database/dbmanager.dart';
+import 'package:deluge_client/settings/deluge/type/sftp_streaming_settings.dart';
+import 'package:deluge_client/sftp_streaming/image_streamer.dart';
 import 'package:deluge_client/sftp_streaming/video_dir.dart';
 import 'package:deluge_client/sftp_streaming/web_spacer.dart';
-import 'package:url_launcher/url_launcher.dart';
-import 'package:deluge_client/control_center/theme.dart';
 import 'package:deluge_client/state_ware_house/state_ware_house.dart';
 
 class files extends StatefulWidget {
   final String direx;
-  String path;
+  final String path;
   final String host;
   final String port;
   final String username;
@@ -53,8 +56,7 @@ class _filesState extends State<files> {
   final String password;
   final Bucket choosen_account;
   _filesState(
-      {Key key,
-      @required this.direx,
+      {@required this.direx,
       @required this.path,
       @required this.host,
       @required this.port,
@@ -84,6 +86,7 @@ class _filesState extends State<files> {
           return directories;
         }
       }
+      return null;
     } on PlatformException catch (e) {
       print('Error: ${e.code}\nError Message: ${e.message}');
       toastMessage("Error Message: ${e.message} Error: ${e.code}");
@@ -97,6 +100,7 @@ class _filesState extends State<files> {
                       selected_account: choosen_account,
                     )));
       }
+      return null;
     }
   }
 
@@ -207,6 +211,7 @@ class _filesState extends State<files> {
       //'authorization', auth);
       return {'authorization': auth};
     }
+    return null;
   }
 
   Future<void> launchInBrowser(String url) async {
@@ -260,6 +265,7 @@ class _filesState extends State<files> {
     } else if (widget_id == 3) {
       return Text("Delete");
     }
+    return null;
   }
 
   Widget content_handler_alert_box(int widget_id) {
@@ -276,6 +282,7 @@ class _filesState extends State<files> {
     } else if (widget_id == 3) {
       return Text("Are you sure to delete this");
     }
+    return Container();
   }
 
   Text handle_confirmation_button(int widget_id) {
@@ -286,6 +293,7 @@ class _filesState extends State<files> {
     } else if (widget_id == 3) {
       return Text("Yes");
     }
+    return null;
   }
 
   //---------------------------------------------------------------------------

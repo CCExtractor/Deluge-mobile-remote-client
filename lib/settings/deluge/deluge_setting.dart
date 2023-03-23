@@ -12,7 +12,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:keyboard_dismisser/keyboard_dismisser.dart';
 
 class deluge_settings extends StatefulWidget {
-  List<Cookie> cookie;
+  final List<Cookie> cookie;
   final Bucket selected_account;
   deluge_settings(
       {Key key, @required this.cookie, @required this.selected_account})
@@ -27,12 +27,12 @@ class _deluge_settingsState extends State<deluge_settings> {
   List<Cookie> cookie;
   final Bucket selected_account;
   _deluge_settingsState(
-      {Key key, @required this.cookie, @required this.selected_account});
+      {@required this.cookie, @required this.selected_account});
 
   @override
   void initState() {
     core_settings_fetcher();
-    // TODO: implement initState
+
     super.initState();
   }
 

@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+
 import 'package:expandable/expandable.dart';
-import 'package:deluge_client/control_center/theme.dart';
 import 'package:intl/intl.dart';
 
 import 'package:deluge_client/api/models/torrent_prop.dart';
+import 'package:deluge_client/control_center/theme.dart';
 
 class more_info extends StatelessWidget {
   final Properties inside_res;
@@ -16,13 +17,6 @@ class more_info extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    buildItem(String label) {
-      return Padding(
-        padding: const EdgeInsets.all(10.0),
-        child: Text(label),
-      );
-    }
-
     buildList() {
       return Column(
         children: <Widget>[

@@ -60,7 +60,6 @@ class _basicState extends State<basic> {
   void initState() {
     initiate_basic_setting();
 
-    // TODO: implement initState
     super.initState();
   }
 

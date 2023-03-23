@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:deluge_client/control_center/theme.dart';
 import 'package:deluge_client/string/sorter.dart';
@@ -15,7 +14,7 @@ class sorter extends StatefulWidget {
 
 class _sorterState extends State<sorter> {
   final VoidCallback rebuilt_list;
-  _sorterState({Key key, this.rebuilt_list});
+  _sorterState({this.rebuilt_list});
   @override
   Widget build(BuildContext context) {
     return Material(

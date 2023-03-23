@@ -1,18 +1,20 @@
 import 'dart:io';
 
-import 'package:deluge_client/core/all_acc.dart';
+import 'package:flutter/material.dart';
+
+import 'package:expandable/expandable.dart';
+import 'package:filesize/filesize.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
+
+import 'package:deluge_client/api/apis.dart';
+import 'package:deluge_client/api/models/torrent_prop.dart';
 import 'package:deluge_client/components/all_info.dart';
 import 'package:deluge_client/components/download_upload_pane.dart';
 import 'package:deluge_client/components/progress_bar.dart';
-import 'package:deluge_client/database/dbmanager.dart';
-import 'package:expandable/expandable.dart';
-import 'package:filesize/filesize.dart';
-import 'package:flutter/material.dart';
 import 'package:deluge_client/control_center/theme.dart';
-import 'package:deluge_client/api/apis.dart';
-import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:deluge_client/control_center/theme_controller.dart';
-import 'package:deluge_client/api/models/torrent_prop.dart';
+import 'package:deluge_client/core/all_acc.dart';
+import 'package:deluge_client/database/dbmanager.dart';
 
 class tile extends StatefulWidget {
   final multtorrent hash_m;
@@ -21,11 +23,11 @@ class tile extends StatefulWidget {
   final List<multtorrent> multi_selected_torrent;
   final String hash;
   final Properties inside_res;
-  bool paused;
+  final bool paused;
   final bool seeding;
   final Bucket selx_acc;
   final List<Cookie> cookie;
-  bool completed;
+  final bool completed;
   final VoidCallback non_delayed_fetch;
   tile(
       {Key key,

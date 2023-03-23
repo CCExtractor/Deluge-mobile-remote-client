@@ -1,13 +1,16 @@
 import 'dart:convert';
 import 'dart:io';
-import 'package:deluge_client/settings/deluge/core_settings.dart';
+
 import 'package:flutter/material.dart';
-import 'package:deluge_client/control_center/theme.dart';
 import 'package:flutter/services.dart';
+
 import 'package:flutter_phoenix/flutter_phoenix.dart';
-import 'package:deluge_client/core/auth_valid.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+
 import 'package:deluge_client/api/models/torrent_prop.dart';
+import 'package:deluge_client/control_center/theme.dart';
+import 'package:deluge_client/core/auth_valid.dart';
+import 'package:deluge_client/settings/deluge/core_settings.dart';
 
 class apis {
   static int network_request = 0;
@@ -50,16 +53,18 @@ class apis {
       // print(response.cookies);
       List<Cookie> cookie = response.cookies;
 
-      final responseBody = await response.transform(utf8.decoder).join();
-
       return cookie;
       // print(responseBody);
       // print(jsonDecode(responseBody));
       // final result = Model.fromJson(json.decode(responseBody));
     } on SocketException catch (_) {
       dialogue_prompt.show_prompt(context);
+      List<Cookie> cookie = null;
+      return cookie;
     } catch (error) {
       print(error);
+      List<Cookie> cookie = null;
+      return cookie;
     }
   }
 
@@ -118,6 +123,8 @@ class apis {
         dialogue_prompt.show_prompt(context);
         has_prompt_fired_for_repetative = true;
       }
+      Map<String, Properties> list_torrent = null;
+      return list_torrent;
     } catch (e) {
       Map<String, Properties> list_torrent = null;
       return list_torrent;
@@ -166,9 +173,6 @@ class apis {
       final response = await request.close();
 
       cookie = response.cookies;
-      final responseBody = await response.transform(utf8.decoder).join();
-      // we do not need response body here
-
     } on SocketException catch (_) {
       dialogue_prompt.show_prompt(context);
     } catch (e) {
@@ -218,7 +222,6 @@ class apis {
       final response = await request.close();
 
       cookie = response.cookies;
-      final responseBody = await response.transform(utf8.decoder).join();
     } on SocketException catch (_) {
       dialogue_prompt.show_prompt(context);
     } catch (e) {
@@ -267,7 +270,6 @@ class apis {
       final response = await request.close();
 
       cookie = response.cookies;
-      final responseBody = await response.transform(utf8.decoder).join();
     } on SocketException catch (_) {
       dialogue_prompt.show_prompt(context);
     } catch (e) {
@@ -316,7 +318,6 @@ class apis {
       // print(response.cookies);
       // print(response.statusCode);
       if (response.statusCode == 200 || response.statusCode == 201) {
-        List<Cookie> cookie = response.cookies;
         final responseBody = await response.transform(utf8.decoder).join();
         print(responseBody);
         Map<String, dynamic> auth_out = await json.decode(responseBody);
@@ -333,7 +334,7 @@ class apis {
 
         return auth_valid(valid: -1, cookie: null);
       }
-
+      return auth_valid(valid: -11, cookie: null);
       // print(responseBody);
       // print(jsonDecode(responseBody));
       // final result = Model.fromJson(json.decode(responseBody));
@@ -512,8 +513,10 @@ class apis {
       return res;
     } on SocketException catch (_) {
       dialogue_prompt.show_prompt(context);
+      return null;
     } catch (e) {
       print(e);
+      return null;
     }
   }
 
@@ -561,8 +564,10 @@ class apis {
       return res['result'];
     } on SocketException catch (_) {
       dialogue_prompt.show_prompt(context);
+      return null;
     } catch (e) {
       print(e);
+      return null;
     }
   }
 
@@ -725,8 +730,10 @@ class apis {
       return res["result"];
     } on SocketException catch (_) {
       dialogue_prompt.show_prompt(context);
+      return null;
     } catch (e) {
       print(e);
+      return null;
     }
   }
 
@@ -778,8 +785,10 @@ class apis {
       return versioning;
     } on SocketException catch (_) {
       dialogue_prompt.show_prompt(context);
+      return null;
     } catch (e) {
       print(e);
+      return null;
     }
   }
 }

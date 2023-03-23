@@ -37,7 +37,7 @@ class _dashboardState extends State<dashboard> {
   bool completed_torrent = false;
   bool torren_seeding = false;
   bool paused_torrent = false;
-  List<String> selected_torrents = new List();
+  List<String> selected_torrents = <String>[];
   double speed = 0.0;
   GlobalKey<multi_accountState> multidash = GlobalKey();
 
@@ -45,7 +45,7 @@ class _dashboardState extends State<dashboard> {
   DbbucketManager account_manager = DbbucketManager();
   Bucket selx_acc;
   bool all_account_selected = false;
-  List<multtorrent> multi_selected_torrents = new List();
+  List<multtorrent> multi_selected_torrents = <multtorrent>[];
   void dashboard_state() async {
     int t = await states.state_selected_account();
 
@@ -589,6 +589,7 @@ class _dashboardState extends State<dashboard> {
     } else if (sort_helper.by_date_time) {
       return sort_helper.sort_by_date_time(map);
     }
+    return map;
   }
 
   String head = "";
