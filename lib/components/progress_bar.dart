@@ -1,12 +1,15 @@
 import 'dart:async';
 import 'dart:io';
-import 'package:deluge_client/control_center/theme.dart';
+
 import "package:flutter/material.dart";
+
 import 'package:percent_indicator/linear_percent_indicator.dart';
+
 import 'package:deluge_client/api/apis.dart';
+import 'package:deluge_client/api/models/torrent_prop.dart';
+import 'package:deluge_client/control_center/theme.dart';
 import 'package:deluge_client/notification/notification_controller.dart';
 import 'package:deluge_client/state_ware_house/state_ware_house.dart';
-import 'package:deluge_client/api/models/torrent_prop.dart';
 
 class download_progress extends StatefulWidget {
   final String torrent_id;
@@ -147,7 +150,6 @@ class download_progressState extends State<download_progress> {
   bool notification_status;
   @override
   void initState() {
-    // TODO: implement initState
     if (this.mounted) {
       setState(() {
         paused;

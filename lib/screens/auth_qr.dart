@@ -1,4 +1,3 @@
-
 import 'package:deluge_client/database/dbmanager.dart';
 import 'package:deluge_client/screens/dashboard.dart';
 import 'package:flutter/material.dart';
@@ -156,7 +155,7 @@ class _auth_qrState extends State<auth_qr> {
                     borderRadius: BorderRadius.circular(5.0),
                     side: BorderSide(color: Color.fromRGBO(241, 94, 90, 1.0)),
                   ),
-                  primary: Colors.white,
+                  backgroundColor: Colors.white,
                 ),
                 child: Padding(
                   padding:

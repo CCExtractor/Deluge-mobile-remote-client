@@ -24,8 +24,7 @@ class _ssh_configState extends State<ssh_config> {
   final String direx;
 
   final Bucket selected_account;
-  _ssh_configState(
-      {Key key, @required this.direx, @required this.selected_account});
+  _ssh_configState({@required this.direx, @required this.selected_account});
 
   void update_sftp_settings() async {
     states.set_sftp_host(core_settings.sftp_host.text.toString());

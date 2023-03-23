@@ -11,7 +11,7 @@ import '../string/controller.dart';
 import 'package:deluge_client/control_center/theme_controller.dart';
 
 class storage_indicator extends StatefulWidget {
-  List<Cookie> cookie;
+  final List<Cookie> cookie;
   final BuildContext context;
   storage_indicator({Key key, @required this.cookie, @required this.context})
       : super(key: key);
@@ -23,8 +23,7 @@ class storage_indicator extends StatefulWidget {
 class _storage_indicatorState extends State<storage_indicator> {
   List<Cookie> cookie;
   final BuildContext context;
-  _storage_indicatorState(
-      {Key key, @required this.cookie, @required this.context});
+  _storage_indicatorState({@required this.cookie, @required this.context});
 
   DbbucketManager account_manager = DbbucketManager();
   int selected_account = 0;

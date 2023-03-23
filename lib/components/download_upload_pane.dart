@@ -112,7 +112,6 @@ class network_speedState extends State<network_speed> {
 
   @override
   void initState() {
-    // TODO: implement initState
     if (this.mounted) {
       setState(() {
         paused;

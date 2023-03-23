@@ -1,4 +1,3 @@
-
 import 'package:deluge_client/components/loader.dart';
 import 'package:deluge_client/database/dbmanager.dart';
 import 'package:deluge_client/screens/auth.dart';
@@ -50,7 +49,7 @@ class accountsState extends State<accounts> {
     super.initState();
   }
 
-  List<int> avail_acc = new List<int>();
+  List<int> avail_acc = <int>[];
 
   prompt_to_delete(
       BuildContext context, int id, String account, int length_acc) {
@@ -86,7 +85,6 @@ class accountsState extends State<accounts> {
             }
 
             //--------------------
-
           }
           //--------------
           dbmanager.deletebucket(id);

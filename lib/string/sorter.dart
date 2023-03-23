@@ -1,6 +1,7 @@
-import 'package:deluge_client/core/all_acc.dart';
 import 'package:intl/intl.dart';
+
 import 'package:deluge_client/api/models/torrent_prop.dart';
+import 'package:deluge_client/core/all_acc.dart';
 
 class sort_helper {
   static bool reverse_order = false;
@@ -17,7 +18,7 @@ class sort_helper {
   }
 
   static Map<String, Properties> sort_by_size(Map<String, Properties> map) {
-    List<map_as_list_view> mid_list = new List<map_as_list_view>();
+    List<map_as_list_view> mid_list = <map_as_list_view>[];
     map.entries.forEach((e) =>
         mid_list.add(map_as_list_view(hash: e.key, properties: e.value)));
     mid_list.sort((a, b) => (a.properties.totalSize ~/ 1000000)
@@ -30,8 +31,7 @@ class sort_helper {
 
   static Map<multtorrent, Properties> sort_by_size_for_multi(
       Map<multtorrent, Properties> map) {
-    List<map_as_list_view_for_multi> mid_list =
-        new List<map_as_list_view_for_multi>();
+    List<map_as_list_view_for_multi> mid_list = <map_as_list_view_for_multi>[];
     map.entries.forEach((e) => mid_list
         .add(map_as_list_view_for_multi(identity: e.key, properties: e.value)));
     mid_list.sort((a, b) => (a.properties.totalSize ~/ 1000000)
@@ -47,8 +47,7 @@ class sort_helper {
   static Map<String, Properties> sort_by_date_time(
       Map<String, Properties> map) {
     final format = new DateFormat('dd-MM-yyyy hh:mm a');
-    final eta = new DateFormat('hh:mm');
-    List<map_as_list_view> mid_list = new List<map_as_list_view>();
+    List<map_as_list_view> mid_list = <map_as_list_view>[];
     map.entries.forEach((e) =>
         mid_list.add(map_as_list_view(hash: e.key, properties: e.value)));
     mid_list.sort((a, b) => (format.format(
@@ -65,10 +64,8 @@ class sort_helper {
   static Map<multtorrent, Properties> sort_by_date_time_for_multi(
       Map<multtorrent, Properties> map) {
     final format = new DateFormat('dd-MM-yyyy hh:mm a');
-    final eta = new DateFormat('hh:mm');
 
-    List<map_as_list_view_for_multi> mid_list =
-        new List<map_as_list_view_for_multi>();
+    List<map_as_list_view_for_multi> mid_list = <map_as_list_view_for_multi>[];
     map.entries.forEach((e) => mid_list
         .add(map_as_list_view_for_multi(identity: e.key, properties: e.value)));
     mid_list.sort((a, b) => (format.format(

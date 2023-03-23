@@ -1,4 +1,3 @@
-
 import 'package:deluge_client/screens/auth_qr.dart';
 import 'package:deluge_client/database/dbmanager.dart';
 import 'package:deluge_client/screens/dashboard.dart';
@@ -414,7 +413,7 @@ class _auth_viewState extends State<auth_view> {
                             side: BorderSide(
                                 color: Color.fromRGBO(241, 94, 90, 1.0)),
                           ),
-                          primary: Colors.white,
+                          backgroundColor: Colors.white,
                         ),
                         child: Padding(
                           padding: const EdgeInsets.symmetric(

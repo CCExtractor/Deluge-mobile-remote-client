@@ -45,7 +45,6 @@ class _splashState extends State<splash> {
 
   @override
   void initState() {
-    // TODO: implement initState
     fetch_is_auth();
     startTime();
 

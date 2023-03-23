@@ -26,7 +26,7 @@ class multi_accountState extends State<multi_account> {
   bool completed_torrent = false;
   bool torren_seeding = false;
   bool paused_torrent = false;
-  List<multtorrent> selected_torrents = new List();
+  List<multtorrent> selected_torrents = [];
   multi_accountState({Key key, @required this.manage_multi});
   @override
   void initState() {
@@ -359,6 +359,7 @@ class multi_accountState extends State<multi_account> {
     } else if (sort_helper.by_date_time) {
       return sort_helper.sort_by_date_time_for_multi(map);
     }
+    return map;
   }
   //----------------------------------------------------------------------
 
@@ -398,7 +399,6 @@ class multi_accountState extends State<multi_account> {
                                 multtorrent key =
                                     sorted_map.keys.elementAt(index);
                                 Bucket buc = key.need;
-                                String hash = key.hash;
                                 //inside the result array
                                 Properties inside_res = snapshot.data[key];
 

@@ -71,7 +71,6 @@ class _add_newState extends State<add_new> {
   }
 
   void add_new_torrent_file() async {
-    String _fileName;
     List<PlatformFile> _paths;
 
     try {

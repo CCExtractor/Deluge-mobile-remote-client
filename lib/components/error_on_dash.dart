@@ -13,7 +13,7 @@ class error extends StatefulWidget {
 class _errorState extends State<error> {
   final VoidCallback retry;
   final String account_name;
-  _errorState({Key key, @required this.retry, this.account_name});
+  _errorState({@required this.retry, this.account_name});
 
   @override
   Widget build(BuildContext context) {

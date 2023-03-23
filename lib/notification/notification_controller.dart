@@ -1,4 +1,3 @@
-
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
 class notification {
@@ -44,7 +43,7 @@ class notification {
   //---------------------------------------------------------------
 
   //----------------------------------------------------------
-  static List<String> store_ids = List<String>();
+  static List<String> store_ids = <String>[];
   static int fetch_noti_id(String hash) {
     return store_ids.indexOf(hash);
   }
